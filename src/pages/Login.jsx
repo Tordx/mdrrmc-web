@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import MDSW from '../img/DSWD-Logo.png'
@@ -7,19 +7,48 @@ import { auth, db } from "../firebase";
 import { collection, getDocs } from "@firebase/firestore";
 
 const Login = () => {
+
+  useEffect(() => {
+    // Check Firebase initialization
+    // console.log('auth');
+    // console.log(db);
+    // console.log('auth');
+    
+   const getUserData = async () => {
+  try {
+
+    const querySnapshot = await getDocs(collection(db, 'user'));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, ' => ', doc.data());
+    });
+  } catch (error) {
+    console.log(error);
+    console.log('Error getting user documents: ', error);
+  }
+};
+
+getUserData();
+    
+    // If the above line executes without errors, Firebase is running
+
+    // ...other code
+  }, []);
+
+
+
   const [loginemail, setloginEmail] = useState('');
   const [loginpassword, setloginPassword] = useState('');
   const navigate = useNavigate();
 
   const checkStatus = async (e) => {
     e.preventDefault()
-    const querySnapshot = await getDocs(collection(db, "users"));
+    const querySnapshot = await getDocs(collection(db, "user"));
     const userData = [];
   
     querySnapshot.forEach((doc) => {
       if (doc.data().email === loginemail) {
         userData.push({
-          Status: doc.data().Status,
+          // Status: doc.data().Status,
           userType: doc.data().userType, // assuming there is a userType field in the document
         });
       }
