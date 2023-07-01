@@ -76,7 +76,7 @@ getUserData();
       <div>
         <img src={MDSW} width = {250} height = {150} draggable = {false}/>
         <img src={MOL} width = {160} height = {160} draggable = {false}/>
-        </div>
+     </div>
     <form onSubmit={checkStatus} >
       <div style = {{width: '100%'}} className="inputcontainer1">
         <input placeholder="Email Address" onChange={(e) => setloginEmail(e.target.value)} value = {loginemail} type="text" id="email" name="username" className="input"/>

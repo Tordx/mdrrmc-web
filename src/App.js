@@ -33,7 +33,7 @@ function App() {
         <Route  path="/">
           <Route path="login" element={<Login/>} />
           <Route path = "*" element={<Error404/>} />
-          <Route index element = {<Home/>}/>
+          <Route index element = {<Login/>}/>
           <Route path="form">
             <Route path="admin" index element={<AddUsers/>} />
             <Route path="public" element = {<AddUsers/>} />
