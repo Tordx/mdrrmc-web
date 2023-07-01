@@ -125,7 +125,7 @@ const Annoucementlist = () => {
     
           
       
-    <Header/>
+    {/* <Header/> */}
     <div className='formContainer'>
          {isExpanded && (
             <div className='photo-overlay' onClick={() => setIsExpanded(false)}>

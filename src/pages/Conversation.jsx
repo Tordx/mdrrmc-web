@@ -9,7 +9,7 @@ import '../style.css'
 const Conversation = () => {
   return (
     <div className='chatContainer'>
-      <Header/>
+      {/* <Header/> */}
       <div className="container">
         <Sidebar/>
         <Chat/>
