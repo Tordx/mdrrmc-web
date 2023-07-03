@@ -19,7 +19,7 @@ const Login = () => {
 
     const querySnapshot = await getDocs(collection(db, 'user'));
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
+      // console.log(doc.id, ' => ', doc.data());
     });
   } catch (error) {
     console.log(error);

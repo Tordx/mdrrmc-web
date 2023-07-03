@@ -11,9 +11,9 @@ const Navbar = () => {
   const {currentUser} = useContext(AuthContext)
   const [user, setUser] = useState([])
 
-  console.log('currentUser');
-  console.log(currentUser.uid);
-  console.log('currentUser');
+  // console.log('currentUser');
+  // console.log(currentUser.uid);
+  // console.log('currentUser');
 
   const navigate = useNavigate()
 
@@ -22,7 +22,7 @@ const Navbar = () => {
       try {
         const querySnapshot = await getDocs(query(collection(db, 'user'), where('uid', '==', "fSLC9Wd2QxXnF6WwzWuzpHMa9233")));
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, ' => ', doc.data());
+          // console.log(doc.id, ' => ', doc.data());
           setUser(doc.data())
         });
       } catch (error) {
@@ -33,9 +33,9 @@ const Navbar = () => {
     getUserData();
   }, []);
   
-  console.log('user');
-  console.log(user.name);
-  console.log('user');
+  // console.log('user');
+  // console.log(user.name);
+  // console.log('user');
   const handleLogout = () => {
       signOut(auth).then(() => {
           navigate('/')
@@ -53,7 +53,7 @@ const Navbar = () => {
       <img src={user.photoUrl} style={{width: 100}}/>
     </div>
 
-        <a href="/">{user.name}</a>
+        <a href="/admin/profile">{user.name}</a>
         <li><a href="/about">Menu</a></li>
         <li><a href="/services">Dashboard</a></li>
         <li><a href="/contact">Community</a></li>
