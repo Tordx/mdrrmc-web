@@ -11,10 +11,6 @@ const Navbar = () => {
   const {currentUser} = useContext(AuthContext)
   const [user, setUser] = useState([])
 
-  // console.log('currentUser');
-  // console.log(currentUser.uid);
-  // console.log('currentUser');
-
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -54,11 +50,11 @@ const Navbar = () => {
     </div>
 
         <a href="/admin/profile">{user.name}</a>
-        <li><a href="/about">Menu</a></li>
-        <li><a href="/services">Dashboard</a></li>
+        <h3>MENU</h3>
+        <li><a href="/admin/chat">Dashboard</a></li>
         <li><a href="/contact">Community</a></li>
         <li><a href="/contact">Alert</a></li>
-        <li><a onClick={handleLogout}>Logout</a></li>
+       <a onClick={handleLogout}>Logout</a>
     </div>
   )
 }
