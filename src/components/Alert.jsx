@@ -5,7 +5,7 @@ import { collection, query, where , getDocs } from 'firebase/firestore'
 import { db } from '../firebase'
 import '../style.css'
 
-const Profile = () => {
+const Alert = () => {
 
   // const {currentUser} = useContext(AuthContext)
   const [user, setUser] = useState([])
@@ -29,23 +29,22 @@ const Profile = () => {
   }, []);
  
   return (
+    <div>
+        {/* <Navbar/> */}
     <div className="modal">
       {/* <Navbar/> */}
     <div className="modal-continer">
-     <Navbar/>
+        <Navbar/>
       <div className="modal-content">
-        <h3>My Profile</h3>
-      <div className="myProfilePic" >
-      <img src={user.photoUrl} style={{width: 100}}/>
-    </div>
-    <a href="/admin/profile">{user.name}</a>
+        <h3>Alert</h3>
         {/* <button className="modal-close" >
           Close
         </button> */}
       </div>
     </div>
     </div>
+    </div>
   );
 };
 
-export default Profile;
+export default Alert;

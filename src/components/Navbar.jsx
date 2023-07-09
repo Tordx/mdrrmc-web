@@ -53,7 +53,7 @@ const Navbar = () => {
         <h3>MENU</h3>
         <li><a href="/admin/chat">Dashboard</a></li>
         <li><a href="/contact">Community</a></li>
-        <li><a href="/contact">Alert</a></li>
+        <li><a href="/admin/alert">Alert</a></li>
        <a onClick={handleLogout}>Logout</a>
     </div>
   )
