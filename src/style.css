@@ -1522,5 +1522,11 @@ img {
 .modal-close {
   margin-top: 10px;
 }
-
+.content1 {
+  /* Add spacing between the navbar and content */
+  margin-left: 20px;
+  display: flex;
+  justify-content: center; /* Center the input horizontally */
+  align-items: center; /* Center the input vertically */
+}
 
