@@ -38,14 +38,9 @@ const Navbar = () => {
       });
     };
 
-    const handleBoxClick = (boxColor) => {
-      console.log(`Clicked on ${boxColor} box!`);
-      // Perform additional actions on box click
-    };
-
   return (
     <div className='navbar'>
-     <div className="myProfilePic" onClick={() => handleBoxClick('red')}>
+     <div className="myProfilePic">
       <img src={user.photoUrl} style={{width: 100}}/>
     </div>
 
