@@ -5,7 +5,7 @@ import {signOut} from "firebase/auth"
 import { auth } from '../firebase'
 import { collection, query, where , getDocs } from 'firebase/firestore'
 import { db } from '../firebase'
-import '../style.css'
+import '../newstyle.css'
 const Navbar = () => {
 
   const {currentUser} = useContext(AuthContext)
@@ -29,9 +29,6 @@ const Navbar = () => {
     getUserData();
   }, []);
   
-  // console.log('user');
-  // console.log(user.name);
-  // console.log('user');
   const handleLogout = () => {
       signOut(auth).then(() => {
           navigate('/')
@@ -39,19 +36,25 @@ const Navbar = () => {
     };
 
   return (
-    <div className='navbar'>
-     <div className="myProfilePic">
-      <img src={user.photoUrl} style={{width: 100}}/>
-    </div>
-
-        <a href="/admin/profile">{user.name}</a>
-        <h3>MENU</h3>
-        <li><a href="/admin/chat">Dashboard</a></li>
-        <li><a href="/contact">Community</a></li>
-        <li><a href="/admin/alert">Alert</a></li>
-       <a onClick={handleLogout}>Logout</a>
+    <div className="sidebar">
+      <div>
+          <img src={user.photoUrl}/>
+          <a href="/admin/profile">{user.username}MY USERNAME</a>
+          <h3>MENU</h3>
+      </div>
     </div>
   )
 }
 
 export default Navbar
+
+
+{/* <div className="myProfilePic">
+<img src={user.photoUrl} style={{width: 100}}/>
+</div>
+
+  
+  <li><a href="/admin/chat">Dashboard</a></li>
+  <li><a href="/contact">Community</a></li>
+  <li><a href="/admin/alert">Alert</a></li>
+ <a onClick={handleLogout}>Logout</a> */}

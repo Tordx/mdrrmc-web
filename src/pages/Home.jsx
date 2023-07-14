@@ -45,6 +45,7 @@ const Home = ({ fileData }) => {
     document.body.removeChild(link);
   };
   return (
+    
     <div className="download-page-container">
       <div>
         <img src={MDSW} width={250} height={150} draggable={false} />

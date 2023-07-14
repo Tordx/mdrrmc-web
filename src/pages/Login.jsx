@@ -77,7 +77,7 @@ getUserData();
       <h1 >WELCOME</h1>
      <input placeholder="Email Address" onChange={(e) => setloginEmail(e.target.value)} value = {loginemail} type="text" id="email" name="username" />
      <input placeholder="Password" onChange={(e) => setloginPassword(e.target.value)} value = {loginpassword} type="password" id="password" name="password"/>
-      <p>forgot password?</p>
+      <a>forgot password?</a>
      <button className="download-button apple" type="submit" onClick={checkStatus}>LOGIN</button>
      </form>
      
