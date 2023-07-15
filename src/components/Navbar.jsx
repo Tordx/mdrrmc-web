@@ -35,15 +35,23 @@ const Navbar = () => {
       });
     };
 
-  return (
-    <div className="sidebar">
-      <div>
-          <img src={user.photoUrl}/>
-          <a href="/admin/profile">{user.username}MY USERNAME</a>
+    return (
+      <div className="sidebar">
+        <div>
+          <img className="profile-img" src={user.photoUrl} alt="User Profile" />
+          <a className="username" href="/admin/profile">
+            {user.username}
+          </a>
+    
           <h3>MENU</h3>
+          <ul className="menu-list">
+            <li><a href="/admin/chat">Dashboard</a></li>
+            <li><a href="/contact">Community</a></li>
+            <li><a href="/admin/alert">Alert</a></li>
+          </ul>
+        </div>
       </div>
-    </div>
-  )
+    );
 }
 
 export default Navbar
@@ -54,7 +62,5 @@ export default Navbar
 </div>
 
   
-  <li><a href="/admin/chat">Dashboard</a></li>
-  <li><a href="/contact">Community</a></li>
-  <li><a href="/admin/alert">Alert</a></li>
+ 
  <a onClick={handleLogout}>Logout</a> */}
