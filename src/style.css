@@ -531,6 +531,7 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: auto;
   
 }
 
@@ -784,41 +785,6 @@ body {
   font-weight: bold;
 }
 
-.chat {
-  display: flex;
-  flex-direction: column;
-  flex: 2;
-}
-
-.chat .chatInfo {
-  height: 50px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  color: black;
-  border-width: 1px;
-}
-
-.chat .chatInfo img {
-
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
-
-}
-
-.chat .chatIcons {
-  display: flex;
-  gap: 10px;
-}
-
-.chat .chatIcons img {
-  height: 24px;
-  cursor: pointer;
-}
 
 /* width */
 ::-webkit-scrollbar {
@@ -1383,35 +1349,26 @@ img {
   }
 }
 /* Define the constant style */
-.myMonitoring {
-  width: 100px;
-  height: 100px;
-  background-color: transparent;
-  border: 1px solid black;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-right: 20px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-}
 .myAdminDashboard1 {
-  width: 500px;
-  height: 150px;
+  width: 1000px;
   background-color: transparent;
   border: 1px solid black;
   border-radius: 10px;
   cursor: pointer;
   margin-right: 20px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  align-items: center;
 }
 .myAdminDashboard2 {
-  width: 200px;
-  height: 150px;
   background-color: transparent;
+  border: 1px solid black;
+  border-radius: 10px;
   cursor: pointer;
   margin-right: 20px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Modal Styles */
