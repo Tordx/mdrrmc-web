@@ -41,7 +41,6 @@ function App() {
             <Route path="admin" index element={<AddUsers/>} />
             <Route path="public" element = {<AddUsers/>} />
             <Route path="submitted" element = {<Submitted/>}/>
-            {/* <Route path="profile" element = {<Profile/>}/> */}
           </Route>
           <Route path = "admin">
           <Route path="form" index element={ <ProtectedRoute><AdminForm/></ProtectedRoute>} />

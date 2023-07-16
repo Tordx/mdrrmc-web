@@ -1,0 +1,308 @@
+.login-container {
+  display: flex;
+  overflow: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-image: url('https://i.imgur.com/HS1zDNP.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-container div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-container {
+  flex-direction: column;
+}
+
+.logo-container p {
+  font-size: 30px;
+}
+
+.logo-container h1 {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.login-container-box {
+  display: flex;
+  width: 500px;
+  height: 500px;
+  background-color: rgba(255, 255, 255, 0.3);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.1);
+  justify-items: center;
+}
+
+.login-container-box h1 {
+  font-weight: bold;
+  font-size: 50px;
+  padding-bottom: 7rem;
+  padding-top: 2rem;
+}
+
+.login-container-box a {
+  font-weight: 500;
+  font-size: 20px;
+  align-self: flex-end;
+  padding-right: 3rem;
+}
+
+.login-container-box a:hover {
+  cursor: pointer;
+}
+
+.login-container-box input {
+  width: 80%;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  border-bottom: 1px solid #000000;
+  font-size: 20px;
+  color: #000000;
+  border-bottom-width: thin;
+  border-color: #101010;
+  margin-bottom: 10px;
+}
+
+.icon-container {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+
+.download-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.apple {
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  padding-left: 10rem;
+  padding-right: 10rem;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: 2rem;
+  position: absolute;
+  bottom: 10px;
+}
+
+.logout-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.apple {
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.google {
+  background-color: #fff;
+  color: #000;
+}
+
+.sidebar {
+  width: 15%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+.sidebar div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 5rem;
+}
+
+.sidebar img {
+  width: 150px;
+  height: 150px;
+  background-color: transparent;
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar a {
+  text-align: left;
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: bold;
+  color: #000;
+}
+
+.sidebar h3 {
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  color: #303030;
+  text-align: left;
+  align-self: flex-start;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 5rem;
+  width: 100%;
+}
+
+.sidebar li {
+  list-style-type: none;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar li a {
+  color: #000;
+  text-decoration: none;
+  padding-right: 3rem;
+}
+
+.sidebar li:hover a {
+  color: #4285f4;
+  outline: none;
+}
+
+.sidebar li:hover {
+  border-right: 3px solid #4285f4;
+}
+
+.sidebar li svg {
+  width: 20px;
+  height: 20px;
+  color: #000;
+}
+
+.sidebar li:hover svg {
+  color: #4285f4;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 2;
+  overflow: auto;
+}
+
+.dashboard .head {
+  height: 50px;
+  display: flex;
+  align-items: flex-start;
+  padding: 3rem;
+  color: black;
+  border-width: 1px;
+  flex-direction: column;
+}
+
+.dashboard .head h4 {
+  color: #808080;
+}
+
+.dashboard .head img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.boxcontainers {
+  
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.boxrecontain {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.dashboard .chatIcons {
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard .chatIcons img {
+  height: 24px;
+  cursor: pointer;
+}
+
+
+.monitoringbutton {
+  width: 150px;
+  height: 150px;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: .5px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 20px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  padding: 15px;
+}
+
+.monitoringbutton h5 {
+
+  font-size: 19px;
+
+}

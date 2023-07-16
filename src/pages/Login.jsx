@@ -1,19 +1,14 @@
 import React, { useState , useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import MDSW from '../img/DSWD-Logo.png'
-import MOL from '../img/Labrador-Logo.png'
+import MOL from '../img/img/1yHrmHy.png'
 import { auth, db } from "../firebase";
 import { collection, getDocs } from "@firebase/firestore";
-
+import '../newstyle.css'
+import { Icon, IconButton } from "@mui/material";
 const Login = () => {
 
   useEffect(() => {
-    // Check Firebase initialization
-    // console.log('auth');
-    // console.log(db);
-    // console.log('auth');
-    
    const getUserData = async () => {
   try {
 
@@ -71,21 +66,22 @@ getUserData();
   };
 
   return (
-    <div className="download-page-container">
-      
-      <div>
-        <img src={MDSW} width = {250} height = {150} draggable = {false}/>
-        <img src={MOL} width = {160} height = {160} draggable = {false}/>
+    <div className="login-container">
+      <div className="logo-container">
+        <img src={MOL} width = {'50%'} height = {'50%'} draggable = {false}/>
+        <h1>MDRRMC/BDRRMC</h1>
+        <p>Monitoring System</p>
      </div>
-    <form onSubmit={checkStatus} >
-      <div style = {{width: '100%'}} className="inputcontainer1">
-        <input placeholder="Email Address" onChange={(e) => setloginEmail(e.target.value)} value = {loginemail} type="text" id="email" name="username" className="input"/>
-      </div>
-      <div  style = {{width: '100%'}} className="inputcontainer1">
-        <input placeholder="Password" onChange={(e) => setloginPassword(e.target.value)} value = {loginpassword} type="password" id="password" name="password" className="input"/>
-      </div>
-      <button class="download-button apple" type="submit" onClick={checkStatus}>LOGIN</button>
-    </form>
+     <div>
+     <form onSubmit={checkStatus} className="login-container-box" >
+      <h1 >WELCOME</h1>
+     <input placeholder="Email Address" onChange={(e) => setloginEmail(e.target.value)} value = {loginemail} type="text" id="email" name="username" />
+     <input placeholder="Password" onChange={(e) => setloginPassword(e.target.value)} value = {loginpassword} type="password" id="password" name="password"/>
+      <a>forgot password?</a>
+     <button className="download-button apple" type="submit" onClick={checkStatus}>LOGIN</button>
+     </form>
+     
+     </div>
   </div>
   );
 };

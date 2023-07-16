@@ -6,6 +6,7 @@ import Messages from "./Messages";
 import Input from "./Input";
 import { ChatContext } from "../context/ChatContext";
 import '../style.css'
+import '../newstyle.css'
 import { Chart,
    BarElement,
   CategoryScale,
@@ -14,7 +15,18 @@ import { Chart,
   Tooltip,
   Legend, } from "chart.js";
 import { Bar , Line, Pie } from "react-chartjs-2";
-
+import weather from "../img/img/x8zsjTm.png"
+import volcano from "../img/img/FD28ReG.png"
+import drought from  "../img/img/cTXjmXp.png"
+import tsunami from  "../img/img/EouQDuS.png"
+import rain from  "../img/img/qlStI1C.png"
+import tornado from  "../img/img/OsUBFui.png"
+import flood from  "../img/img/9mkRbrF.png"
+import slide from '../img/img/GXQhrpc.png'
+import earthquake from '../img/img/PmNFMqc.png'
+import vehicleacc from '../img/img/6hkpBfL.png'
+import housefire from '../img/img/eQ8MoBj.png'
+import elecacc from '../img/img/wg409Ru.png'
 Chart.register(
   BarElement,
   CategoryScale,
@@ -62,90 +74,95 @@ const Chat = () => {
 
   const handleBoxClick = (boxColor) => {
     console.log(`Clicked on ${boxColor} box!`);
-    // Perform additional actions on box click
   };
 
 
   return (
-    <div className="chat">
-       <div className="chatInfo">
-      <h2 >Admin Dashboard</h2>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-         <h4>Real Time Data Virtualization </h4>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div className="dashboard">
+       <div className="head">
+      <h1 >Admin Dashboard</h1>
       
-        {/* <div
-          style={{ width: '400px', height: '150px', backgroundColor: 'red', cursor: 'pointer' , marginRight: 100 }}
-          onClick={() => handleBoxClick('red')}
-        />
-        <div
-          style={{ width: '150px', height: '150px', backgroundColor: 'green', cursor: 'pointer' }}
-          onClick={() => handleBoxClick('green')}
-        /> */}
+      <h4 >Real-time Visualization</h4>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginLeft: 20 }}>
+         
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         
      <div className="myAdminDashboard1" onClick={() => handleBoxClick('red')}>
           <Bar
-          style={{width: '100%'}}
+          style={{padding: 25, width: '100%'}}
           data = {datas}
           options={options}
           ></Bar>
       </div> 
-     <div className="myAdminDashboard2" onClick={() => handleBoxClick('red')} />
-         {/* <Pie
-          // style={{width: '200px'}}
-          data = {dataspie}
-          options={options}
-          ></Pie> */}
+     <div className="myAdminDashboard2" onClick={() => handleBoxClick('red')}>
+
+     <Pie data={datas}
+       style={{padding: 25}}
+      options={options}>
+          
+          </Pie>
+     </div>
+      
       </div>
     </div>
-      <div className="chatInfo">
-      <h2>Monitoring</h2>
+      <div className="head">
+      <h1>Monitoring</h1>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div classname = 'boxcontainers' >
+      <div className="boxrecontain">
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+        <img src= {weather} width={'70%'} height={'70%'} />
+        <h5>Weather Monitoring</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+        <img src= {volcano} width={'70%'} height={'70%'} />
+        <h5>Volcanic Eruption</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {drought} width={'70%'} height={'70%'} />
+        <h5>Extreme Drought</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {tsunami} width={'70%'} height={'70%'} />
+        <h5>Tsunami</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {tornado} width={'70%'} height={'70%'} />
+        <h5>Tornado</h5>
       </div>  
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {flood} width={'70%'} height={'70%'} />
+        <h5>Flood</h5>
       </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="boxrecontain">
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {rain} width={'70%'} height={'70%'} />
+        <h5>Heavy rain</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {slide} width={'70%'} height={'70%'} />
+        <h5>Landslide</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {earthquake} width={'70%'} height={'70%'} />
+        <h5>Earthquake</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {vehicleacc} width={'70%'} height={'70%'} />
+        <h5>Vehicular Accident</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {housefire} width={'70%'} height={'70%'} />
+        <h5>House fires</h5>
       </div>
-      <div className="myMonitoring" onClick={() => handleBoxClick('red')}>
-        <p>This is the text inside the box</p>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <img src= {elecacc} width={'70%'} height={'70%'} />
+        <h5>Electrical Accidents</h5>
       </div>
       </div>
     </div>
-      {/* <Messages/>
-      <Input  /> */}
   </div>
   );
 };

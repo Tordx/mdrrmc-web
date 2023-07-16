@@ -5,7 +5,10 @@ import {signOut} from "firebase/auth"
 import { auth } from '../firebase'
 import { collection, query, where , getDocs } from 'firebase/firestore'
 import { db } from '../firebase'
-import '../style.css'
+import '../newstyle.css'
+import { faChartSimple, faComments, faBullseye } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 const Navbar = () => {
 
   const {currentUser} = useContext(AuthContext)
@@ -29,34 +32,38 @@ const Navbar = () => {
     getUserData();
   }, []);
   
-  // console.log('user');
-  // console.log(user.name);
-  // console.log('user');
   const handleLogout = () => {
       signOut(auth).then(() => {
           navigate('/')
       });
     };
 
-    const handleBoxClick = (boxColor) => {
-      console.log(`Clicked on ${boxColor} box!`);
-      // Perform additional actions on box click
-    };
-
-  return (
-    <div className='navbar'>
-     <div className="myProfilePic" onClick={() => handleBoxClick('red')}>
-      <img src={user.photoUrl} style={{width: 100}}/>
-    </div>
-
-        <a href="/admin/profile">{user.name}</a>
-        <h3>MENU</h3>
-        <li><a href="/admin/chat">Dashboard</a></li>
-        <li><a href="/admin/community">Community</a></li>
-        <li><a href="/admin/alert">Alert</a></li>
-       <a onClick={handleLogout}>Logout</a>
-    </div>
-  )
+    return (
+        <div className="sidebar">
+          <div>
+            <img  src={user.photoUrl} alt="User Profile" />
+            <a className="username" href="/admin/profile">
+              {user.username}
+            </a>
+            <ul className="menu-list">
+            <h3>Menu</h3>
+              <li><FontAwesomeIcon icon={faChartSimple} size ='xl' /><a href="/admin/chat">Dashboard</a></li>
+              <li><FontAwesomeIcon icon={faComments} size ='xl'/><a href="/admin/community">Community</a></li>
+              <li><FontAwesomeIcon icon={faBullseye} size ='xl'/><a href="/admin/alert">Alert</a></li>
+            </ul>
+          </div>
+          <button className='logout-button apple' onClick={handleLogout}>Logout</button> 
+        </div>
+    );
 }
 
 export default Navbar
+
+
+{/* <div className="myProfilePic">
+<img src={user.photoUrl} style={{width: 100}}/>
+</div>
+
+  
+ 
+*/}

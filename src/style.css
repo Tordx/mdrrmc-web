@@ -3,13 +3,6 @@
   color: red;
 }
 
-.download-page-container form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
 .download-page-container label {
   font-size: 1.2rem;
@@ -135,7 +128,7 @@ h3 {
 
 .formContainer {
   
-  background-image: url('https://i.imgur.com/DXNpQ8d.png');
+  background-image: url('https://i.imgur.com/HS1zDNP.png');
   background-repeat: no-repeat;
   background-size: cover;
   display: block;
@@ -531,13 +524,14 @@ button:hover {
 /* Chat Box */
 .chatContainer {
 
-  background-image: url('https://i.imgur.com/DXNpQ8d.png');
+  background-image: url('https://i.imgur.com/HS1zDNP.png');
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: auto;
   
 }
 
@@ -545,7 +539,6 @@ button:hover {
   border-radius: 10px;
   width: 100%;
   height: 100%;
-  /* margin-top: 5%; */
   display: flex;
   overflow: hidden;
   
@@ -669,22 +662,18 @@ body {
 
 /* Style the sidebar */
 .sidebar {
-  width: 20%;
+  width: 15%;
   background-color: 'transparent';
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  border: 1px solid black;
   position: relative;
-  border-right: 1px solid var(--border-color);
 }
 
 .sidebar .navbar {
   display: block;
+  justify-content: center;
   align-items: center;
-  background-color: rgb(245, 242, 242);
   height: 0px;
-  color: var(--text-color);
-  border-bottom: 1px solid var(--border-color);
 }
 
 .sidebar .navbar .logo {
@@ -796,41 +785,6 @@ body {
   font-weight: bold;
 }
 
-.chat {
-  display: flex;
-  flex-direction: column;
-  flex: 2;
-}
-
-.chat .chatInfo {
-  height: 50px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  color: black;
-  border-width: 1px;
-}
-
-.chat .chatInfo img {
-
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
-
-}
-
-.chat .chatIcons {
-  display: flex;
-  gap: 10px;
-}
-
-.chat .chatIcons img {
-  height: 24px;
-  cursor: pointer;
-}
 
 /* width */
 ::-webkit-scrollbar {
@@ -1206,19 +1160,7 @@ body {
   height: auto;
 }
 
-.download-page-container {
-  display: flex;
-  overflow: auto;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100%;
-  background-image: url('https://i.imgur.com/DXNpQ8d.png');
-  background-repeat: no-repeat;
-  background-size: cover;
- 
-}
+
 
 .checkbox-grid {
   display: grid;
@@ -1241,13 +1183,7 @@ body {
   width: 90%;
 }
 
-.download-page-container > div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-  
-}
+
 
 .inputcontainer1{
   display: flex;
@@ -1335,34 +1271,6 @@ body {
   text-decoration: none;
 }
 
-.download-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem;
-  padding: 1rem;
-  font-size: 1.5rem;
-  border-radius: 5px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.download-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.apple {
-  background-color: #000;
-  color: #fff;
-  text-decoration: none;
-}
-
-.google {
-  background-color: #fff;
-  color: #000;
-}
 
 img {
   margin-right: 1rem;
@@ -1441,46 +1349,26 @@ img {
   }
 }
 /* Define the constant style */
-.myMonitoring {
-  width: 100px;
-  height: 100px;
-  background-color: transparent;
-  border: 1px solid black;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-right: 20px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-}
 .myAdminDashboard1 {
-  width: 500px;
-  height: 150px;
+  width: 1000px;
   background-color: transparent;
   border: 1px solid black;
   border-radius: 10px;
   cursor: pointer;
   margin-right: 20px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  align-items: center;
 }
 .myAdminDashboard2 {
-  width: 200px;
-  height: 150px;
   background-color: transparent;
-  cursor: pointer;
-  margin-right: 20px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid black;
   border-radius: 10px;
-  border: 1px solid black;
-}
-
-.myProfilePic {
- width: 100px;
-  height: 100px;
-  background-color: transparent;
-  border: 1px solid black;
-  border-radius: 50%;
   cursor: pointer;
   margin-right: 20px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  justify-content: center;
+  align-items: center;
 }
 
 /* Modal Styles */
@@ -1491,7 +1379,7 @@ img {
   width: 100%;
   height: 100%;
   /* background-color: #fff; */
-  background-image: url('https://i.imgur.com/DXNpQ8d.png');
+  background-image: url('https://i.imgur.com/HS1zDNP.png');
   display: flex;
   /* justify-content: center;
   align-items: center; */
@@ -1503,7 +1391,7 @@ img {
   width: 100%;
   height: 100%;
   /* background-color: #fff; */
-  /* background-image: url('https://i.imgur.com/DXNpQ8d.png'); */
+  /* background-image: url('https://i.imgur.com/HS1zDNP.png'); */
   display: flex;
   justify-content: center;
   align-items: center;
