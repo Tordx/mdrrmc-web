@@ -52,7 +52,7 @@ const Navbar = () => {
         <a href="/admin/profile">{user.name}</a>
         <h3>MENU</h3>
         <li><a href="/admin/chat">Dashboard</a></li>
-        <li><a href="/contact">Community</a></li>
+        <li><a href="/admin/community">Community</a></li>
         <li><a href="/admin/alert">Alert</a></li>
        <a onClick={handleLogout}>Logout</a>
     </div>

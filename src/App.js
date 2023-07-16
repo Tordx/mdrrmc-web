@@ -17,7 +17,8 @@ import AnnoucementForm from "./pages/AnnouncementForm";
 import ApprovingForm from "./pages/ApprovingForm";
 import ApproveAnnoucementForm from "./pages/ApproveAnnoucementForm";
 import Profile from "./components/Profile";
-import Alert from "./components/Alert";
+import Alert from "./pages/Alert";
+import Community from "./pages/Community";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -48,6 +49,7 @@ function App() {
             <Route path = "userlist" index element={ <ProtectedRoute><UserList/></ProtectedRoute>} />
             <Route path = "profile" index element={ <ProtectedRoute><Profile/></ProtectedRoute>} />
             <Route path = "alert" index element={ <ProtectedRoute><Alert/></ProtectedRoute>} />
+            <Route path = "community" index element={ <ProtectedRoute><Community/></ProtectedRoute>} />
             <Route path = "applicationlist" index element={ <ProtectedRoute><ApplicationList/></ProtectedRoute>} />
             <Route path = "annoucementlist" index element={ <ProtectedRoute><Annoucementlist/></ProtectedRoute>} />
             <Route path = "annoucementform" index element={ <ProtectedRoute><AnnoucementForm/></ProtectedRoute>} />
