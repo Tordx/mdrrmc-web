@@ -5,6 +5,8 @@ import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { db } from "../firebase";
 import '../style.css';
+import Messages from "../components/Messages";
+import Input from "../components/Input";
 
 const Community = () => {
 
@@ -74,6 +76,8 @@ const Community = () => {
           </div>
         </div>
       ))}
+      <Messages/>
+      <Input/>
   </div>
   )
 }

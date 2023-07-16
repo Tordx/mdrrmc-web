@@ -14,6 +14,10 @@ const Message = ({ message }) => {
     console.log(message.chatdate);
   }, [message]);
 
+  console.log('message.senderId');
+  console.log(message.senderId);
+  console.log("message.senderId");
+
   return (
     <div
     ref={ref}
@@ -30,7 +34,7 @@ const Message = ({ message }) => {
       />
     </div>
     <div className="messageContent">
-      <p>{message.text}</p>
+      <p>{message.message}</p>
       {message.img && <img src={message.img} alt="" />}
       <span>
       {message.chattime} — {message.chatdate} 

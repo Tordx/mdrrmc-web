@@ -50,34 +50,34 @@ const Input = () => {
         }
       );
     } else {
-      await updateDoc(doc(db, "chats", data.chatId), {
+      await updateDoc(doc(db, "chats", "mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92"), {
         messages: arrayUnion({
           id: uuid(),
-          text,
+          message: text,
           senderId: currentUser.uid,
           date: Timestamp.now(),
           chatdate: chatdate,
           chattime: chattime,
-          receiver: data.user.FullName,
+          receiver: "username",
           isRead: false
         }),
       });
     }
 
-    await updateDoc(doc(db, "userChats", currentUser.uid), {
-      [data.chatId + ".lastMessage"]:   {
+    await updateDoc(doc(db, "userChats", "0WExfTKqtpb2Neu86MtX6YaIRM92"), {
+      ["mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92" + ".lastMessage"]:   {
         text,
         isRead: false 
       },
-      [data.chatId + ".date"]: serverTimestamp(),
+      ["mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92" + ".date"]: serverTimestamp(),
     });
 
-    await updateDoc(doc(db, "userChats", data.user.uid), {
-      [data.chatId + ".lastMessage"]: {
+    await updateDoc(doc(db, "userChats", "mdrNgqcK8NPADFBCQqIa"), {
+      ["mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92" + ".lastMessage"]: {
         text,
         isRead: false 
       },
-      [data.chatId + ".date"]: serverTimestamp(),
+      ["mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92" + ".date"]: serverTimestamp(),
     });
 
     setText("");
