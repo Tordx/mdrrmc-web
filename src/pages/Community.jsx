@@ -7,6 +7,7 @@ import { db } from "../firebase";
 import '../style.css';
 import Messages from "../components/Messages";
 import Input from "../components/Input";
+import ReactModal from "react-modal";
 
 const Community = () => {
 
@@ -14,6 +15,8 @@ const Community = () => {
 
     const { currentUser } = useContext(AuthContext);
     const { dispatch } = useContext(ChatContext);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
 
     useEffect(() => {
         const getChats = () => {
@@ -28,9 +31,36 @@ const Community = () => {
         console.log(currentUser.uid);
         currentUser.uid && getChats();
       }, [currentUser.uid]);
+
+     
+      const customStyles = {
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        },
+        content: {
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          padding: '20px',
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          transform: 'translate(-50%, -50%)',
+          minWidth: '600px',
+          maxWidth: '600px',
+          maxHeight: '400px',
+          maxHeight: '400px',
+        },
+      };
+      
+    
+      const closeModal = () => {
+        setModalIsOpen(false);
+      };
     
 
       const handleSelect = async (u) => {
+        setModalIsOpen(true);
         dispatch({ type: "CHANGE_USER", payload: u[1].userInfo });
     
         console.log(u[1].lastMessage.isRead);
@@ -76,8 +106,16 @@ const Community = () => {
           </div>
         </div>
       ))}
-      <Messages/>
+      <ReactModal
+  isOpen={modalIsOpen}
+  onRequestClose={closeModal}
+  contentLabel="Example Modal"
+  style={customStyles}
+>
+     <Messages/>
       <Input/>
+</ReactModal>
+     
   </div>
   )
 }

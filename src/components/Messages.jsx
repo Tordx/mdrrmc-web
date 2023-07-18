@@ -8,9 +8,13 @@ import '../style.css'
 const Messages = () => {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext); 
+  const userUID = data.user.uid
+  const adminUID = "mdrNgqcK8NPADFBCQqIa";
+  const ChatID = adminUID.concat(userUID);
+
 
   useEffect(() => {
-    const unSub = onSnapshot(doc(db, "chats", "mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92"), (doc) => {
+    const unSub = onSnapshot(doc(db, "chats", ChatID), (doc) => {
       doc.exists() && setMessages(doc.data().messages);
     });
 
@@ -18,14 +22,6 @@ const Messages = () => {
       unSub();
     };
   }, [data.chatId]);
-
-  console.log('dataMessage');
-  console.log(data);
-  console.log("dataMessage");
-  console.log('messages');
-  console.log(messages);
-  console.log("messages");
-
 
   return (
     <div className="messages">

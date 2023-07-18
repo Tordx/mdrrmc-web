@@ -10,13 +10,7 @@ const Message = ({ message }) => {
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
-    console.log('error');
-    console.log(message.chatdate);
   }, [message]);
-
-  console.log('message.senderId');
-  console.log(message.senderId);
-  console.log("message.senderId");
 
   return (
     <div

@@ -23,6 +23,9 @@ const Input = () => {
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+  const userUID = data.user.uid
+  const adminUID = "mdrNgqcK8NPADFBCQqIa";
+  const ChatID = adminUID.concat(userUID);
 
   const handleSend = async () => {
     if (img) {
@@ -50,7 +53,7 @@ const Input = () => {
         }
       );
     } else {
-      await updateDoc(doc(db, "chats", "mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92"), {
+      await updateDoc(doc(db, "chats", ChatID), {
         messages: arrayUnion({
           id: uuid(),
           message: text,
@@ -64,20 +67,20 @@ const Input = () => {
       });
     }
 
-    await updateDoc(doc(db, "userChats", "0WExfTKqtpb2Neu86MtX6YaIRM92"), {
-      ["mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92" + ".lastMessage"]:   {
+    await updateDoc(doc(db, "userChats", userUID), {
+      [ChatID + ".lastMessage"]:   {
         text,
         isRead: false 
       },
-      ["mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92" + ".date"]: serverTimestamp(),
+      [ChatID + ".date"]: serverTimestamp(),
     });
 
-    await updateDoc(doc(db, "userChats", "mdrNgqcK8NPADFBCQqIa"), {
-      ["mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92" + ".lastMessage"]: {
+    await updateDoc(doc(db, "userChats", adminUID), {
+      [ChatID + ".lastMessage"]: {
         text,
         isRead: false 
       },
-      ["mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92" + ".date"]: serverTimestamp(),
+      [ChatID + ".date"]: serverTimestamp(),
     });
 
     setText("");
