@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { db } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { v4 as uuid } from "uuid";
 
 
 const EarthQuickForm = () => {
@@ -6,7 +9,7 @@ const EarthQuickForm = () => {
     area: '',
     coordinates: '',
     depth: '',
-    id: '',
+    id: uuid(),
     location: '',
     magnitude: '',
     time: '',
@@ -21,10 +24,29 @@ const EarthQuickForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Do something with the form data, like submitting it to an API or performing some action.
-    console.log(formData);
+
+    try {
+      // Add the form data to Firestore
+      const earthquakeRef = doc(db, 'earthquake' , uuid()); // Replace 'earthquakes' with your collection name
+      await setDoc(earthquakeRef, formData);
+
+      // Optionally, you can reset the form after successful submission
+      setFormData({
+        area: '',
+        coordinates: '',
+        depth: '',
+        location: '',
+        magnitude: '',
+        time: '',
+        title: '',
+      });
+
+      console.log('Form data added to Firestore!');
+    } catch (error) {
+      console.error('Error adding form data to Firestore:', error);
+    }
   };
 
   return (
@@ -49,10 +71,10 @@ const EarthQuickForm = () => {
           <label htmlFor="depth">Depth:</label>
           <input type="text" id="depth" name="depth" value={formData.depth} onChange={handleChange} />
         </div>
-        <div className="form-field">
+        {/* <div className="form-field">
           <label htmlFor="id">ID:</label>
           <input type="text" id="id" name="id" value={formData.id} onChange={handleChange} />
-        </div>
+        </div> */}
         <div className="form-field">
           <label htmlFor="location">Location:</label>
           <input
