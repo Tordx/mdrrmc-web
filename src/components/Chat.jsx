@@ -31,6 +31,9 @@ import elecacc from '../img/img/wg409Ru.png'
 import LongPress from "./LongPress";
 import EarthQuickForm from "../forms/EarthQuickForm";
 import WeatherMonitoringForm from "../forms/WeatherMonitoringForm";
+import VolcanicEruptionForm from "../forms/VolcanicEruptionForm";
+import ExtremeDrougth from "../forms/ExtremeDrougth";
+import Tsunami from "../forms/TsunamiFrom";
 
 Chart.register(
   BarElement,
@@ -164,27 +167,19 @@ const Chat = () => {
       </div>
       <div classname = 'boxcontainers' >
       <div className="boxrecontain">
-      <div
-  className="monitoringbutton"
-  {...longPressEvent}
-  onClick={() => {
-    const monitoringValue = 'weathermonitoringForm'; // Replace this with the actual monitoring value from your data source
-    handleBoxClick(monitoringValue); // Pass the monitoring value to handleBoxClick
-    setActiveModal(monitoringValue); // Set the activeModal value
-  }}
->
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('weathermonitoringForm')}}>
         <img src={weather} width={'70%'} height={'70%'} />
         <h5>Weather Monitoring</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('volcaniceruptionForm')}}>
         <img src= {volcano} width={'70%'} height={'70%'} />
         <h5>Volcanic Eruption</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('extremedrougthForm')}}>
       <img src= {drought} width={'70%'} height={'70%'} />
         <h5>Extreme Drought</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('tsunamiForm')}}>
       <img src= {tsunami} width={'70%'} height={'70%'} />
         <h5>Tsunami</h5>
       </div>
@@ -232,6 +227,9 @@ const Chat = () => {
 >
   {activeModal === 'earthquickForm' && <EarthQuickForm isOpen={true} />}
   {activeModal === 'weathermonitoringForm' && <WeatherMonitoringForm isOpen={true} />}
+  {activeModal === 'volcaniceruptionForm' && <VolcanicEruptionForm isOpen={true} />}
+  {activeModal === 'extremedrougthForm' && <ExtremeDrougth isOpen={true} />}
+  {activeModal === 'tsunamiForm' && <Tsunami isOpen={true} />}
     {/* <EarthQuickForm/> */}
     {/* <Weather/> */}
      {/* <Messages/>
