@@ -5,10 +5,10 @@ const WeatherMonitoringForm = () => {
   const [formData, setFormData] = useState({
     area: '',
     coordinates: '',
-    depth: '',
+    signal: '',
     id: '',
     location: '',
-    magnitude: '',
+    windspeed: '',
     time: '',
     title: '',
   });
@@ -29,7 +29,7 @@ const WeatherMonitoringForm = () => {
 
   return (
     <div className="form-container1">
-      <h2>Earthquake Details Form</h2>
+      <h2>Weather Monitoring Details Form</h2>
       <form className="form1" onSubmit={handleSubmit}>
         <div className="form-field1">
           <label htmlFor="area">Area:</label>
@@ -46,8 +46,8 @@ const WeatherMonitoringForm = () => {
           />
         </div>
         <div className="form-field">
-          <label htmlFor="depth">Depth:</label>
-          <input type="text" id="depth" name="depth" value={formData.depth} onChange={handleChange} />
+          <label htmlFor="signal">Signal:</label>
+          <input type="text" id="signal" name="signal" value={formData.signal} onChange={handleChange} />
         </div>
         <div className="form-field">
           <label htmlFor="id">ID:</label>
@@ -64,12 +64,12 @@ const WeatherMonitoringForm = () => {
           />
         </div>
         <div className="form-field">
-          <label htmlFor="magnitude">Magnitude:</label>
+          <label htmlFor="windspeed">Windspeed:</label>
           <input
             type="text"
-            id="magnitude"
-            name="magnitude"
-            value={formData.magnitude}
+            id="windspeed"
+            name="windspeed"
+            value={formData.windspeed}
             onChange={handleChange}
           />
         </div>

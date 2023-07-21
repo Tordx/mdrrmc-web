@@ -45,6 +45,7 @@ Chart.register(
 const Chat = () => {
   const { data } = useContext(ChatContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
   const [formData, setFormData] = useState({
     area: '',
     coordinates: '',
@@ -107,38 +108,28 @@ const Chat = () => {
 
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Do something with the form data, like submitting it to an API or performing some action.
-    console.log(formData);
-  };
-
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
+  const handleBoxClick = (monitoring) => {
+    console.log('handleBoxClick:', monitoring);
+    setActiveModal(monitoring);
+    // Additional code for handling short press event
+  };
+
+  const handleLongPress = (monitoring) => {
+    console.log('handleLongPress:', monitoring);
+    setModalIsOpen(true);
+    // Additional code for handling long press event
+  };
+
+  const longPressEvent = LongPress(
+    () => handleLongPress(activeModal), // Pass the activeModal value to handleLongPress
+    1000,
+    activeModal // Pass the activeModal value to the LongPress hook
+  );
   
-
-  const handleBoxClick = (boxColor) => {
-    console.log(`Clicked on ${boxColor} box!`);
-  };
-
-  const handleLongPress = (boxColor) => {
-    setModalIsOpen(true)
-    console.log(`Long press on ${boxColor}!`);
-  };
-
-  const longPressEvent = LongPress(() => handleLongPress('red'), 1000);
-
-
   return (
     <div className="dashboard">
        <div className="head">
@@ -173,7 +164,15 @@ const Chat = () => {
       </div>
       <div classname = 'boxcontainers' >
       <div className="boxrecontain">
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')} {...longPressEvent}>
+      <div
+  className="monitoringbutton"
+  {...longPressEvent}
+  onClick={() => {
+    const monitoringValue = 'weathermonitoringForm'; // Replace this with the actual monitoring value from your data source
+    handleBoxClick(monitoringValue); // Pass the monitoring value to handleBoxClick
+    setActiveModal(monitoringValue); // Set the activeModal value
+  }}
+>
         <img src={weather} width={'70%'} height={'70%'} />
         <h5>Weather Monitoring</h5>
       </div>
@@ -207,7 +206,7 @@ const Chat = () => {
       <img src= {slide} width={'70%'} height={'70%'} />
         <h5>Landslide</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')} {...longPressEvent}>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('earthquickForm')} {...longPressEvent}>
         <img src={earthquake} width={'70%'} height={'70%'} />
         <h5>Earthquick</h5>
       </div>
@@ -231,8 +230,10 @@ const Chat = () => {
   contentLabel="Example Modal"
   style={customStyles}
 >
-    <EarthQuickForm/>
-    <Weather/>
+  {activeModal === 'earthquickForm' && <EarthQuickForm isOpen={true} />}
+  {activeModal === 'weathermonitoringForm' && <WeatherMonitoringForm isOpen={true} />}
+    {/* <EarthQuickForm/> */}
+    {/* <Weather/> */}
      {/* <Messages/>
       <Input/> */}
 </ReactModal>

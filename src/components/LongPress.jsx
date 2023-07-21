@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 
-const LongPress = (callback, ms = 300) => {
+const LongPress = (callback, ms = 300, monitoring) => {
   const [isPressing, setIsPressing] = useState(false);
   const timeoutRef = useRef(null);
 
   const startPress = () => {
     setIsPressing(true);
-    timeoutRef.current = setTimeout(callback, ms);
+    timeoutRef.current = setTimeout(() => callback(monitoring), ms); // Pass the monitoring parameter to the callback
   };
 
   const stopPress = () => {
