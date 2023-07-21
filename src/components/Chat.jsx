@@ -34,6 +34,10 @@ import WeatherMonitoringForm from "../forms/WeatherMonitoringForm";
 import VolcanicEruptionForm from "../forms/VolcanicEruptionForm";
 import ExtremeDrougth from "../forms/ExtremeDrougth";
 import Tsunami from "../forms/TsunamiFrom";
+import Tornado from "../forms/TornadoForm";
+import Flood from "../forms/FloodForm";
+import HeavyRain from "../forms/HeavyRainForm";
+import LandSlide from "../forms/LandSlideForm";
 
 Chart.register(
   BarElement,
@@ -183,21 +187,21 @@ const Chat = () => {
       <img src= {tsunami} width={'70%'} height={'70%'} />
         <h5>Tsunami</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('tornadoForm')}}>
       <img src= {tornado} width={'70%'} height={'70%'} />
         <h5>Tornado</h5>
       </div>  
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('floodForm')}}>
       <img src= {flood} width={'70%'} height={'70%'} />
         <h5>Flood</h5>
       </div>
       </div>
       <div className="boxrecontain">
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('heavyrainForm')}}>
       <img src= {rain} width={'70%'} height={'70%'} />
         <h5>Heavy rain</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('landslideForm')}}>
       <img src= {slide} width={'70%'} height={'70%'} />
         <h5>Landslide</h5>
       </div>
@@ -230,6 +234,10 @@ const Chat = () => {
   {activeModal === 'volcaniceruptionForm' && <VolcanicEruptionForm isOpen={true} />}
   {activeModal === 'extremedrougthForm' && <ExtremeDrougth isOpen={true} />}
   {activeModal === 'tsunamiForm' && <Tsunami isOpen={true} />}
+  {activeModal === 'tornadoForm' && <Tornado isOpen={true} />}
+  {activeModal === 'floodForm' && <Flood isOpen={true} />}
+  {activeModal === 'heavyrainForm' && <HeavyRain isOpen={true} />}
+  {activeModal === 'landslideForm' && <LandSlide isOpen={true} />}
     {/* <EarthQuickForm/> */}
     {/* <Weather/> */}
      {/* <Messages/>
