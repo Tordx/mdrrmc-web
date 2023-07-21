@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
-
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import ReactModal from "react-modal";
+import Maplocation from '../components/maplocation';
 
 const ElectricalAccident = () => {
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     area: '',
     coordinates: '',
@@ -15,6 +20,45 @@ const ElectricalAccident = () => {
     time: '',
     title: '',
   });
+
+  const customStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    },
+    content: {
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      padding: '20px',
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      transform: 'translate(-50%, -50%)',
+      minWidth: '700px',
+      maxWidth: '700px',
+      maxHeight: '700px',
+      maxHeight: '700px',
+    },
+  };
+  const handleMapClick = (coordinates) => {
+    console.log('coordinates');
+    console.log(coordinates);
+    console.log('coordinates');
+    // setModalIsOpen(false)
+    setFormData({
+        ...formData,
+        coordinates: coordinates
+      });
+  };
+
+  const handleButtonClick = () => {
+    setModalIsOpen(true)
+    console.log(formData.coordinates);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,11 +72,9 @@ const ElectricalAccident = () => {
     e.preventDefault();
 
     try {
-      // Add the form data to Firestore
-      const earthquakeRef = doc(db, 'electrical-accident', uuid()); // Replace 'earthquakes' with your collection name
+      const earthquakeRef = doc(db, 'electrical-accident', uuid()); 
       await setDoc(earthquakeRef, formData);
 
-      // Optionally, you can reset the form after successful submission
       setFormData({
         area: '',
         coordinates: '',
@@ -52,6 +94,7 @@ const ElectricalAccident = () => {
   return (
     <div className="form-container1">
       <h2>Electrical Accident Details Form</h2>
+      <button onClick={handleButtonClick}>Get Coordinates</button>
       <form className="form1" onSubmit={handleSubmit}>
         <div className="form-field1">
           <label htmlFor="area">Area:</label>
@@ -71,10 +114,6 @@ const ElectricalAccident = () => {
           <label htmlFor="damage">Damage:</label>
           <input type="text" id="damage" name="damage" value={formData.damage} onChange={handleChange} />
         </div>
-        {/* <div className="form-field">
-          <label htmlFor="id">ID:</label>
-          <input type="text" id="id" name="id" value={formData.id} onChange={handleChange} />
-        </div> */}
         <div className="form-field">
           <label htmlFor="location">Location:</label>
           <input
@@ -105,6 +144,16 @@ const ElectricalAccident = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <ReactModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        style={customStyles}
+        >
+         <Maplocation
+         onMapClick={handleMapClick}
+         />
+        </ReactModal>
     </div>
   );
 };
