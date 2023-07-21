@@ -38,6 +38,9 @@ import Tornado from "../forms/TornadoForm";
 import Flood from "../forms/FloodForm";
 import HeavyRain from "../forms/HeavyRainForm";
 import LandSlide from "../forms/LandSlideForm";
+import VehicularAccident from "../forms/VehicularAccidentForm";
+import HouseFire from "../forms/HouseFire";
+import ElectricalAccident from "../forms/ElectricalAccident";
 
 Chart.register(
   BarElement,
@@ -209,15 +212,15 @@ const Chat = () => {
         <img src={earthquake} width={'70%'} height={'70%'} />
         <h5>Earthquick</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('vehicularaccidentForm')}}>
       <img src= {vehicleacc} width={'70%'} height={'70%'} />
         <h5>Vehicular Accident</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('housefireForm')}}>
       <img src= {housefire} width={'70%'} height={'70%'} />
         <h5>House fires</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('red')}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('electricalaccidentForm')}}>
       <img src= {elecacc} width={'70%'} height={'70%'} />
         <h5>Electrical Accidents</h5>
       </div>
@@ -238,6 +241,9 @@ const Chat = () => {
   {activeModal === 'floodForm' && <Flood isOpen={true} />}
   {activeModal === 'heavyrainForm' && <HeavyRain isOpen={true} />}
   {activeModal === 'landslideForm' && <LandSlide isOpen={true} />}
+  {activeModal === 'vehicularaccidentForm' && <VehicularAccident isOpen={true} />}
+  {activeModal === 'housefireForm' && <HouseFire isOpen={true} />}
+  {activeModal === 'electricalaccidentForm' && <ElectricalAccident isOpen={true} />}
     {/* <EarthQuickForm/> */}
     {/* <Weather/> */}
      {/* <Messages/>
