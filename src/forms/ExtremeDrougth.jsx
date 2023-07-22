@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
-
+import ReactModal from "react-modal";
+import Maplocation from '../components/maplocation';
 
 const ExtremeDrougth = () => {
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     area: '',
     coordinates: '',
@@ -15,6 +18,45 @@ const ExtremeDrougth = () => {
     time: '',
     title: '',
   });
+
+  const customStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    },
+    content: {
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      padding: '20px',
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      transform: 'translate(-50%, -50%)',
+      minWidth: '700px',
+      maxWidth: '700px',
+      maxHeight: '700px',
+      maxHeight: '700px',
+    },
+  };
+  const handleMapClick = (coordinates) => {
+    console.log('coordinates');
+    console.log(coordinates);
+    console.log('coordinates');
+    // setModalIsOpen(false)
+    setFormData({
+        ...formData,
+        coordinates: coordinates
+      });
+  };
+
+  const handleButtonClick = () => {
+    setModalIsOpen(true)
+    console.log(formData.coordinates);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,6 +94,7 @@ const ExtremeDrougth = () => {
   return (
     <div className="form-container1">
       <h2>Extreme Drougth Details Form</h2>
+      <button onClick={handleButtonClick}>Get Coordinates</button>
       <form className="form1" onSubmit={handleSubmit}>
         <div className="form-field1">
           <label htmlFor="area">Area:</label>
@@ -105,6 +148,16 @@ const ExtremeDrougth = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <ReactModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        style={customStyles}
+        >
+         <Maplocation
+         onMapClick={handleMapClick}
+         />
+        </ReactModal>
     </div>
   );
 };
