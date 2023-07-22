@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc , Timestamp , updateDoc , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
 import ReactModal from "react-modal";
 import Maplocation from '../components/maplocation';
@@ -15,7 +15,7 @@ const Flood = () => {
     id: uuid(),
     location: '',
     duration: '',
-    time: '',
+    time: Timestamp.now(),
     title: '',
   });
 
@@ -70,12 +70,31 @@ const Flood = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const timestamp = Timestamp.now().toDate();
+    const monthCount = timestamp.getMonth();
+  
+    const docRef = doc(db, 'chartDataset', 'flood');
+    const docSnapshot = await getDoc(docRef);
+  
+    if (docSnapshot.exists()) {
+      const data = docSnapshot.data().datasets[0].data;
+      const updated = data[monthCount] + 1;
+      data[monthCount] = updated;
+  
+      const currentData = docSnapshot.data();
+      currentData.datasets[0].data = data;
+      await setDoc(docRef, currentData, { merge: true });
+  
+      console.log('Updated Data:', data);
+    } else {
+      console.log('Document does not exist.');
+    }
+  
     try {
       // Add the form data to Firestore
-      const earthquakeRef = doc(db, 'flood' , uuid()); // Replace 'earthquakes' with your collection name
+      const earthquakeRef = doc(db, 'flood', uuid()); // Replace 'earthquakes' with your collection name
       await setDoc(earthquakeRef, formData);
-
+  
       // Optionally, you can reset the form after successful submission
       setFormData({
         area: '',
@@ -86,12 +105,13 @@ const Flood = () => {
         time: '',
         title: '',
       });
-
+  
       console.log('Form data added to Firestore!');
     } catch (error) {
       console.error('Error adding form data to Firestore:', error);
     }
   };
+  
 
   return (
     <div className="form-container1">
@@ -140,10 +160,10 @@ const Flood = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-field">
+        {/* <div className="form-field">
           <label htmlFor="time">Time:</label>
           <input type="text" id="time" name="time" value={formData.time} onChange={handleChange} />
-        </div>
+        </div> */}
         <div className="form-field">
           <label htmlFor="title">Title:</label>
           <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />

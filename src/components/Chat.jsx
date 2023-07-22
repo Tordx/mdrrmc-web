@@ -41,6 +41,9 @@ import LandSlide from "../forms/LandSlideForm";
 import VehicularAccident from "../forms/VehicularAccidentForm";
 import HouseFire from "../forms/HouseFire";
 import ElectricalAccident from "../forms/ElectricalAccident";
+import { db } from '../firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { v4 as uuid } from "uuid";
 
 Chart.register(
   BarElement,
@@ -56,15 +59,20 @@ const Chat = () => {
   const { data } = useContext(ChatContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
-  const [formData, setFormData] = useState({
-    area: '',
-    coordinates: '',
-    depth: '',
-    id: '',
-    location: '',
-    magnitude: '',
-    time: '',
-    title: '',
+  const barColors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf', '#aec7e8', '#ffbb78'];
+
+  const [dataset, setDataSet] = useState({
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July' , 'August' , 'September' , 
+    'October', 'November' , 'December'],
+    datasets: [
+      {
+        label: 'Sales',
+        data: [12, 19, 3, 5, 2, 3, 9, 10 ,6 , 3 ,5 , 5],
+        backgroundColor: barColors,
+        borderColor: barColors,
+        borderWidth: 1,
+      },
+    ],
   });
 
   const customStyles = {
@@ -87,33 +95,6 @@ const Chat = () => {
     },
   };
 
-  const datas = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July' , 'August' , 'September' , 'November' , 'December'],
-    datasets: [
-      {
-        label: 'Sales',
-        data: [12, 19, 3, 5, 2, 3, 9, 10 ,6 , 3 ,5],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const dataspie = {
-    labels: ['January', 'February', 'March',],
-    datasets: [
-      {
-        // label: 'Sales',
-        data: [12, 19, 3],
-        backgroundColor: ['red' , 'blue' , 'yellow'],
-        // borderColor: 'rgba(75, 192, 192, 1)',
-        // borderWidth: 1,
-      },
-    ],
-  };
-
-
   const options = {
 
   }
@@ -122,12 +103,18 @@ const Chat = () => {
     setModalIsOpen(false);
   };
 
-  const handleBoxClick = (monitoring) => {
-    console.log('handleBoxClick:', monitoring);
+  const handleBoxClick = async (monitoring) => {
+    try {
+      const docRef = doc(db, 'chartDataset', monitoring);
+      const docSnapshot = await getDoc(docRef);
+      setDataSet(docSnapshot.data());
+      console.log('Form data added to Firestore!');
+    } catch (error) {
+      console.error('Error adding form data to Firestore:', error);
+    }
     setActiveModal(monitoring);
-    // Additional code for handling short press event
   };
-
+  
   const handleLongPress = (monitoring) => {
     console.log('handleLongPress:', monitoring);
     setModalIsOpen(true);
@@ -154,13 +141,13 @@ const Chat = () => {
      <div className="myAdminDashboard1" onClick={() => handleBoxClick('red')}>
           <Bar
           style={{padding: 25, width: '100%'}}
-          data = {datas}
+          data = {dataset}
           options={options}
           ></Bar>
       </div> 
      <div className="myAdminDashboard2" onClick={() => handleBoxClick('red')}>
 
-     <Pie data={datas}
+     <Pie data={dataset}
        style={{padding: 25}}
       options={options}>
           
@@ -174,53 +161,53 @@ const Chat = () => {
       </div>
       <div classname = 'boxcontainers' >
       <div className="boxrecontain">
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('weathermonitoringForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('weathermonitoring')}}>
         <img src={weather} width={'70%'} height={'70%'} />
         <h5>Weather Monitoring</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('volcaniceruptionForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('volcaniceruption')}}>
         <img src= {volcano} width={'70%'} height={'70%'} />
         <h5>Volcanic Eruption</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('extremedrougthForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('extremedrougth')}}>
       <img src= {drought} width={'70%'} height={'70%'} />
         <h5>Extreme Drought</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('tsunamiForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('tsunami')}}>
       <img src= {tsunami} width={'70%'} height={'70%'} />
         <h5>Tsunami</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('tornadoForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('tornado')}}>
       <img src= {tornado} width={'70%'} height={'70%'} />
         <h5>Tornado</h5>
       </div>  
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('floodForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('flood')}}>
       <img src= {flood} width={'70%'} height={'70%'} />
         <h5>Flood</h5>
       </div>
       </div>
       <div className="boxrecontain">
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('heavyrainForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('heavyrain')}}>
       <img src= {rain} width={'70%'} height={'70%'} />
         <h5>Heavy rain</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('landslideForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('landslide')}}>
       <img src= {slide} width={'70%'} height={'70%'} />
         <h5>Landslide</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('earthquickForm')} {...longPressEvent}>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('earthquick')} {...longPressEvent}>
         <img src={earthquake} width={'70%'} height={'70%'} />
         <h5>Earthquick</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('vehicularaccidentForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('vehicularaccident')}}>
       <img src= {vehicleacc} width={'70%'} height={'70%'} />
         <h5>Vehicular Accident</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('housefireForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('housefire')}}>
       <img src= {housefire} width={'70%'} height={'70%'} />
         <h5>House fires</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('electricalaccidentForm')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('electricalaccident')}}>
       <img src= {elecacc} width={'70%'} height={'70%'} />
         <h5>Electrical Accidents</h5>
       </div>
@@ -232,18 +219,18 @@ const Chat = () => {
   contentLabel="Example Modal"
   style={customStyles}
 >
-  {activeModal === 'earthquickForm' && <EarthQuickForm isOpen={true} />}
-  {activeModal === 'weathermonitoringForm' && <WeatherMonitoringForm isOpen={true} />}
-  {activeModal === 'volcaniceruptionForm' && <VolcanicEruptionForm isOpen={true} />}
-  {activeModal === 'extremedrougthForm' && <ExtremeDrougth isOpen={true} />}
-  {activeModal === 'tsunamiForm' && <Tsunami isOpen={true} />}
-  {activeModal === 'tornadoForm' && <Tornado isOpen={true} />}
-  {activeModal === 'floodForm' && <Flood isOpen={true} />}
-  {activeModal === 'heavyrainForm' && <HeavyRain isOpen={true} />}
-  {activeModal === 'landslideForm' && <LandSlide isOpen={true} />}
-  {activeModal === 'vehicularaccidentForm' && <VehicularAccident isOpen={true} />}
-  {activeModal === 'housefireForm' && <HouseFire isOpen={true} />}
-  {activeModal === 'electricalaccidentForm' && <ElectricalAccident isOpen={true} />}
+  {activeModal === 'earthquick' && <EarthQuickForm isOpen={true} />}
+  {activeModal === 'weathermonitoring' && <WeatherMonitoringForm isOpen={true} />}
+  {activeModal === 'volcaniceruption' && <VolcanicEruptionForm isOpen={true} />}
+  {activeModal === 'extremedrougth' && <ExtremeDrougth isOpen={true} />}
+  {activeModal === 'tsunami' && <Tsunami isOpen={true} />}
+  {activeModal === 'tornado' && <Tornado isOpen={true} />}
+  {activeModal === 'flood' && <Flood isOpen={true} />}
+  {activeModal === 'heavyrain' && <HeavyRain isOpen={true} />}
+  {activeModal === 'landslide' && <LandSlide isOpen={true} />}
+  {activeModal === 'vehicularaccident' && <VehicularAccident isOpen={true} />}
+  {activeModal === 'housefire' && <HouseFire isOpen={true} />}
+  {activeModal === 'electricalaccident' && <ElectricalAccident isOpen={true} />}
     {/* <EarthQuickForm/> */}
     {/* <Weather/> */}
      {/* <Messages/>
