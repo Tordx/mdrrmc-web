@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react';
 import { db } from '../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc , Timestamp , updateDoc , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -17,7 +17,7 @@ const ElectricalAccident = () => {
     id: uuid(),
     location: '',
     damage: '',
-    time: '',
+    time: Timestamp.now(),
     title: '',
   });
 
@@ -70,6 +70,26 @@ const ElectricalAccident = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const timestamp = Timestamp.now().toDate();
+    const monthCount = timestamp.getMonth();
+  
+    const docRef = doc(db, 'chartDataset', 'electricalaccident');
+    const docSnapshot = await getDoc(docRef);
+  
+    if (docSnapshot.exists()) {
+      const data = docSnapshot.data().datasets[0].data;
+      const updated = data[monthCount] + 1;
+      data[monthCount] = updated;
+  
+      const currentData = docSnapshot.data();
+      currentData.datasets[0].data = data;
+      await setDoc(docRef, currentData, { merge: true });
+  
+      console.log('Updated Data:', data);
+    } else {
+      console.log('Document does not exist.');
+    }
 
     try {
       const earthquakeRef = doc(db, 'electrical-accident', uuid()); 
@@ -134,10 +154,10 @@ const ElectricalAccident = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-field">
+        {/* <div className="form-field">
           <label htmlFor="time">Time:</label>
           <input type="text" id="time" name="time" value={formData.time} onChange={handleChange} />
-        </div>
+        </div> */}
         <div className="form-field">
           <label htmlFor="title">Title:</label>
           <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />

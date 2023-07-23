@@ -66,8 +66,8 @@ const Chat = () => {
     'October', 'November' , 'December'],
     datasets: [
       {
-        label: 'Sales',
-        data: [12, 19, 3, 5, 2, 3, 9, 10 ,6 , 3 ,5 , 5],
+        label: 'Data',
+        data: [0, 0, 0, 0, 0, 0, 0, 0 ,0 , 0 ,0 , 0],
         backgroundColor: barColors,
         borderColor: barColors,
         borderWidth: 1,
