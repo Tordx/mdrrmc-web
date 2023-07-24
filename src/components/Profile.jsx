@@ -17,7 +17,6 @@ const Profile = () => {
       try {
         const querySnapshot = await getDocs(query(collection(db, 'user'), where('uid', '==', "fSLC9Wd2QxXnF6WwzWuzpHMa9233")));
         querySnapshot.forEach((doc) => {
-          // console.log(doc.id, ' => ', doc.data());
           setUser(doc.data())
         });
       } catch (error) {
@@ -30,18 +29,14 @@ const Profile = () => {
  
   return (
     <div className="modal">
-      {/* <Navbar/> */}
     <div className="modal-continer">
      <Navbar/>
       <div className="modal-content">
         <h3>My Profile</h3>
       <div className="myProfilePic" >
-      <img src={user.photoUrl} style={{width: 100}}/>
+      <img src={user.photoURL} style={{width: 100, height: 100}}/>
     </div>
     <a href="/admin/profile">{user.name}</a>
-        {/* <button className="modal-close" >
-          Close
-        </button> */}
       </div>
     </div>
     </div>
