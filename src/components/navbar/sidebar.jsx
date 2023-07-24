@@ -1,19 +1,21 @@
 import React, { useContext , useEffect , useState } from 'react'
-import { AuthContext } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {signOut} from "firebase/auth"
-import { auth } from '../firebase'
+import { auth } from '../../firebase'
 import { collection, query, where , getDocs } from 'firebase/firestore'
-import { db } from '../firebase'
-import '../newstyle.css'
+import { db } from '../../firebase'
+import '../../newstyle.css'
 import { faChartSimple, faComments, faBullseye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import SideBarItem from './sidebaritem'
 
-const Navbar = () => {
+const Sidebar = ({menu}) => {
 
   const {currentUser} = useContext(AuthContext)
   const [user, setUser] = useState([])
-
+  const location = useLocation();
+  const [active, setActive] = useState(1);
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -38,6 +40,18 @@ const Navbar = () => {
       });
     };
 
+    useEffect(() => {
+        menu.forEach(element => {
+            if (location.pathname === element.path) {
+                setActive(element.id);
+            }
+        });
+    }, [location.pathname])
+
+    const __navigate = (id) => {
+        setActive(id);
+    }
+
     return (
         <div className="sidebar">
           <div>
@@ -45,11 +59,16 @@ const Navbar = () => {
             <a className="username" href="/admin/profile">
               {user.username}
             </a>
-            <ul className="menu-list">
+            <ul>
+              
             <h3>Menu</h3>
-              <li><FontAwesomeIcon icon={faChartSimple} size ='xl' /><a href="/admin/chat">Dashboard</a></li>
-              <li><FontAwesomeIcon icon={faComments} size ='xl'/><a href="/admin/community">Community</a></li>
-              <li><FontAwesomeIcon icon={faBullseye} size ='xl'/><a href="/admin/alert">Alert</a></li>
+                {menu.map((item, index) => (
+                                <div key={index}  onClick={() => __navigate(item.id)}>
+                                    <SideBarItem
+                                        active={item.id === active}
+                                        item={item} />
+                                </div>
+                ))}
             </ul>
           </div>
           <button className='logout-button apple' onClick={handleLogout}>Logout</button> 
@@ -57,7 +76,7 @@ const Navbar = () => {
     );
 }
 
-export default Navbar
+export default Sidebar
 
 
 {/* <div className="myProfilePic">

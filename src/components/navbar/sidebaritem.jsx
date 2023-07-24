@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {useState} from "react";
 import { Link } from 'react-router-dom';
     
@@ -8,11 +9,8 @@ const SideBarItem = ({ item, active }) => {
         <Link 
             to={item.path} 
             className={active ? 'sidebar-item-active' : 'sidebar-item'} >
-                <img 
-                    src={item.icon}
-                    alt={`icon-${item.icon}`}
-                    className='sidebar-item-icon' />
-                <span className='sidebar-item-label'>{item.title}</span>
+               <FontAwesomeIcon className={active ? "sidebar-svg-active " : "sidebar-svg"} icon={item.icon} size = '1x' />
+                <span className={active ? 'sidebar-item-label-active' : 'sidebar-item-label'}>{item.title}</span>
         </Link>
     )
 }
