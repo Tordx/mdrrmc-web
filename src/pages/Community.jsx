@@ -11,7 +11,7 @@ import ReactModal from "react-modal";
 import sidebar_menu from "../components/navbar/sidebarmenu";
 import Sidebar from "../components/navbar/sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faMessage, faShare, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 const Community = () => {
 
@@ -105,9 +105,9 @@ const Community = () => {
             {p.photoURL && <img className="postImage" src={p.photoURL} alt="Post" />}
             <p className="postDescription">{p.description}</p>
             <div className="postStats">
-              <span className="likes">{p.likes} Likes</span>
-              <span className="likes">{p.comment} Comments</span>
-              <span className="shares">{p.shares} Shares</span>
+              <span className="likes"> <FontAwesomeIcon icon={faThumbsUp} /> Liked Post {p.likes} </span>
+              <span className="likes"> <FontAwesomeIcon icon={faMessage} /> Comments {p.comment} </span>
+              <span className="shares"> <FontAwesomeIcon icon={faShare} /> Shares {p.shares} </span>
             </div>
           </div>
         ))}
