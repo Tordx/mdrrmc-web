@@ -1,6 +1,6 @@
 import React , {useEffect , useState} from 'react';
 import '../style.css'
-import Navbar from './Navbar';
+import Navbar from './navbar/sidebar';
 import { collection, query, where , getDocs } from 'firebase/firestore'
 import { db } from '../firebase'
 import '../style.css'
