@@ -5,13 +5,14 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../firebase'
 import Header from '../components/Header';
 import '../style.css'
-import Navbar from '../components/Navbar';
+import Sidebar from '../components/navbar/sidebar';
+import sidebar_menu from '../components/navbar/sidebarmenu';
 const Conversation = () => {
   return (
     <div className='chatContainer'>
       {/* <Header/> */}
       <div className="container">
-        <Navbar/>
+        <Sidebar menu={sidebar_menu}/>
         <Chat/>
       </div>
     </div>

@@ -8,15 +8,19 @@ import '../style.css';
 import Messages from "../components/Messages";
 import Input from "../components/Input";
 import ReactModal from "react-modal";
+import sidebar_menu from "../components/navbar/sidebarmenu";
+import Sidebar from "../components/navbar/sidebar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 
 const Community = () => {
 
     const [chats, setChats] = useState([]);
-
+    const [post, setpost] = useState([])
     const { currentUser } = useContext(AuthContext);
     const { dispatch } = useContext(ChatContext);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         const getChats = () => {
@@ -28,11 +32,24 @@ const Community = () => {
             unsub();
           };
         };
-        console.log(currentUser.uid);
         currentUser.uid && getChats();
       }, [currentUser.uid]);
 
-     
+
+      useEffect(() => {
+        const getPosts = () => {
+          const unsub = onSnapshot(collection(db, "community-posts"), (snapshot) => {
+            const postsData = snapshot.docs.map((doc) => doc.data());
+            setpost(postsData);
+            console.log(postsData);
+          });
+          return () => {
+            unsub();
+          };
+        };
+        getPosts();
+      }, []);
+
       const customStyles = {
         overlay: {
           backgroundColor: 'rgba(0, 0, 0, 0.75)',
@@ -75,23 +92,38 @@ const Community = () => {
         }
       };
     console.log(chats);
-    // console.log(chats.mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92.userInfo.Fullname);
     console.log('chats');
-    // <h5>{chats.mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92?.userInfo?.FullName}</h5>
-    // <h5>{chats.mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92?.lastMessage?.text}</h5>
   
   return (
-    <div >
+    <div className="chatContainer">
+      <div className="container">
+        <Sidebar menu={sidebar_menu}/>
+        
+      <div className="feedContainer">
+        {post.map((p) => (
+          <div className="feedItem" key={p.docid}>
+            {p.photoURL && <img className="postImage" src={p.photoURL} alt="Post" />}
+            <p className="postDescription">{p.description}</p>
+            <div className="postStats">
+              <span className="likes">{p.likes} Likes</span>
+              <span className="likes">{p.comment} Comments</span>
+              <span className="shares">{p.shares} Shares</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    <div className="chatlist">
+      <h4>Messages</h4>
     {Object.entries(chats)
       ?.sort((a, b) => b[1].date - a[1].date)
       .map((chat) => (
         <div
-          className={`userChat ${chat[1].lastMessage?.isRead ? "" : "userChatbold"}`}
+          className={`chats ${chat[1].lastMessage?.isRead ? "" : "chats-bold"}`}
           key={chat[0]}
           onClick={() => handleSelect(chat)}
         >
           <img src={chat[1].userInfo?.photoURL} alt="" />
-          <div className="userChatInfo">
+          <div className="chatinfo">
             <span>
               {chat[1].userInfo?.FullName?.charAt(0).toUpperCase() +
                 chat[1].userInfo?.FullName?.slice(1)}
@@ -102,20 +134,24 @@ const Community = () => {
               <span className="newMessageCircle"></span>  
             )}
             </p>
-
           </div>
+          <div className="ellipsis-container">
+              <FontAwesomeIcon icon={faEllipsisVertical} />
+            </div>
         </div>
       ))}
-      <ReactModal
-  isOpen={modalIsOpen}
-  onRequestClose={closeModal}
-  contentLabel="Example Modal"
-  style={customStyles}
->
-     <Messages/>
+      </div>
+  </div>
+  <ReactModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        style={customStyles}
+      >
+      <Messages/>
       <Input/>
-</ReactModal>
-     
+      </ReactModal>
+      
   </div>
   )
 }
