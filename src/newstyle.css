@@ -163,10 +163,10 @@
 .sidebar img {
   width: 150px;
   height: 150px;
-  background-color: transparent;
   border-radius: 100%;
   border: none;
   cursor: pointer;
+  object-fit: cover;
 }
 
 
@@ -337,6 +337,7 @@
 
 .chatlist {
 
+  margin-top: 10px;
   width: 250px;
   justify-content: center;
   align-items: center;
@@ -437,6 +438,42 @@
   font-size: 14px;
   color: #888;
 }
+.postHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.userProfileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.displayName {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.time {
+  font-size: 14px;
+  color: #888;
+}
+
+.time::before {
+  content: "(";
+}
+
+.time::after {
+  content: ")";
+}
 /** scroll settings **/
 ::-webkit-scrollbar {
   width: 7px;
@@ -450,3 +487,5 @@
   background: transparent; 
   border-radius: 5px;
 }
+
+/*sidebarimage*/
