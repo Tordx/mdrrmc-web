@@ -159,7 +159,7 @@ const Chat = () => {
       <div className="head">
       <h1>Monitoring</h1>
       </div>
-      <div classname = 'boxcontainers' >
+      <div className = 'boxcontainers' >
       <div className="boxrecontain">
       <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('weathermonitoring')}}>
         <img src={weather} width={'70%'} height={'70%'} />
