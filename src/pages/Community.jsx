@@ -12,6 +12,7 @@ import sidebar_menu from "../components/navbar/sidebarmenu";
 import Sidebar from "../components/navbar/sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical, faMessage, faShare, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import ReactTimeago from "react-timeago";
 
 const Community = () => {
 
@@ -93,25 +94,53 @@ const Community = () => {
       };
     console.log(chats);
     console.log('chats');
+
+    const customFormatter = (value, unit, suffix) => {
+      if (value === 1) {
+        return `${value} ${unit} ${suffix.replace("(", "").replace(")", "")}`;
+      } else {
+        return `${value} ${unit}s ${suffix.replace("(", "").replace(")", "")}`;
+      }
+    };
   
   return (
     <div className="chatContainer">
       <div className="container">
         <Sidebar menu={sidebar_menu}/>
         
-      <div className="feedContainer">
-        {post.map((p) => (
-          <div className="feedItem" key={p.docid}>
-            {p.photoURL && <img className="postImage" src={p.photoURL} alt="Post" />}
-            <p className="postDescription">{p.description}</p>
-            <div className="postStats">
-              <span className="likes"> <FontAwesomeIcon icon={faThumbsUp} /> Liked Post {p.likes} </span>
-              <span className="likes"> <FontAwesomeIcon icon={faMessage} /> Comments {p.comment} </span>
-              <span className="shares"> <FontAwesomeIcon icon={faShare} /> Shares {p.shares} </span>
-            </div>
+        <div className="feedContainer">
+  {post.map((p) => {
+      
+    const firstDataItem = p.time
+    const timeInSeconds = firstDataItem.seconds
+    const date = new Date(timeInSeconds * 1000);
+    const formattedTime = date
+    return (
+      <div className="feedItem" key={p.docid}>
+        <div className="postHeader">
+          <img className="userProfileImage" src={p.photoURL} alt="User Profile" />
+          <div className="userInfo">
+            <p className="displayName">{p.displayName}</p>
+            <ReactTimeago className="time" date={formattedTime} />
           </div>
-        ))}
+        </div>
+        {p.image && <img className="postImage" src={p.image} alt="Post" />}
+        <p className="postDescription">{p.description}</p>
+        <div className="postStats">
+          <span className="likes">
+            <FontAwesomeIcon icon={faThumbsUp} /> Liked Post {p.likes}
+          </span>
+          <span className="likes">
+            <FontAwesomeIcon icon={faMessage} /> Comments {p.comment}
+          </span>
+          <span className="shares">
+            <FontAwesomeIcon icon={faShare} /> Shares {p.shares}
+          </span>
+        </div>
       </div>
+    );
+  })}
+</div>
     <div className="chatlist">
       <h4>Messages</h4>
     {Object.entries(chats)
