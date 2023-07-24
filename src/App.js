@@ -19,6 +19,7 @@ import ApproveAnnoucementForm from "./pages/ApproveAnnoucementForm";
 import Profile from "./components/Profile";
 import Alert from "./pages/Alert";
 import Community from "./pages/Community";
+import Navbar from "./components/navbar/sidebar";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
