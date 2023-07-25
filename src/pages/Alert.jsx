@@ -8,14 +8,50 @@ import axios from 'axios';
 import Sidebar from '../components/navbar/sidebar';
 import sidebar_menu from '../components/navbar/sidebarmenu';
 import { SendNotif } from '../functions';
+import ReactModal from "react-modal";
 
 const Alert = () => {
 
   // const {currentUser} = useContext(AuthContext)
-  const [user, setUser] = useState([])
+  const [allData, setAllData] = useState([]);
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
-  const [documentData, setDocumentData] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [database, setDatbase] = useState('landslide');
+
+  useEffect(() => {
+    const getAllData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, database)); // Replace 'user' with your collection name
+        const dataArray = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setAllData(dataArray);
+      } catch (error) {
+        console.error('Error getting data: ', error);
+      }
+    };
+
+    getAllData();
+  }, [database]);
+
+  const customStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    },
+    content: {
+      border: '1px solid #ccc',
+      borderRadius: '4px',
+      padding: '20px',
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      transform: 'translate(-50%, -50%)',
+      minWidth: '700px',
+      maxWidth: '700px',
+      maxHeight: '1000px',
+      maxHeight: '1000px',
+    },
+  };
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -28,27 +64,133 @@ const Alert = () => {
   const handleClick = () => {
     SendNotif(title, message)
   }
-
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const querySnapshot = await getDocs(query(collection(db, 'user'), where('uid', '==', "fSLC9Wd2QxXnF6WwzWuzpHMa9233")));
-        querySnapshot.forEach((doc) => {
-          // console.log(doc.id, ' => ', doc.data());
-          setUser(doc.data())
-        });
-      } catch (error) {
-        console.error('Error getting user document: ', error);
-      }
-    };
-  
-    getUserData();
-  }, []);
+  const openModal = (monitorig) => {
+    setDatbase(monitorig)
+    // setModalIsOpen(true)
+    console.log(monitorig);
+  }
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
  
+  const getPropertyToDisplay = (item) => {
+    switch (database) {
+      case 'weather-monitoring':
+        return item.windspeed;
+      case 'landslide':
+        return item.severity;
+      case 'vehicular-accident':
+        return item.typeofvehicleinvolve;
+     case 'volcanic-eruption':
+        return item.duration;
+      // Add cases for other databases if needed
+      default:
+        return ''; // Return some default value if the database doesn't match any case
+    }
+  };
+
+  const getPropertyToDisplays = (item) => {
+    switch (database) {
+      case 'weather-monitoring':
+        return item.signal;
+      case 'landslide':
+        return item.damage;
+      case 'vehicular-accident':
+        return item.damage;
+      case 'volcanic-eruption':
+        return item.intensity;
+      // Add cases for other databases if needed
+      default:
+        return ''; // Return some default value if the database doesn't match any case
+    }
+  };
+
+  const getHeaderLabels = () => {
+    switch (database) {
+      case 'weather-monitoring':
+        return 'Signal';
+      case 'landslide':
+        return 'Damage';
+      case 'vehicular-accident':
+       return 'Damage ';
+      case 'volcanic-eruption':
+       return 'Intensity ';
+      // Add cases for other databases if needed
+      default:
+        return 'Unknown'; // Return some default label if the database doesn't match any case
+    }
+  };
+
+  const getHeaderLabel = () => {
+    switch (database) {
+      case 'weather-monitoring':
+        return 'Windspeed';
+      case 'landslide':
+        return 'Severity';
+      case 'vehicular-accident':
+        return 'Type of Vehicle ';
+       case 'volcanic-eruption':
+        return 'Duration ';
+      // Add cases for other databases if needed
+      default:
+        return 'Unknown'; // Return some default label if the database doesn't match any case
+    }
+  };
+
   return (
     <div className='chatContainer'>
-    <div className="container">
-        <Sidebar menu={sidebar_menu} />
+       <Sidebar menu={sidebar_menu} />
+       <div style={{ display: 'flex', flexDirection: 'column' }}>
+       <div>
+  <select onChange={(e) => openModal(e.target.value)}>
+    <option value="">Select an option</option>
+    <option value="weather-monitoring">Weather Monitoring</option>
+    <option value="volcanic-eruption">Volcanic Eruption</option>
+    <option value="tsunami">Tsunami</option>
+    <option value="tornado">Tornado</option>
+    <option value="flood">Flood</option>
+    <option value="heavy-rain">Heavy Rain</option>
+    <option value="landslide">Landslide</option>
+    <option value="earthquake">Earthquake</option>
+    <option value="vehicular-accident">Vehicular Accidents</option>
+    <option value="house-fire">House Fire</option>
+    <option value="electrical-accidents">Electrical Accidents</option>
+  </select>
+</div>
+
+      <table style={{ width: '100%', textAlign: 'center' }}>
+  <thead>
+    <tr>
+      <th>{getHeaderLabels()}</th>
+      <th>Area</th>
+      <th>ID</th>
+      <th>Location</th>
+      <th>{getHeaderLabel()}</th>
+      <th>Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    {allData.map((item, index) => (
+      <tr key={index}>
+        <td>{getPropertyToDisplays(item)}</td>
+        <td>{item.area}</td>
+        <td>{item.id}</td>
+        <td>{item.location}</td>
+        <td>{getPropertyToDisplay(item)}</td>
+        <td>{item.title}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+    </div>
+     <ReactModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        style={customStyles}
+        >
+        <div className="container">
         <div className="modal-content">
           <h3>Alert</h3>
           <div className="content1">
@@ -68,12 +210,9 @@ const Alert = () => {
             />
           </div>
           <button onClick={handleClick}>Send Notification</button>
-          {/* <button className="modal-close" >
-            Close
-          </button> */}
         </div>
-      {/* </div> */}
     </div>
+        </ReactModal>
   </div>
     );
 };
