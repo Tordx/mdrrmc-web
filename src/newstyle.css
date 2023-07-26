@@ -1,3 +1,32 @@
+.homecontainer {
+  background-image: url('https://i.imgur.com/HS1zDNP.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.container {
+  
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.darkcontainer {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 1));
+}
+
 .login-container {
   display: flex;
   overflow: auto;
@@ -334,6 +363,42 @@
   font-size: 19px;
 
 }
+.notiflist {
+  
+  margin-top: 10px;
+  width: 250px;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  overflow: auto;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+}
+
+.notiflist h4 {
+  color: #000000;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.notification-item img {
+  width: 50px; /* Adjust the image width as needed */
+  height: 50px; /* Adjust the image height as needed */
+  object-fit: cover;
+  border-radius: 100px;
+  margin-right: 10px;
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+}
 
 .chatlist {
 
@@ -463,16 +528,8 @@
 }
 
 .time {
-  font-size: 14px;
-  color: #888;
-}
-
-.time::before {
-  content: "(";
-}
-
-.time::after {
-  content: ")";
+  font-size: 12px;
+  color: #000;
 }
 /** scroll settings **/
 ::-webkit-scrollbar {
