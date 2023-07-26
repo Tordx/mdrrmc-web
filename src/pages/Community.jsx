@@ -138,9 +138,9 @@ const Community = () => {
         {p.image && <img className="postImage" src={p.image} alt="Post" />}
         <p className="postDescription">{p.description}</p>
         <div className="postStats">
-          <span className="likes">
+          <a className="likes">
             <FontAwesomeIcon icon={faThumbsUp} /> Liked Post {p.likes}
-          </span>
+          </a>
           <span className="likes">
             <FontAwesomeIcon icon={faMessage} /> Comments {p.comment}
           </span>

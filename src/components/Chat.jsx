@@ -1,4 +1,4 @@
-import React, { useContext , useState } from "react";
+import React, { useContext , useEffect, useState } from "react";
 import Cam from "../img/cam.png";
 import Add from "../img/add.png";
 import More from "../img/more.png";
@@ -114,18 +114,33 @@ const Chat = () => {
     }
     setActiveModal(monitoring);
   };
+
+  const Initaldata = async() => {
+    try {
+      const docRef = doc(db, 'chartDataset', 'weathermonitoring');
+      const docSnapshot = await getDoc(docRef);
+      setDataSet(docSnapshot.data());
+      console.log('Form data added to Firestore!');
+    } catch (error) {
+      console.error('Error adding form data to Firestore:', error);
+    }
+    setActiveModal('weathermonitoring');
+  };
   
   const handleLongPress = (monitoring) => {
     console.log('handleLongPress:', monitoring);
     setModalIsOpen(true);
-    // Additional code for handling long press event
   };
 
   const longPressEvent = LongPress(
-    () => handleLongPress(activeModal), // Pass the activeModal value to handleLongPress
+    () => handleLongPress(activeModal),
     1000,
-    activeModal // Pass the activeModal value to the LongPress hook
+    activeModal
   );
+
+  useEffect(() => {
+    Initaldata()
+  },[])
   
   return (
     <div className="dashboard">
