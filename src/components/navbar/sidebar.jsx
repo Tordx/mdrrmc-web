@@ -38,7 +38,9 @@ const Sidebar = ({menu}) => {
     return (
         <div className="sidebar">
           <div>
-            <img  src={currentUser.photoURL} />
+            <a href='/admin/profile'>
+            <img src={currentUser.photoURL} />
+            </a>
             <a>{currentUser.displayName}</a>
             <ul>
               
