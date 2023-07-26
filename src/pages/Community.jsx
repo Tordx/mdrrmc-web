@@ -21,7 +21,7 @@ const Community = () => {
     const { currentUser } = useContext(AuthContext);
     const { dispatch } = useContext(ChatContext);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [data, setData] = useState([]);
+    const [notif, setnotif] = useState([]);
 
     useEffect(() => {
         const getChats = () => {
@@ -48,6 +48,17 @@ const Community = () => {
             unsub();
           };
         };
+        const getNoif = () => {
+          const unsub = onSnapshot(collection(db, "notifications"), (snapshot) => {
+            const notifdata = snapshot.docs.map((doc) => doc.data());
+            setnotif(notifdata);
+            console.log(notifdata);
+          });
+          return () => {
+            unsub();
+          };
+        };
+        getNoif();
         getPosts();
       }, []);
 
@@ -104,8 +115,8 @@ const Community = () => {
     };
   
   return (
-    <div className="chatContainer">
-      <div className="container">
+    <div className="homecontainer">
+      <div className="darkcontainer">
         <Sidebar menu={sidebar_menu}/>
         
         <div className="feedContainer">
@@ -141,6 +152,26 @@ const Community = () => {
     );
   })}
 </div>
+  <div>
+  <div class="notiflist">
+      <h4>Notification</h4>
+      {notif.map((n) => {
+        const firstDataItem = n.time
+        const timeInSeconds = firstDataItem.seconds
+        const date = new Date(timeInSeconds * 1000);
+        const formattedTime = date;
+
+        return (
+          <div class="notification-item">
+            <img src={n.image} alt="Notification Image" />
+            <div class="notification-content">
+              <p>{n.title}</p>
+              <ReactTimeago className="time" date={formattedTime} />
+            </div>
+          </div>
+        );
+      })}
+    </div>
     <div className="chatlist">
       <h4>Messages</h4>
     {Object.entries(chats)
@@ -169,6 +200,7 @@ const Community = () => {
             </div>
         </div>
       ))}
+      </div>
       </div>
   </div>
   <ReactModal
