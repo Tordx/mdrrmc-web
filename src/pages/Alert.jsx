@@ -66,7 +66,7 @@ const Alert = () => {
   }
   const openModal = (monitorig) => {
     setDatbase(monitorig)
-    // setModalIsOpen(true)
+    setModalIsOpen(true)
     console.log(monitorig);
   }
   const closeModal = () => {
