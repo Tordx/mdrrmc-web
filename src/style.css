@@ -1110,27 +1110,28 @@ body {
   justify-content: center;
   height: 100vh;
   text-align: center;
-  background-image: url('https://i.imgur.com/O2KfPFH.png');
+  background-image: url('https://i.imgur.com/HS1zDNP.png');
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .error-container h1 {
   font-size: 4rem;
+  font-weight: bold;
   margin-bottom: 2rem;
-  color: #999
+  color: #000000
 }
 
 .error-container p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  color: #888
+  color: #000000
 }
 
 .error-container a {
   font-size: 1rem;
   margin-bottom: 2rem;
-  color: pink;
+  color: #ffffff;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -1249,11 +1250,6 @@ body {
   background-color: transparent;
   color: black;
   text-decoration: none;
-}
-
-
-img {
-  margin-right: 1rem;
 }
 
 @media (max-width: 1200px) {
@@ -1439,5 +1435,3 @@ button {
 button:hover {
   background-color: #0056b3;
 }
-
-

@@ -29,16 +29,51 @@ const Profile = () => {
  
   return (
     <div className="chatContainer">
-    <div className="container">
-     <Sidebar menu = {sidebar_menu} />
-      <div className="modal-content">
-        <h3>My Profile</h3>
-      <div className="myProfilePic" >
-      <img src={user.photoURL} style={{width: 100, height: 100}}/>
-    </div>
-    <a href="/admin/profile">{user.username}</a>
+      <div className="darkcontainer">
+        <Sidebar menu={sidebar_menu} />
+        <div className="profile">
+          <div className='info'>
+            <h3>My Profile</h3>
+            <img src={user.photoURL}/>
+            <h4>{currentUser.displayName}</h4>
+          </div>
+          <div className="editinfo">
+            <div className="editinfocontainer">
+              <div>
+                <h4>Email:</h4>
+                <p>{user.email}</p>
+              </div>
+              <button>Edit</button>
+            </div>
+            <div className="editinfocontainer">
+              <div>
+                <h4>Username:</h4>
+                <p>{user.username}</p>
+              </div>
+              <button>Edit</button>
+            </div>
+            <div className="editinfocontainer">
+              <div>
+                <h4>Password:</h4>
+                <p>********</p>
+              </div>
+              <button>Edit</button>
+            </div>
+            <div className="editinfocontainer">
+              <div>
+                <h4>Manage Notifications</h4>
+              </div>
+              <button className='managebutton'>Manage</button>
+            </div>
+            <div className="editinfocontainer">
+              <div>
+                <h4>Manage Location</h4>
+              </div>
+              <button className='managebutton' >Manage</button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
