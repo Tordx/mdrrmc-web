@@ -11,7 +11,7 @@ const Conversation = () => {
   return (
     <div className='chatContainer'>
       {/* <Header/> */}
-      <div className="container">
+      <div className="dashboard-container">
         <Sidebar menu={sidebar_menu}/>
         <Chat/>
       </div>
