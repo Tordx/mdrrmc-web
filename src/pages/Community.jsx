@@ -105,15 +105,6 @@ const Community = () => {
       };
     console.log(chats);
     console.log('chats');
-
-    const customFormatter = (value, unit, suffix) => {
-      if (value === 1) {
-        return `${value} ${unit} ${suffix.replace("(", "").replace(")", "")}`;
-      } else {
-        return `${value} ${unit}s ${suffix.replace("(", "").replace(")", "")}`;
-      }
-    };
-  
   return (
     <div className="homecontainer">
       <div className="darkcontainer">
