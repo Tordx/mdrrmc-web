@@ -31,7 +31,7 @@ const Profile = () => {
  
   return (
     <div className="chatContainer">
-      <div className="darkcontainer">
+      <div className="profilecontainer">
         <Sidebar menu={sidebar_menu} />
         <div className="profile">
           <div className='info'>
