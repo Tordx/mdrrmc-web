@@ -803,7 +803,7 @@ table.table .avatar {
   align-items: center;
   justify-content: space-between;
   margin-left: 10rem;
-  width: 1000px;
+  width: 950px;
   height: 500px;
   border-radius: 10px;
   overflow: hidden;
@@ -828,16 +828,17 @@ table.table .avatar {
   height: 125px;
   border-radius: 150px;
   object-fit: cover;
+  margin-top: 1rem;
 }
 
 .info h4 {
   color: #FFFFFF;
-  margin-top: 10px;
+  margin-top: 1rem;
   font-weight: 600;
 }
 
 .editinfo {
-  margin-right: 5rem;
+  margin-right: 2rem;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -857,6 +858,12 @@ table.table .avatar {
   position: absolute;
   right: 0;
   top: 0;
+}
+.editinfocontainer svg {
+  width: 20px;
+  width: 20px;
+  margin-right: 3px;
+  color: #FFFFFF;
 }
 .editinfocontainer div  {
   flex-direction: row;

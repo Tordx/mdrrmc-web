@@ -5,6 +5,8 @@ import '../newstyle.css'
 import { AuthContext } from '../context/AuthContext';
 import Sidebar from './navbar/sidebar';
 import sidebar_menu from './navbar/sidebarmenu';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faPencilSquare } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = () => {
 
@@ -38,40 +40,41 @@ const Profile = () => {
             <h4>{currentUser.displayName}</h4>
           </div>
           <div className="editinfo">
-            <div className="editinfocontainer">
-              <div>
-                <h4>Email:</h4>
-                <p>{user.email}</p>
-              </div>
-              <button>Edit</button>
+          <div className="editinfocontainer">
+            <div>
+              <h4>Email:</h4>
+              <p>{user.email}</p>
             </div>
-            <div className="editinfocontainer">
-              <div>
-                <h4>Username:</h4>
-                <p>{user.username}</p>
-              </div>
-              <button>Edit</button>
-            </div>
-            <div className="editinfocontainer">
-              <div>
-                <h4>Password:</h4>
-                <p>********</p>
-              </div>
-              <button>Edit</button>
-            </div>
-            <div className="editinfocontainer">
-              <div>
-                <h4>Manage Notifications</h4>
-              </div>
-              <button className='managebutton'>Manage</button>
-            </div>
-            <div className="editinfocontainer">
-              <div>
-                <h4>Manage Location</h4>
-              </div>
-              <button className='managebutton' >Manage</button>
-            </div>
+             <button><FontAwesomeIcon icon={faPencil} />Edit</button>
           </div>
+          <div className="editinfocontainer">
+            <div>
+              <h4>Username:</h4>
+              <p>{user.username}</p>
+            </div>
+            <button> <FontAwesomeIcon  icon={faPencil} />Edit</button>
+            
+          </div>
+          <div className="editinfocontainer">
+            <div>
+              <h4>Password:</h4>
+              <p>********</p>
+            </div>
+             <button><FontAwesomeIcon icon={faPencil} />Edit</button>
+          </div>
+          <div className="editinfocontainer">
+            <div>
+              <h4>Manage Notifications</h4>
+            </div>
+            <button className='managebutton'>Manage</button>
+          </div>
+          <div className="editinfocontainer">
+            <div>
+              <h4>Manage Location</h4>
+            </div>
+            <button className='managebutton' >Manage</button>
+          </div>
+        </div>
         </div>
       </div>
     </div>
