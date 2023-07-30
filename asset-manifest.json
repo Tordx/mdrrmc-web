@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.bfc6eec7.css",
-    "main.js": "/static/js/main.ff874f1f.js",
-    "static/media/erro404image2.png": "/static/media/erro404image2.04e10cc2dadce563d3a1.png",
-    "static/media/1yHrmHy.png": "/static/media/1yHrmHy.6f36dccdbd315b95e3ef.png",
-    "static/media/userIcon.png": "/static/media/userIcon.ecfe47ccffb00c056488.png",
-    "static/media/Labrador-Logo.png": "/static/media/Labrador-Logo.8d1442a625a70d483fe7.png",
-    "static/media/erro404image.png": "/static/media/erro404image.da26ce6101ff17d16d47.png",
-    "static/media/DSWD-Logo.png": "/static/media/DSWD-Logo.c6a82650839a91a08ca9.png",
-    "static/media/6hkpBfL.png": "/static/media/6hkpBfL.8d4d3518a71a18614fd5.png",
-    "index.html": "/index.html",
-    "main.bfc6eec7.css.map": "/static/css/main.bfc6eec7.css.map",
-    "main.ff874f1f.js.map": "/static/js/main.ff874f1f.js.map"
+    "main.css": "/mdrrmc-web/static/css/main.bfc6eec7.css",
+    "main.js": "/mdrrmc-web/static/js/main.16d7b6f3.js",
+    "static/media/erro404image2.png": "/mdrrmc-web/static/media/erro404image2.04e10cc2dadce563d3a1.png",
+    "static/media/1yHrmHy.png": "/mdrrmc-web/static/media/1yHrmHy.6f36dccdbd315b95e3ef.png",
+    "static/media/userIcon.png": "/mdrrmc-web/static/media/userIcon.ecfe47ccffb00c056488.png",
+    "static/media/Labrador-Logo.png": "/mdrrmc-web/static/media/Labrador-Logo.8d1442a625a70d483fe7.png",
+    "static/media/erro404image.png": "/mdrrmc-web/static/media/erro404image.da26ce6101ff17d16d47.png",
+    "static/media/DSWD-Logo.png": "/mdrrmc-web/static/media/DSWD-Logo.c6a82650839a91a08ca9.png",
+    "static/media/6hkpBfL.png": "/mdrrmc-web/static/media/6hkpBfL.8d4d3518a71a18614fd5.png",
+    "index.html": "/mdrrmc-web/index.html",
+    "main.bfc6eec7.css.map": "/mdrrmc-web/static/css/main.bfc6eec7.css.map",
+    "main.16d7b6f3.js.map": "/mdrrmc-web/static/js/main.16d7b6f3.js.map"
   },
   "entrypoints": [
     "static/css/main.bfc6eec7.css",
-    "static/js/main.ff874f1f.js"
+    "static/js/main.16d7b6f3.js"
   ]
 }
