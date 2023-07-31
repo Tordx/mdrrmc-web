@@ -42,8 +42,9 @@ import VehicularAccident from "../forms/VehicularAccidentForm";
 import HouseFire from "../forms/HouseFire";
 import ElectricalAccident from "../forms/ElectricalAccident";
 import { db } from '../firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, getDocs , collection } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
+import Maplocation from "./maplocation";
 
 Chart.register(
   BarElement,
@@ -59,6 +60,12 @@ const Chat = () => {
   const { data } = useContext(ChatContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
+  const [initialMarker, setInitialMarker] = useState();
+  // const initialMarkers = [
+  //   [120.2307078878246, 16.032108026014853], // Marker 1 coordinates (e.g., [120.2307078878246, 16.032108026014853])
+  //   [120.25, 16.05], // Marker 2 coordinates (e.g., [120.25, 16.05])
+  //   // Add more markers as needed
+  // ];
   const barColors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf', '#aec7e8', '#ffbb78'];
 
   const [dataset, setDataSet] = useState({
@@ -127,9 +134,23 @@ const Chat = () => {
     setActiveModal('weathermonitoring');
   };
   
-  const handleLongPress = (monitoring) => {
+  const handleLongPress = async(monitoring) => {
     console.log('handleLongPress:', monitoring);
-    setModalIsOpen(true);
+      try {
+        const querySnapshot = await getDocs(collection(db, monitoring)); // Replace 'user' with your collection name
+        const dataArray = querySnapshot.docs.map((doc) => ({ coordinates: doc.data().coordinates }));        // setAllData(dataArray) 
+        console.log(dataArray);
+        console.log(Array.isArray(dataArray)); // Check if initialMarkers is an array
+        const convertedData = dataArray.map((item) => item.coordinates);
+        // console.log('convertedData');
+        // console.log(convertedData);
+        // console.log('convertedData');
+        setInitialMarker(convertedData)
+      } catch (error) {
+        console.error('Error getting data: ', error);
+      }
+     setModalIsOpen(true);
+    
   };
 
   const longPressEvent = LongPress(
@@ -176,7 +197,7 @@ const Chat = () => {
       </div>
       <div className = 'boxcontainers' >
       <div className="boxrecontain">
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('weathermonitoring')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('weather-monitoring')}}>
         <img src={weather} width={'70%'} height={'70%'} />
         <h5>Weather Monitoring</h5>
       </div>
@@ -234,7 +255,10 @@ const Chat = () => {
   contentLabel="Example Modal"
   style={customStyles}
 >
-  {activeModal === 'earthquick' && <EarthQuickForm isOpen={true} />}
+<Maplocation
+initialMarker={initialMarker}
+/>
+  {/* {activeModal === 'earthquick' && <EarthQuickForm isOpen={true} />}
   {activeModal === 'weathermonitoring' && <WeatherMonitoringForm isOpen={true} />}
   {activeModal === 'volcaniceruption' && <VolcanicEruptionForm isOpen={true} />}
   {activeModal === 'extremedrougth' && <ExtremeDrougth isOpen={true} />}
@@ -245,7 +269,7 @@ const Chat = () => {
   {activeModal === 'landslide' && <LandSlide isOpen={true} />}
   {activeModal === 'vehicularaccident' && <VehicularAccident isOpen={true} />}
   {activeModal === 'housefire' && <HouseFire isOpen={true} />}
-  {activeModal === 'electricalaccident' && <ElectricalAccident isOpen={true} />}
+  {activeModal === 'electricalaccident' && <ElectricalAccident isOpen={true} />} */}
     {/* <EarthQuickForm/> */}
     {/* <Weather/> */}
      {/* <Messages/>
