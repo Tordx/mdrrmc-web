@@ -572,7 +572,7 @@
 }
 .table-wrapper {
   margin-left: 10px;
-	background-color: #fff 0.3;
+	background-color: #fff;
 	padding: 20px 25px;
 	border-radius: 10px;
 	min-width: 1000px;
@@ -835,8 +835,8 @@ table.table .avatar {
 }
 
 .info img {
-  width: 125px;
-  height: 125px;
+  width: 150px;
+  height: 150px;
   border-radius: 150px;
   object-fit: cover;
   margin-top: 1rem;
