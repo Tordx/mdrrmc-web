@@ -13,6 +13,9 @@ import ReactModal from "react-modal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DeleteForeverOutlined, SendOutlined } from '@mui/icons-material';
 import { faDeleteLeft, faPenSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { doc, getDoc , Timestamp , updateDoc , setDoc } from 'firebase/firestore';
+import { v4 as uuid } from "uuid";
+import Maplocation from '../components/maplocation';
 
 const Alert = () => {
 
@@ -20,7 +23,10 @@ const Alert = () => {
   const [allData, setAllData] = useState([]);
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
+  const [warningtime, setWarningTime] = useState('');
+  const [alertlocation, setAlertLocation] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [openMap, setOpenMap] = useState(false);
   const [database, setDatbase] = useState('landslide');
 
   useEffect(() => {
@@ -57,16 +63,49 @@ const Alert = () => {
     },
   };
 
+  const handleMapClick = (coordinates) => {
+    setAlertLocation(coordinates)
+  };
+
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
+  };
+
+  const handleWarningTimeChange = (event) => {
+    setWarningTime(event.target.value);
   };
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
   };
 
-  const handleClick = () => {
-    SendNotif(title, message)
+  const openCoordinatesModat = () => {
+    setOpenMap(true)
+  };
+  const closeCoordinatesModal = () => {
+    setOpenMap(false)
+  };
+
+  const handleClick = async() => {
+    SendNotif(title, message , warningtime)
+    try {
+      // Add the form data to Firestore
+      const earthquakeRef = doc(db, 'notifications' , uuid()); // Replace 'earthquakes' with your collection name
+      const notifData = ({
+        title: title,
+        message: message,
+        warningtime: warningtime,
+        id: uuid(),
+        time: Timestamp.now(),
+        alertlocation: alertlocation,
+
+      });
+      await setDoc(earthquakeRef , notifData);
+
+      console.log('Form data added to Firestore!');
+    } catch (error) {
+      console.error('Error adding form data to Firestore:', error);
+    }
   }
   const monitoringdata = (monitorig) => {
     setDatbase(monitorig)
@@ -207,7 +246,6 @@ const Alert = () => {
       </tbody>
     </table>
   </div>
-
     </div>
      <ReactModal
         isOpen={modalIsOpen}
@@ -220,22 +258,38 @@ const Alert = () => {
           <h3>Alert</h3>
           <div className="content1">
             <label htmlFor="title">Title:</label>
-            <input
+            <textarea
               type="text"
               id="title"
               value={title}
               onChange={handleTitleChange}
             />
-  
             <label htmlFor="message">Message:</label>
             <textarea
               id="message"
               value={message}
               onChange={handleMessageChange}
             />
+            <label htmlFor="warningtime">Warning Time:</label>
+            <textarea
+              id="warningtime"
+              value={warningtime}
+              onChange={handleWarningTimeChange}
+            />
+             <button onClick={openCoordinatesModat}>Get Location</button>
           </div>
           <button onClick={handleClick}>Send Notification</button>
         </div>
+      <ReactModal
+        isOpen={openMap}
+        onRequestClose={closeCoordinatesModal}
+        contentLabel="Get Coordinates"
+        style={customStyles}
+        >
+         <Maplocation
+         onMapClick={handleMapClick}
+         />
+        </ReactModal>
     </div>
         </ReactModal>
   </div>
