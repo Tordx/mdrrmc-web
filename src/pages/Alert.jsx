@@ -122,13 +122,62 @@ const Alert = () => {
         return item.severity;
       case 'vehicular-accident':
         return item.typeofvehicleinvolve;
-     case 'volcanic-eruption':
+      case 'volcanic-eruption':
         return item.duration;
+      case 'extreme-drought':
+        return item.level;
+      case 'tsunami':
+        return item.speed;
+      case 'tornado':
+        return item.duration;
+      case 'flood':
+        return item.duration;
+      case 'heavy-rain':
+        return item.duration;
+      case 'earthquake':
+        return item.depth;
+      case 'housefire':
+        return item.damage;
+      case 'electrical-accident':
+        return item.damage;
       // Add cases for other databases if needed
       default:
         return ''; // Return some default value if the database doesn't match any case
     }
   };
+  
+
+  const getHeaderLabel = () => {
+    switch (database) {
+      case 'weather-monitoring':
+        return 'Windspeed';
+      case 'landslide':
+        return 'Severity';
+      case 'vehicular-accident':
+        return 'Type of Vehicle';
+      case 'volcanic-eruption':
+        return 'Duration';
+      case 'extreme-drought':
+        return 'Level';
+      case 'tsunami':
+        return 'Speed';
+      case 'tornado':
+        return 'Duration';
+      case 'flood':
+        return 'Duration';
+      case 'heavy-rain':
+        return 'Duration';
+      case 'earthquake':
+        return 'Depth';
+      case 'housefire':
+        return 'Damage';
+      case 'electrical-accident':
+        return 'Damage';
+      default:
+        return 'Unknown';
+    }
+  };
+  
 
   const getPropertyToDisplays = (item) => {
     switch (database) {
@@ -140,42 +189,60 @@ const Alert = () => {
         return item.damage;
       case 'volcanic-eruption':
         return item.intensity;
+      case 'extreme-drought':
+        return item.temperature;
+      case 'tsunami':
+        return item.waterheight;
+      case 'tornado':
+        return item.windspeed;
+      case 'flood':
+        return item.waterlevel;
+      case 'heavy-rain':
+        return item.intensity;
+      case 'earthquake':
+        return item.magnitude;
+      case 'housefire':
+        return item.alertlevel;
+      case 'electrical-accident':
+        return item.cause;
       // Add cases for other databases if needed
       default:
         return ''; // Return some default value if the database doesn't match any case
     }
   };
+  
 
   const getHeaderLabels = () => {
-    switch (database) {
-      case 'weather-monitoring':
-        return 'Signal';
-      case 'landslide':
-        return 'Damage';
-      case 'vehicular-accident':
-       return 'Damage ';
-      case 'volcanic-eruption':
-       return 'Intensity ';
-      // Add cases for other databases if needed
-      default:
-        return 'Unknown'; // Return some default label if the database doesn't match any case
-    }
-  };
-
-  const getHeaderLabel = () => {
-    switch (database) {
-      case 'weather-monitoring':
-        return 'Windspeed';
-      case 'landslide':
-        return 'Severity';
-      case 'vehicular-accident':
-        return 'Type of Vehicle ';
-       case 'volcanic-eruption':
-        return 'Duration ';
-      default:
-        return 'Unknown';
-    }
-  };
+  switch (database) {
+    case 'weather-monitoring':
+      return 'Signal';
+    case 'landslide':
+      return 'Damage';
+    case 'vehicular-accident':
+      return 'Damage';
+    case 'volcanic-eruption':
+      return 'Intensity';
+    case 'extreme-drought':
+      return 'Temperature';
+    case 'tsunami':
+      return 'WaterHeight';
+    case 'tornado':
+      return 'Windspeed';
+    case 'flood':
+      return 'Waterlevel';
+    case 'heavy-rain':
+      return 'Intensity';
+    case 'earthquake':
+      return 'Magnitude';
+    case 'housefire':
+      return 'Alertlevel';
+    case 'electrical-accident':
+      return 'Cause';
+    // Add cases for other databases if needed
+    default:
+      return 'Unknown'; // Return some default label if the database doesn't match any case
+  }
+};
 
   return (
     <div className='chatContainer'>
@@ -205,8 +272,9 @@ const Alert = () => {
           <option value="landslide">Landslide</option>
           <option value="earthquake">Earthquake</option>
           <option value="vehicular-accident">Vehicular Accidents</option>
-          <option value="house-fire">House Fire</option>
-          <option value="electrical-accidents">Electrical Accidents</option>
+          <option value="housefire">House Fire</option>
+          <option value="electrical-accident">Electrical Accidents</option>
+          <option value="extreme-drougth">Extreme Drougth</option>
         </select>
       </div>
       <table className='table'>
