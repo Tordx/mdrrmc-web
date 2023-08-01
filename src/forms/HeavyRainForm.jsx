@@ -74,7 +74,7 @@ const HeavyRain = () => {
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
-    const docRef = doc(db, 'chartDataset', 'heavyrain');
+    const docRef = doc(db, 'chartDataset', 'heavy-rain');
     const docSnapshot = await getDoc(docRef);
   
     if (docSnapshot.exists()) {

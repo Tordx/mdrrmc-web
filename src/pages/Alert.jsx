@@ -12,6 +12,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { doc , Timestamp  , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
+import EarthQuickForm from "../forms/EarthQuickForm";
+import WeatherMonitoringForm from "../forms/WeatherMonitoringForm";
+import VolcanicEruptionForm from "../forms/VolcanicEruptionForm";
+import ExtremeDrougth from "../forms/ExtremeDrougth";
+import Tsunami from "../forms/TsunamiFrom";
+import Tornado from "../forms/TornadoForm";
+import Flood from "../forms/FloodForm";
+import HeavyRain from "../forms/HeavyRainForm";
+import LandSlide from "../forms/LandSlideForm";
+import VehicularAccident from "../forms/VehicularAccidentForm";
+import HouseFire from "../forms/HouseFire";
+import ElectricalAccident from "../forms/ElectricalAccident";
 
 const Alert = () => {
 
@@ -22,6 +34,7 @@ const Alert = () => {
   const [warningtime, setWarningTime] = useState('');
   const [alertlocation, setAlertLocation] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [addmonitoringModal, setAddmonitoringModal] = useState(false);
   const [database, setDatbase] = useState('landslide');
 
   const [magnitude, setmagnitude] = useState('');
@@ -106,6 +119,9 @@ const Alert = () => {
   }
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+  const closeAddMonitoringModal = () => {
+    setAddmonitoringModal(false);
   };
  
   const getPropertyToDisplay = (item) => {
@@ -248,6 +264,7 @@ const Alert = () => {
 					</div>
 					<div className="col-sm-6">
 						<a onClick={() => {setModalIsOpen(true)}} href="#addEmployeeModal" className="btn btn-success" data-toggle="modal"><span>Send Alert and Notification</span></a>
+						<a onClick={() => {setAddmonitoringModal(true)}} className="btn btn-success" data-toggle="modal"><span>Add Monitoring</span></a>
 						<a href="#deleteEmployeeModal" className="btn btn-danger" data-toggle="modal"><span>Delete</span></a>						
 					</div>
 				</div>
@@ -406,6 +423,25 @@ const Alert = () => {
           </div>
         </div>
         </ReactModal>
+        <ReactModal
+  isOpen={addmonitoringModal}
+  onRequestClose={closeAddMonitoringModal}
+  contentLabel="Example Modal"
+  style={customStyles}
+>
+  {database === 'earthquake' && <EarthQuickForm isOpen={true} />}
+  {database === 'weather-monitoring' && <WeatherMonitoringForm isOpen={true} />}
+  {database === 'volcanic-eruption' && <VolcanicEruptionForm isOpen={true} />}
+  {database === 'extreme-drougth' && <ExtremeDrougth isOpen={true} />}
+  {database === 'tsunami' && <Tsunami isOpen={true} />}
+  {database === 'tornado' && <Tornado isOpen={true} />}
+  {database === 'flood' && <Flood isOpen={true} />}
+  {database === 'heavy-rain' && <HeavyRain isOpen={true} />}
+  {database === 'landslide' && <LandSlide isOpen={true} />}
+  {database === 'vehicular-accident' && <VehicularAccident isOpen={true} />}
+  {database === 'housefire' && <HouseFire isOpen={true} />}
+  {database === 'electrical-accident' && <ElectricalAccident isOpen={true} />}
+</ReactModal>
       </div>
     );
 };
