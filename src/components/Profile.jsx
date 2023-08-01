@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 import Sidebar from './navbar/sidebar';
 import sidebar_menu from './navbar/sidebarmenu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faPencil, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEnvelope, faLock, faPencil, faUser } from '@fortawesome/free-solid-svg-icons';
 import ReactModal from 'react-modal';
 import { EmailAuthProvider, reauthenticateWithCredential, updateProfile, updatePassword } from 'firebase/auth';
 import { v4 as uuid } from "uuid";
@@ -170,9 +170,12 @@ const handlePasswordUpdate = () => {
       </div>
       <ReactModal
         isOpen = {openmodal}
-        onRequestClose={() => setopenmodal(false)}
         style={customStyles}
       >
+      <button className="go-back-button" onClick={() => setopenmodal(false)}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+          <span>&nbsp; Back</span>
+        </button>
         <div className='editemail'>
           <h2>Update {changes}</h2>
            <br/>
@@ -188,7 +191,7 @@ const handlePasswordUpdate = () => {
             <FontAwesomeIcon icon={faLock} className="icon" />
           </div>
           <br/>
-          {changes === 'Password' ? <button onClick={handlePasswordUpdate} className='logout-button apple '>Save</button> : <button onClick={update} className='logout-button apple '>Update Info</button>}
+          {changes === 'Password' ? <button onClick={handlePasswordUpdate} className='logout-button apple '>Save</button> : <button onClick={update} className='logout-button apple '>Save</button>}
         </div>
       </ReactModal>
     </div>

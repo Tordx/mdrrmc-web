@@ -1078,3 +1078,29 @@ table.table .avatar {
     transform: rotate(360deg);
   }
 }
+
+.go-back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.go-back-button:hover {
+  background-color: transparent;
+}
+
+.go-back-button:focus {
+  outline: none;
+}
+
+.go-back-button span {
+  margin-left: 5px;
+}
