@@ -69,7 +69,6 @@ outline: none;
   margin-right: 10px;
   resize: none;
   font-size: 13px;
-  height: 50px;
 }
 
 .alert-modal-container input {
@@ -79,15 +78,18 @@ outline: none;
   border: .5px solid #ccc;
   background-color: white;
   width: 100%;
-  height: 50px;
   margin-right: 10px;
-  resize: none;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .alert-modal-container textarea,
 input:focus {
   outline: none;
+}
+
+.alert-modal-container button {
+  margin: 10px;
+  border-radius: 10px;
 }
 
 .dashboard-container {

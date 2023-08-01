@@ -1,21 +1,17 @@
 import React , {useEffect , useState} from 'react';
 import '../style.css'
-import Navbar from '../components/navbar/sidebar';
-import { collection, query, where , getDocs } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../firebase'
 import '../style.css'
 import '../newstyle.css'
-import axios from 'axios';
 import Sidebar from '../components/navbar/sidebar';
 import sidebar_menu from '../components/navbar/sidebarmenu';
 import { SendNotif } from '../functions';
 import ReactModal from "react-modal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DeleteForeverOutlined, SendOutlined } from '@mui/icons-material';
-import { faDeleteLeft, faPenSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { doc, getDoc , Timestamp , updateDoc , setDoc } from 'firebase/firestore';
+import { faPenSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { doc , Timestamp  , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
-import Maplocation from '../components/maplocation';
 
 const Alert = () => {
 
@@ -72,35 +68,23 @@ const Alert = () => {
     setAlertLocation(coordinates)
   };
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
+  const handleImageChange = (event) => {
+    const imageFile = event.target.files[0];
 
-  const handleWarningTimeChange = (event) => {
-    setWarningTime(event.target.value);
-  };
-
-  const handleMessageChange = (event) => {
-    setMessage(event.target.value);
-  };
-
-  const handleLocationChange = (event) => {
-    setAlertLocation(event.target.value)
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setimage(reader.result);
+    };
+    reader.readAsDataURL(imageFile);
   };
 
    const handleChoices = (event) => {
     setmagnitude(event.target.value)
   };
-
-    const handleChoiceChange = (event) => {
-    setmagchoice(event.target.value)
-  };
-
   const handleClick = async() => {
     SendNotif(title, message , warningtime)
     try {
-      // Add the form data to Firestore
-      const earthquakeRef = doc(db, 'notifications' , uuid()); // Replace 'earthquakes' with your collection name
+      const earthquakeRef = doc(db, 'notifications' , uuid());
       const notifData = ({
         title: title,
         message: message,
@@ -215,9 +199,8 @@ const Alert = () => {
         return item.alertlevel;
       case 'electrical-accident':
         return item.cause;
-      // Add cases for other databases if needed
       default:
-        return ''; // Return some default value if the database doesn't match any case
+        return ''; 
     }
   };
   
@@ -248,9 +231,8 @@ const Alert = () => {
       return 'Alertlevel';
     case 'electrical-accident':
       return 'Cause';
-    // Add cases for other databases if needed
     default:
-      return 'Unknown'; // Return some default label if the database doesn't match any case
+      return 'Unknown';
   }
 };
 
@@ -336,7 +318,7 @@ const Alert = () => {
           <div>
             <label htmlFor="title">Alert Warning Level</label>
             <select className='selectcontainer' value={title}
-              onChange={handleTitleChange}>
+              onChange={(e) => setTitle(e.target.value)}>
               <option disabled value="">Select an option</option>
               <option value = 'Red Warning'>Red Warning</option>
               <option value = 'Orange Warning' >Orange Warning</option>
@@ -348,26 +330,33 @@ const Alert = () => {
             <textarea
               id="message"
               value={message}
-              onChange={handleMessageChange}
+              onChange={(e) => setMessage(e.target.value)}
             />
             <label htmlFor="warningtime">Until when?</label>
             <input
               type='date'
               id="warningtime"
               value={warningtime}
-              onChange={handleWarningTimeChange}
+              onChange={(e) => setWarningTime(e.target.value)}
             />
              <label htmlFor="warningtime">Alert Location</label>
             <input
               id="warningtime"
               value={alertlocation}
-              onChange={handleLocationChange}
+              onChange={(e) => setAlertLocation(e.target.value)}
+            />
+            <label htmlFor="warningtime">Image</label>
+            <input
+              type='file'
+              id="image"
+              value={image}
+              onChange={handleImageChange}
             />
           </div>
            <div>
             <label htmlFor="title">Alert Warning Background</label>
-            <select className='selectcontainer' value={title}
-              onChange={handleTitleChange}>
+            <select className='selectcontainer' value={imagecolor}
+              onChange={(e) => setimagecolor(e.target.event)}>
               <option disabled value="">Select an option</option>
               <option value = 'red'>Red</option>
               <option value = 'orange' >Orange</option>
@@ -378,19 +367,13 @@ const Alert = () => {
             <label htmlFor="message">Alert Description</label>
             <textarea
               id="message"
-              value={message}
-              onChange={handleMessageChange}
+              value={description}
+              onChange={(e) => setdiscription(e.target.event)}
             />
-            <label htmlFor="warningtime">Image</label>
-            <input
-              type='file'
-              id="warningtime"
-              value={''}
-              onChange={handleWarningTimeChange}
-            />
-           <label htmlFor="title">Alert Magnitude</label>
+           <label htmlFor="title">Alert Index</label>
             <select className='selectcontainer'
-              onChange={handleChoiceChange}>
+              value={magchoice}
+              onChange={(e) => setmagchoice(e.target.value)}>
               <option disabled value="">Select an option</option>
               <option value = 'Magnitude'>Magnitude</option>
               <option value = 'Wave Height' >Wave Height</option>
@@ -403,7 +386,8 @@ const Alert = () => {
               value={magnitude}
               onChange={handleChoices}
             />}
-             {magchoice === 'Wave Height' &&<input
+             {magchoice === 'Wave Height' &&
+             <input
               id="warningtime"
               value={magnitude}
               onChange= {handleChoices}
@@ -418,6 +402,7 @@ const Alert = () => {
               value={magnitude}
               onChange={handleChoices}
             />}
+           <button onClick={handleClick}>Send</button>
           </div>
         </div>
         </ReactModal>
@@ -436,4 +421,4 @@ export default Alert;
             // />
           //    <button onClick={openCoordinatesModat}>Get Location</button>
           // </div>
-          // <button onClick={handleClick}>Send Notification</button>
+          //
