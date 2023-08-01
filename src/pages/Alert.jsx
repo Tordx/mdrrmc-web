@@ -397,7 +397,7 @@ const Alert = () => {
               <option value = 'Heat Index'>Heat Index</option>
               <option value = 'Flood Level'>Flood Level</option>
             </select>
-             <label htmlFor="warningtime">{magchoicedd}</label>
+             <label htmlFor="warningtime">{magchoice}</label>
             {magchoice === 'Magnitude' && <input
               id="warningtime"
               value={magnitude}
