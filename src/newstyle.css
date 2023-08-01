@@ -588,12 +588,19 @@ input:focus {
   margin-top: 10px;
 }
 
-.feedItem .postStats {
+.postStats {
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
   font-size: 14px;
   color: #888;
+}
+
+.postStats a{
+  text-decoration: none; 
+  color: inherit; 
+  outline: none;
+  cursor: pointer;
 }
 .postHeader {
   display: flex;

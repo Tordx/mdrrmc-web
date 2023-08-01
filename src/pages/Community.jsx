@@ -132,12 +132,12 @@ const Community = () => {
           <a className="likes">
             <FontAwesomeIcon icon={faThumbsUp} /> Liked Post {p.likes}
           </a>
-          <span className="likes">
+          <a className="likes">
             <FontAwesomeIcon icon={faMessage} /> Comments {p.comment}
-          </span>
-          <span className="shares">
+          </a>
+          <a className="shares">
             <FontAwesomeIcon icon={faShare} /> Shares {p.shares}
-          </span>
+          </a>
         </div>
       </div>
     );
