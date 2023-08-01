@@ -74,7 +74,7 @@ const WeatherMonitoringForm = () => {
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
-    const docRef = doc(db, 'chartDataset', 'weathermonitoring');
+    const docRef = doc(db, 'chartDataset', 'weather-monitoring');
     const docSnapshot = await getDoc(docRef);
   
     if (docSnapshot.exists()) {

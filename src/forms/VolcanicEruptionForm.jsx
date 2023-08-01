@@ -74,7 +74,7 @@ const VolcanicEruptionForm = () => {
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
-    const docRef = doc(db, 'chartDataset', 'volcaniceruption');
+    const docRef = doc(db, 'chartDataset', 'volcanic-eruption');
     const docSnapshot = await getDoc(docRef);
   
     if (docSnapshot.exists()) {

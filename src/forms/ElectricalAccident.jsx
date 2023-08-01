@@ -74,7 +74,7 @@ const ElectricalAccident = () => {
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
-    const docRef = doc(db, 'chartDataset', 'electricalaccident');
+    const docRef = doc(db, 'chartDataset', 'electrical-accident');
     const docSnapshot = await getDoc(docRef);
   
     if (docSnapshot.exists()) {

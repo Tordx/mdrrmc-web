@@ -72,7 +72,7 @@ const ExtremeDrougth = () => {
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
-    const docRef = doc(db, 'chartDataset', 'extremedrougth');
+    const docRef = doc(db, 'chartDataset', 'extreme-drougth');
     const docSnapshot = await getDoc(docRef);
   
     if (docSnapshot.exists()) {

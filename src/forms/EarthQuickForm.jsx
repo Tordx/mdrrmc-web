@@ -72,7 +72,7 @@ const EarthQuickForm = () => {
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
-    const docRef = doc(db, 'chartDataset', 'earthquick');
+    const docRef = doc(db, 'chartDataset', 'earthquake');
     const docSnapshot = await getDoc(docRef);
   
     if (docSnapshot.exists()) {

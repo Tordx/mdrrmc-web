@@ -42,7 +42,7 @@ import VehicularAccident from "../forms/VehicularAccidentForm";
 import HouseFire from "../forms/HouseFire";
 import ElectricalAccident from "../forms/ElectricalAccident";
 import { db } from '../firebase';
-import { doc, getDoc, getDocs , collection } from 'firebase/firestore';
+import { doc, getDoc, getDocs , collection , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
 import Maplocation from "./maplocation";
 
@@ -115,7 +115,7 @@ const Chat = () => {
       const docRef = doc(db, 'chartDataset', monitoring);
       const docSnapshot = await getDoc(docRef);
       setDataSet(docSnapshot.data());
-      console.log('Form data added to Firestore!');
+      console.log(docSnapshot);
     } catch (error) {
       console.error('Error adding form data to Firestore:', error);
     }
@@ -124,7 +124,7 @@ const Chat = () => {
 
   const Initaldata = async() => {
     try {
-      const docRef = doc(db, 'chartDataset', 'weathermonitoring');
+      const docRef = doc(db, 'chartDataset', 'weather-monitoring');
       const docSnapshot = await getDoc(docRef);
       setDataSet(docSnapshot.data());
       console.log('Form data added to Firestore!');
@@ -201,11 +201,11 @@ const Chat = () => {
         <img src={weather} width={'70%'} height={'70%'} />
         <h5>Weather Monitoring</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('volcaniceruption')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('volcanic-eruption')}}>
         <img src= {volcano} width={'70%'} height={'70%'} />
         <h5>Volcanic Eruption</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('extremedrougth')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('extreme-drougth')}}>
       <img src= {drought} width={'70%'} height={'70%'} />
         <h5>Extreme Drought</h5>
       </div>
@@ -223,7 +223,7 @@ const Chat = () => {
       </div>
       </div>
       <div className="boxrecontain">
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('heavyrain')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('heavy-rain')}}>
       <img src= {rain} width={'70%'} height={'70%'} />
         <h5>Heavy rain</h5>
       </div>
@@ -231,11 +231,11 @@ const Chat = () => {
       <img src= {slide} width={'70%'} height={'70%'} />
         <h5>Landslide</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('earthquick')} {...longPressEvent}>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('earthquake')} {...longPressEvent}>
         <img src={earthquake} width={'70%'} height={'70%'} />
         <h5>Earthquick</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('vehicularaccident')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('vehicular-accident')}}>
       <img src= {vehicleacc} width={'70%'} height={'70%'} />
         <h5>Vehicular Accident</h5>
       </div>
@@ -243,7 +243,7 @@ const Chat = () => {
       <img src= {housefire} width={'70%'} height={'70%'} />
         <h5>House fires</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('electricalaccident')}}>
+      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('electrical-accident')}}>
       <img src= {elecacc} width={'70%'} height={'70%'} />
         <h5>Electrical Accidents</h5>
       </div>
