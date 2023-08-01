@@ -26,8 +26,13 @@ const Alert = () => {
   const [warningtime, setWarningTime] = useState('');
   const [alertlocation, setAlertLocation] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [openMap, setOpenMap] = useState(false);
   const [database, setDatbase] = useState('landslide');
+
+  const [magnitude, setmagnitude] = useState('');
+  const [magchoice, setmagchoice] = useState('');
+  const [description, setdiscription] = useState('');
+  const [image, setimage] = useState('');
+  const [imagecolor, setimagecolor] = useState('');
 
   useEffect(() => {
     const getAllData = async () => {
@@ -79,11 +84,16 @@ const Alert = () => {
     setMessage(event.target.value);
   };
 
-  const openCoordinatesModat = () => {
-    setOpenMap(true)
+  const handleLocationChange = (event) => {
+    setAlertLocation(event.target.value)
   };
-  const closeCoordinatesModal = () => {
-    setOpenMap(false)
+
+   const handleChoices = (event) => {
+    setmagnitude(event.target.value)
+  };
+
+    const handleChoiceChange = (event) => {
+    setmagchoice(event.target.value)
   };
 
   const handleClick = async() => {
@@ -253,47 +263,109 @@ const Alert = () => {
         contentLabel="Example Modal"
         style={customStyles}
         >
-        <div className="container">
-        <div className="modal-content">
-          <h3>Alert</h3>
-          <div className="content1">
-            <label htmlFor="title">Title:</label>
-            <textarea
-              type="text"
-              id="title"
-              value={title}
-              onChange={handleTitleChange}
-            />
-            <label htmlFor="message">Message:</label>
+          <h2>Send Alert and Notification</h2>
+        <div className="alert-modal-container">
+          <div>
+            <label htmlFor="title">Alert Warning Level</label>
+            <select className='selectcontainer' value={title}
+              onChange={handleTitleChange}>
+              <option disabled value="">Select an option</option>
+              <option value = 'Red Warning'>Red Warning</option>
+              <option value = 'Orange Warning' >Orange Warning</option>
+              <option value = 'Yellow Warning'>Yellow Warning</option>
+              <option value = 'Green Warning'>Green Warning</option>
+              <option value = 'Blue Warning'>Blue Warning</option>
+            </select>
+            <label htmlFor="message">Notification Message</label>
             <textarea
               id="message"
               value={message}
               onChange={handleMessageChange}
             />
-            <label htmlFor="warningtime">Warning Time:</label>
-            <textarea
+            <label htmlFor="warningtime">Until when?</label>
+            <input
+              type='date'
               id="warningtime"
               value={warningtime}
               onChange={handleWarningTimeChange}
             />
-             <button onClick={openCoordinatesModat}>Get Location</button>
+             <label htmlFor="warningtime">Alert Location</label>
+            <input
+              id="warningtime"
+              value={alertlocation}
+              onChange={handleLocationChange}
+            />
           </div>
-          <button onClick={handleClick}>Send Notification</button>
+           <div>
+            <label htmlFor="title">Alert Warning Background</label>
+            <select className='selectcontainer' value={title}
+              onChange={handleTitleChange}>
+              <option disabled value="">Select an option</option>
+              <option value = 'red'>Red</option>
+              <option value = 'orange' >Orange</option>
+              <option value = 'yellow'>Yellow</option>
+              <option value = 'green'>Green</option>
+              <option value = 'blue'>Blue</option>
+            </select>
+            <label htmlFor="message">Alert Description</label>
+            <textarea
+              id="message"
+              value={message}
+              onChange={handleMessageChange}
+            />
+            <label htmlFor="warningtime">Image</label>
+            <input
+              type='file'
+              id="warningtime"
+              value={''}
+              onChange={handleWarningTimeChange}
+            />
+           <label htmlFor="title">Alert Magnitude</label>
+            <select className='selectcontainer'
+              onChange={handleChoiceChange}>
+              <option disabled value="">Select an option</option>
+              <option value = 'Magnitude'>Magnitude</option>
+              <option value = 'Wave Height' >Wave Height</option>
+              <option value = 'Heat Index'>Heat Index</option>
+              <option value = 'Flood Level'>Flood Level</option>
+            </select>
+             <label htmlFor="warningtime">{magchoicedd}</label>
+            {magchoice === 'Magnitude' && <input
+              id="warningtime"
+              value={magnitude}
+              onChange={handleChoices}
+            />}
+             {magchoice === 'Wave Height' &&<input
+              id="warningtime"
+              value={magnitude}
+              onChange= {handleChoices}
+            />}
+            {magchoice === 'Heat Index' &&<input
+              id="warningtime"
+              value={magnitude}
+              onChange={handleChoices}
+            />}
+            {magchoice === 'Flood Level' &&<input
+              id="warningtime"
+              value={magnitude}
+              onChange={handleChoices}
+            />}
+          </div>
         </div>
-      <ReactModal
-        isOpen={openMap}
-        onRequestClose={closeCoordinatesModal}
-        contentLabel="Get Coordinates"
-        style={customStyles}
-        >
-         <Maplocation
-         onMapClick={handleMapClick}
-         />
         </ReactModal>
-    </div>
-        </ReactModal>
-  </div>
+      </div>
     );
 };
 
 export default Alert;
+
+
+            // <label htmlFor="warningtime">Warning Time:</label>
+            // <textarea
+            //   id="warningtime"
+            //   value={warningtime}
+            //   onChange={handleWarningTimeChange}
+            // />
+          //    <button onClick={openCoordinatesModat}>Get Location</button>
+          // </div>
+          // <button onClick={handleClick}>Send Notification</button>
