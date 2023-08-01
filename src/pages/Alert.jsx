@@ -247,8 +247,7 @@ const Alert = () => {
 						<h2>Manage<b> Alerts and Notifications</b></h2>
 					</div>
 					<div className="col-sm-6">
-						<a onClick={() => {setModalIsOpen(true)}} href="#addEmployeeModal" className="btn btn-success" data-toggle="modal"><span>Send Alert and Notification</span></a>
-						<a href="#deleteEmployeeModal" className="btn btn-danger" data-toggle="modal"><span>Delete</span></a>						
+						<a onClick={() => {setModalIsOpen(true)}} href="#addEmployeeModal" className="btn btn-success" data-toggle="modal"><span>Send Alert and Notification</span></a>				
 					</div>
 				</div>
 			</div>
@@ -283,7 +282,8 @@ const Alert = () => {
       <th>Configure</th>
   </thead>
       <tbody>
-        {allData.map((item, index) => (
+        {
+          allData.map((item, index) => (
           <tr className='' key={index}>
             <td>
                   <span className="custom-checkbox">
@@ -298,11 +298,11 @@ const Alert = () => {
             <td>{getPropertyToDisplay(item)}</td>
             <td>{item.title}</td>
             <td>
-                  <a href="#editEmployeeModal" className="edit" data-toggle="modal"><FontAwesomeIcon  icon={faPenSquare}></FontAwesomeIcon></a>
                   <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon></a>
             </td>
           </tr>
-        ))}
+          ))
+        }
       </tbody>
     </table>
   </div>
