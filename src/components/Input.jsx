@@ -14,6 +14,9 @@ import { db, storage } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import '../style.css'
+import { auth } from "../firebase";
+import { updateProfile } from "firebase/auth";
+
 const Input = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
@@ -23,11 +26,14 @@ const Input = () => {
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  const userUID = data.user.uid
+  const userUID = "0WExfTKqtpb2Neu86MtX6YaIRM92"
   const adminUID = "mdrNgqcK8NPADFBCQqIa";
   const ChatID = adminUID.concat(userUID);
+  const UsernameAdmin = currentUser.displayName
+  // const userUID = data.user.uid
 
   const handleSend = async () => {
+
     if (img) {
       
       const storageRef = ref(storage, uuid());
@@ -53,15 +59,18 @@ const Input = () => {
         }
       );
     } else {
-      await updateDoc(doc(db, "chats", ChatID), {
+      await updateDoc(doc(db, "chats", 'mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92'), {
         messages: arrayUnion({
           id: uuid(),
           message: text,
           senderId: currentUser.uid,
+          senderUsername: UsernameAdmin,
           date: Timestamp.now(),
           chatdate: chatdate,
           chattime: chattime,
-          receiver: "username",
+          receiverId: data.user.uid,
+          receiverName: data.user.FullName,
+          typeOfUser: 'Admin',
           isRead: false
         }),
       });

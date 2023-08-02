@@ -31,6 +31,9 @@ const Message = ({ message }) => {
       <p>{message.message}</p>
       {message.img && <img src={message.img} alt="" />}
       <span>
+      {message.senderUsername} — {message.typeOfUser} 
+      </span>
+      <span>
       {message.chattime} — {message.chatdate} 
       </span>
     </div>
