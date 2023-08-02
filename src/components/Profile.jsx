@@ -26,8 +26,9 @@ const Profile = () => {
   const [newpassword, setnewpassword] = useState('')
   const [loading, setloading] = useState(false)
   const [location, setlocation] = useState(null)
+  const [permission, setPermission] = useState(Notification.permission);
   const fileInputRef = useRef(null);
-  
+
   const update = async() => {
     
     try {
@@ -179,6 +180,20 @@ const handlePasswordUpdate = () => {
     askForLocation();
   }
 
+
+  useEffect(() => {
+    setPermission(Notification.permission);
+  }, []);
+
+  const requestNotificationPermission = async () => {
+    try {
+      const permissionResult = await Notification.requestPermission();
+      setPermission(permissionResult);
+    } catch (error) {
+      console.error('Error requesting notification permission:', error);
+    }
+  };
+
   
 
 
@@ -224,10 +239,6 @@ const handlePasswordUpdate = () => {
   };
   return (
     <div className="chatContainer">
-     {location ? ( null
-      ) : (
-        <p>Requesting location...</p>
-      )}
     {loading && <div className="loading-modal-overlay">
       <div className="loading-modal">
         <div className="loading-spinner"></div>
@@ -269,7 +280,7 @@ const handlePasswordUpdate = () => {
             <div>
               <h4>Manage Notifications</h4>
             </div>
-            <button className='managebutton'>Manage</button>
+            <button onClick={requestNotificationPermission} className='managebutton'>Manage</button>
           </div>
           <div className="editinfocontainer">
             <div>
