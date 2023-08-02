@@ -25,7 +25,10 @@ const Profile = () => {
   const [currentpassword, setcurrentpassword] = useState('')
   const [newpassword, setnewpassword] = useState('')
   const [loading, setloading] = useState(false)
+  const [location, setlocation] = useState(null)
+  const [permission, setPermission] = useState(Notification.permission);
   const fileInputRef = useRef(null);
+
   const update = async() => {
     
     try {
@@ -108,18 +111,31 @@ const Profile = () => {
       }
     }
 
-  const updatepassword = async (currentPassword, newPassword) => {
-  try {
-     const currentuser = auth.currentUser;
-    const credential = EmailAuthProvider.credential(currentuser.email, currentPassword);
-    await reauthenticateWithCredential(currentuser, credential);
-    await updatePassword(currentuser.email, newPassword);
+  const updatepassword = async () => {
+    setloading(true)
+    try {
+      const currentuser = auth.currentUser;
 
-    console.log("Password updated successfully!");
-  } catch (error) {
-    console.error("Error updating password:", error);
-  }
-};
+      if (!currentuser) {
+        console.error("User is not authenticated.");
+        return;
+      }
+
+      const credential = EmailAuthProvider.credential(currentUser.email, currentpassword);
+      await reauthenticateWithCredential(currentuser,credential);
+
+      await updatePassword(currentuser,newpassword).then(() => {
+          setloading(false)
+          alert('Password successfully changed!')
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      })
+
+    } catch (error) {
+      console.error("Error updating password:", error.message);
+    }
+  };
 
 const handlePasswordUpdate = () => {
     updatepassword(currentpassword, newpassword);
@@ -142,6 +158,43 @@ const handlePasswordUpdate = () => {
   
     getUserData();
   }, []);
+  
+  const askForLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setlocation({ latitude, longitude });
+        },
+        (error) => {
+          console.error('Error getting location:', error.message);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  };
+
+  const locationrequest = () => {
+    alert("This website wants to access your location. Click 'Allow' to continue.");
+    askForLocation();
+  }
+
+
+  useEffect(() => {
+    setPermission(Notification.permission);
+  }, []);
+
+  const requestNotificationPermission = async () => {
+    try {
+      const permissionResult = await Notification.requestPermission();
+      setPermission(permissionResult);
+    } catch (error) {
+      console.error('Error requesting notification permission:', error);
+    }
+  };
+
+  
 
 
   const customStyles = {
@@ -227,13 +280,13 @@ const handlePasswordUpdate = () => {
             <div>
               <h4>Manage Notifications</h4>
             </div>
-            <button className='managebutton'>Manage</button>
+            <button onClick={requestNotificationPermission} className='managebutton'>Manage</button>
           </div>
           <div className="editinfocontainer">
             <div>
               <h4>Manage Location</h4>
             </div>
-            <button className='managebutton' >Manage</button>
+            <button onClick={locationrequest} className='managebutton' >Manage</button>
           </div>
         </div>
         </div>}
@@ -250,14 +303,14 @@ const handlePasswordUpdate = () => {
           <h2>Update {changes}</h2>
            <br/>
           <div className="input-container">
-            {changes === 'Email' && <input value = {email} onChange={(event) => {setemail(event.target.value)}} placeholder='New Email Address' />}
-            {changes === 'Password' && <input onChange = {(event) => {setnewpassword(event.target.value)}} placeholder='New Password' />}
+            {changes === 'Email' && <input value = {email} onChange={(event) => setemail(event.target.value)} placeholder='New Email Address' />}
+            {changes === 'Password' && <input onChange = {(event) => setnewpassword(event.target.value)} placeholder='New Password' />}
             {changes === 'Username' && <input value = {displayname} onChange={(event) => setdisplayname(event.target.value)}placeholder='New Username' />}
             <FontAwesomeIcon icon={changes === 'Email' ? faEnvelope : changes === 'Password' ? faLock : faUser} className="icon" />
           </div>
           <p>To confirm, Please type your password</p>
            <div className="input-container">
-            <input onChange = {(event) => {setcurrentpassword(event.target.value)}} placeholder='Confirm Password' />
+            <input onChange = {(event) => setcurrentpassword(event.target.value)} placeholder='Confirm Password' />
             <FontAwesomeIcon icon={faLock} className="icon" />
           </div>
           <br/>
