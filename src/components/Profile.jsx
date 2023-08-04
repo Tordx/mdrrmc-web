@@ -80,7 +80,6 @@ const Profile = () => {
         const imageURL = await getDownloadURL(storageRef);
 
         const docRef = await addDoc(collection(db, 'images'), { imageURL });
-
         await updateProfile(currentuser, {
         displayName: displayname,
         email: email,

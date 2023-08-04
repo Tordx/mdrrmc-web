@@ -1,7 +1,7 @@
 import React , {useEffect , useState} from 'react';
 import '../style.css'
 import { collection, getDocs } from 'firebase/firestore'
-import { db } from '../firebase'
+import { db, storage } from '../firebase'
 import '../style.css'
 import '../newstyle.css'
 import Sidebar from '../components/navbar/sidebar';
@@ -24,6 +24,7 @@ import LandSlide from "../forms/LandSlideForm";
 import VehicularAccident from "../forms/VehicularAccidentForm";
 import HouseFire from "../forms/HouseFire";
 import ElectricalAccident from "../forms/ElectricalAccident";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const Alert = () => {
 
@@ -36,7 +37,7 @@ const Alert = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [addmonitoringModal, setAddmonitoringModal] = useState(false);
   const [database, setDatbase] = useState('landslide');
-
+  const [loading, setloading] = useState(false)
   const [magnitude, setmagnitude] = useState('');
   const [magchoice, setmagchoice] = useState('');
   const [description, setdiscription] = useState('');
@@ -97,6 +98,10 @@ const Alert = () => {
   const handleClick = async() => {
     SendNotif(title, message , warningtime)
     try {
+        setloading(true)
+        const storageRef = ref(storage, `images/${image.name}`);
+        await uploadBytes(storageRef, image);
+        const imageURL = await getDownloadURL(storageRef);
       const earthquakeRef = doc(db, 'notifications' , uuid());
       const notifData = ({
         title: title,
@@ -104,16 +109,34 @@ const Alert = () => {
         warningtime: warningtime,
         id: uuid(),
         time: Timestamp.now(),
+        image: imageURL,
         alertlocation: alertlocation,
 
       });
       await setDoc(earthquakeRef , notifData);
-
+      await alertdata()
       console.log('Form data added to Firestore!');
     } catch (error) {
       console.error('Error adding form data to Firestore:', error);
     }
   }
+
+  const alertdata = async() => {
+    const earthquakeRef = doc(db, 'monitoring-alert' , uuid());
+    const alertData = ({
+          
+          title: title,
+          message: message,
+          warningtime: warningtime,
+          id: uuid(),
+          imagebackground: imagecolor,
+          image: image,
+          magnitude: magnitude,
+          alertlocation: alertlocation,
+        })
+      await setDoc(earthquakeRef , alertData);
+  }
+
   const monitoringdata = (monitorig) => {
     setDatbase(monitorig)
   }
@@ -150,9 +173,8 @@ const Alert = () => {
         return item.damage;
       case 'electrical-accident':
         return item.damage;
-      // Add cases for other databases if needed
       default:
-        return ''; // Return some default value if the database doesn't match any case
+        return ''; 
     }
   };
   
@@ -350,7 +372,7 @@ const Alert = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <label htmlFor="warningtime">Until when?</label>
+            <label htmlFor="date">Until when?</label>
             <input
               type='date'
               id="warningtime"
@@ -363,18 +385,17 @@ const Alert = () => {
               value={alertlocation}
               onChange={(e) => setAlertLocation(e.target.value)}
             />
-            <label htmlFor="warningtime">Image</label>
+            <label htmlFor="image">Image</label>
             <input
               type='file'
               id="image"
-              value={image}
               onChange={handleImageChange}
             />
           </div>
            <div>
-            <label htmlFor="title">Alert Warning Background</label>
-            <select className='selectcontainer' value={imagecolor}
-              onChange={(e) => setimagecolor(e.target.event)}>
+            <label htmlFor="imagecolor">Alert Warning Background</label>
+            <select id ='imagecolor' className='selectcontainer' value={imagecolor}
+              onChange={(e) => setimagecolor(e.target.value)}>
               <option disabled value="">Select an option</option>
               <option value = 'red'>Red</option>
               <option value = 'orange' >Orange</option>
@@ -386,7 +407,7 @@ const Alert = () => {
             <textarea
               id="message"
               value={description}
-              onChange={(e) => setdiscription(e.target.event)}
+              onChange={(e) => setdiscription(e.target.value)}
             />
            <label htmlFor="title">Alert Index</label>
             <select className='selectcontainer'
