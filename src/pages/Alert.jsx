@@ -43,6 +43,8 @@ const Alert = () => {
   const [description, setdiscription] = useState('');
   const [image, setimage] = useState('');
   const [imagecolor, setimagecolor] = useState('');
+  const [type, settype] = useState('');
+  const [icon, seticon] = useState('')
 
   useEffect(() => {
     const getAllData = async () => {
@@ -109,7 +111,7 @@ const Alert = () => {
         warningtime: warningtime,
         id: uuid(),
         time: Timestamp.now(),
-        image: imageURL,
+        image: image,
         alertlocation: alertlocation,
 
       });
@@ -126,13 +128,14 @@ const Alert = () => {
     const alertData = ({
           
           title: title,
-          message: message,
+          description: message,
           warningtime: warningtime,
           id: uuid(),
           imagebackground: imagecolor,
           image: image,
           magnitude: magnitude,
           alertlocation: alertlocation,
+          alerttype: type,
         })
       await setDoc(earthquakeRef , alertData);
   }
@@ -441,6 +444,20 @@ const Alert = () => {
               value={magnitude}
               onChange={handleChoices}
             />}
+            <label htmlFor="imagecolor">Alert Warning Type</label>
+            <select id ='imagecolor' className='selectcontainer' value={type}
+              onChange={(e) => settype(e.target.value)}>
+              <option disabled value="">Select an option</option>
+              <option value = 'flood'>flood</option>
+              <option value = 'quake' >quake</option>
+              <option value = 'temparature'>temparature</option>
+              <option value = 'landslide'>landslide</option>
+              <option value = 'drought'>drought</option>
+              <option value = 'storm'>storm</option>
+              <option value = 'tornado'>tornado</option>
+              <option value = 'volcano'>volcano</option>
+              <option value = 'wave'>wave</option>
+            </select>
            <button onClick={handleClick}>Send</button>
           </div>
         </div>
