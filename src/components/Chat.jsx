@@ -95,10 +95,8 @@ const Chat = () => {
       right: 'auto',
       bottom: 'auto',
       transform: 'translate(-50%, -50%)',
-      minWidth: '700px',
-      maxWidth: '700px',
-      maxHeight: '700px',
-      maxHeight: '700px',
+      minWidth: '100%',
+      minHeight: '100%',
     },
   };
 
@@ -137,14 +135,11 @@ const Chat = () => {
   const handleLongPress = async(monitoring) => {
     console.log('handleLongPress:', monitoring);
       try {
-        const querySnapshot = await getDocs(collection(db, monitoring)); // Replace 'user' with your collection name
-        const dataArray = querySnapshot.docs.map((doc) => ({ coordinates: doc.data().coordinates }));        // setAllData(dataArray) 
+        const querySnapshot = await getDocs(collection(db, monitoring)); 
+        const dataArray = querySnapshot.docs.map((doc) => ({ coordinates: doc.data().coordinates }));
         console.log(dataArray);
-        console.log(Array.isArray(dataArray)); // Check if initialMarkers is an array
+        console.log(Array.isArray(dataArray));
         const convertedData = dataArray.map((item) => item.coordinates);
-        // console.log('convertedData');
-        // console.log(convertedData);
-        // console.log('convertedData');
         setInitialMarker(convertedData)
       } catch (error) {
         console.error('Error getting data: ', error);
@@ -164,8 +159,12 @@ const Chat = () => {
   },[])
   
   return (
-    <div className="dashboard">
-       <div className="head">
+    <>
+    {modalIsOpen ?
+        <Maplocation
+        initialMarker={initialMarker}
+        /> : <div className="dashboard">
+        <div className="head">
       <h1 >Admin Dashboard</h1>
       
       <h4 >Real-time Visualization</h4>
@@ -249,33 +248,10 @@ const Chat = () => {
       </div>
       </div>
     </div>
-    <ReactModal
-  isOpen={modalIsOpen}
-  onRequestClose={closeModal}
-  contentLabel="Example Modal"
-  style={customStyles}
->
-<Maplocation
-initialMarker={initialMarker}
-/>
-  {/* {activeModal === 'earthquick' && <EarthQuickForm isOpen={true} />}
-  {activeModal === 'weathermonitoring' && <WeatherMonitoringForm isOpen={true} />}
-  {activeModal === 'volcaniceruption' && <VolcanicEruptionForm isOpen={true} />}
-  {activeModal === 'extremedrougth' && <ExtremeDrougth isOpen={true} />}
-  {activeModal === 'tsunami' && <Tsunami isOpen={true} />}
-  {activeModal === 'tornado' && <Tornado isOpen={true} />}
-  {activeModal === 'flood' && <Flood isOpen={true} />}
-  {activeModal === 'heavyrain' && <HeavyRain isOpen={true} />}
-  {activeModal === 'landslide' && <LandSlide isOpen={true} />}
-  {activeModal === 'vehicularaccident' && <VehicularAccident isOpen={true} />}
-  {activeModal === 'housefire' && <HouseFire isOpen={true} />}
-  {activeModal === 'electricalaccident' && <ElectricalAccident isOpen={true} />} */}
-    {/* <EarthQuickForm/> */}
-    {/* <Weather/> */}
-     {/* <Messages/>
-      <Input/> */}
-</ReactModal>
+    
   </div>
+    }
+    </>
   );
 };
 

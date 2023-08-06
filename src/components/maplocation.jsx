@@ -10,7 +10,7 @@ const Maplocation = ({ onMapClick, initialMarker }) => {
       container: 'map', // ID of the div element to render the map
       style: 'mapbox://styles/kalokalo/cldzyog2k000a01t401qifylc', // Mapbox base style
       center: [120.2307078878246, 16.032108026014853], // Initial map center coordinates (e.g., [-122.4194, 37.7749])
-      zoom: 12, // Initial zoom level
+      zoom: 10, // Adjust the initial zoom level to fit the desired area
     });
 
     const markers = [];
@@ -50,7 +50,13 @@ const Maplocation = ({ onMapClick, initialMarker }) => {
     return () => map.remove();
   }, [initialMarker, onMapClick]);
 
-  return <div id="map" style={{ width: '100%', height: '400px' }} />;
+  // Use CSS to style the map container to fit the screen
+  const mapContainerStyle = {
+    width: '100%', // Use 100% of the available width
+    height: '100vh', // Use 100% of the viewport height
+  };
+
+  return <div id="map" style={mapContainerStyle} />;
 };
 
 export default Maplocation;
