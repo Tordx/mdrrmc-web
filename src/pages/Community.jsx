@@ -1,5 +1,5 @@
 
-import { doc, onSnapshot, updateDoc, collection, getDocs, getDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, collection, getDocs, getDoc, Firestore, deleteDoc, setDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
@@ -22,6 +22,8 @@ const Community = () => {
     const { dispatch } = useContext(ChatContext);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [notif, setnotif] = useState([]);
+    const [postid, setpostid] = useState([]);
+    const [likes, setlikes] = useState([])
 
     useEffect(() => {
         const getChats = () => {
@@ -37,29 +39,36 @@ const Community = () => {
       }, [currentUser.uid]);
 
 
-      useEffect(() => {
+        useEffect(() => {
         const getPosts = () => {
           const unsub = onSnapshot(collection(db, "community-posts"), (snapshot) => {
-            const postsData = snapshot.docs.map((doc) => doc.data());
+            const postsData = snapshot.docs.map((doc) => ({ ...doc.data(), docid: doc.id }));
             setpost(postsData);
-            console.log(postsData);
           });
-          return () => {
-            unsub();
-          };
+          return unsub;
         };
+
         const getNoif = () => {
           const unsub = onSnapshot(collection(db, "notifications"), (snapshot) => {
             const notifdata = snapshot.docs.map((doc) => doc.data());
             setnotif(notifdata);
             console.log(notifdata);
           });
-          return () => {
-            unsub();
-          };
+          return unsub;
         };
+
+        const getLikes = () => {
+          const unsub = onSnapshot(collection(db, "community-likes"), (snapshot) => {
+            const likesdata = snapshot.docs.map((doc) => doc.data());
+            const extractedLikes = likesdata.map((like) => like.postid);
+            setlikes(extractedLikes);
+          });
+          return unsub;
+        };
+
         getNoif();
         getPosts();
+        getLikes();
       }, []);
 
       const customStyles = {
@@ -103,8 +112,42 @@ const Community = () => {
           console.error("Error updating isRead value:", error);
         }
       };
-    console.log(chats);
-    console.log('chats');
+
+    const handleButtonClick = async (postid, likesCount, docid) => {
+    if (currentUser.displayName) {
+      const existingStatus = likes.includes(postid);
+      const newStatus = !existingStatus;
+
+      setlikes((prevLikes) =>
+        newStatus ? [...prevLikes, postid] : prevLikes.filter((id) => id !== postid)
+      );
+
+      await handleReaction(postid, currentUser.displayName, newStatus, likesCount, docid);
+    }
+  };
+  
+ const handleReaction = async (postid, displayName, status, likesCount, docid) => {
+    const likeRef = doc(db, "community-likes", docid);
+    const postRef = doc(db, "community-posts", postid);
+
+    if (status) {
+      // User likes the post
+      const newLike = {
+        userid: currentUser.uid,
+        displayName: displayName,
+        postid: postid,
+        likeid: "",
+        status: true,
+        time: "",
+      };
+      await setDoc(likeRef, newLike);
+      await updateDoc(postRef, { likes: likesCount + 1 });
+    } else {
+      await deleteDoc(likeRef);
+      await updateDoc(postRef, { likes: likesCount - 1 });
+    }
+  };
+  
   return (
     <div className="homecontainer">
       <div className="darkcontainer">
@@ -112,39 +155,40 @@ const Community = () => {
         
         <div className="feedContainer">
   {post.map((p) => {
-      
-    const firstDataItem = p.time
-    const timeInSeconds = firstDataItem?.seconds 
-    const date = new Date(timeInSeconds * 1000);
-    const formattedTime = date
-    return (
-      <div className="feedItem" key={p.docid}>
-        <div className="postHeader">
-          <img className="userProfileImage" src={p.photoURL} alt="User Profile" />
-          <div className="userInfo">
-            <p className="displayName">{p.displayName}</p>
-            <ReactTimeago className="time" date={formattedTime} />
+        const firstDataItem = p.time;
+        const timeInSeconds = firstDataItem?.seconds;
+        const date = new Date(timeInSeconds * 1000);
+        const formattedTime = date;
+        const maplikes = likes.includes(p.postid);
+        return (
+          <div className="feedItem" key={p.docid}>
+          <div className="postHeader">
+              <img className="userProfileImage" src={p.photoURL} alt="User Profile" />
+              <div className="userInfo">
+                <p className="displayName">{p.displayName}</p>
+                <ReactTimeago className="time" date={formattedTime} />
+              </div>
+            </div>
+            <div className="postStats">
+              <span
+                onClick={() => handleButtonClick(p.postid, p.likes, p.docid)}
+                className={maplikes ? "reactions-active" : "reactions-inactive"}
+              >
+                <FontAwesomeIcon icon={faThumbsUp} />
+                <p>Liked Post {p.likes}</p>
+              </span>
+              <span className="reactions-inactive">
+                <FontAwesomeIcon icon={faMessage} />
+                <p>Comments {p.comment}</p>
+              </span>
+              <span className="reactions-inactive">
+                <FontAwesomeIcon icon={faShare} />
+                <p>Shares {p.shares}</p>
+              </span>
+            </div>
           </div>
-        </div>
-        {p.image && <img className="postImage" src={p.image} alt="Post" />}
-        <p className="postDescription">{p.description}</p>
-        <div className="postStats">
-          <span>
-            <FontAwesomeIcon icon={faThumbsUp} /> 
-            <p>Liked Post {p.likes}</p>
-          </span>
-          <span>
-            <FontAwesomeIcon icon={faMessage} /> 
-            <p>Comments {p.comment}</p>
-          </span>
-          <span>
-            <FontAwesomeIcon icon={faShare} /> 
-            <p>Shares {p.shares}</p>
-          </span>
-        </div>
-      </div>
-    );
-  })}
+        );
+      })}
 </div>
   <div>
   <div class="notiflist">
@@ -196,16 +240,12 @@ const Community = () => {
       ))}
       </div>
       </div>
-  </div>
-  <ReactModal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-        style={customStyles}
-      >
+      
+      <div className="chatbox">
       <Messages/>
       <Input/>
-      </ReactModal>
+      </div>
+  </div>
       
   </div>
   )

@@ -593,25 +593,61 @@ input:focus {
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
-  color: #888;
   margin-top: 20px;
 }
 
-.postStats span{
+.reactions-active {
   color: inherit; 
   outline: none;
   width: 30%;
   display: flex;
   justify-content: center;
-  align-self: center;
+  align-content: center;
   flex-direction: row;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  color:#4285F4;
 }
+
+.reactions-inactive {
+  color: inherit; 
+  outline: none;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: row;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  color: #888;
+}
+
+.postStats span:hover{
+
+  background-color: #e2e2e2;
+
+}
+
+
 
 .postStats svg {
   width: 25px;
   height: 25px;
-  margin-right: 5px;
+  margin-right: 10px;
 }
+
+.reactions-active p {
+  margin: 0;
+  font-weight: bold;
+}
+.reactions-inactive p {
+  margin: 0;
+}
+
 
 .postHeader {
   display: flex;
@@ -1160,4 +1196,8 @@ table.table .avatar {
   background-color: transparent;
   border-radius: 5px;
   color: black;
+}
+.chatbox {
+  margin: 1.5rem;
+  width: 30%;
 }

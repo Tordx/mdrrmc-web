@@ -570,8 +570,10 @@ body {
 .messages {
   background-color: #f6f6f6;
   padding: 10px;
+  border-radius: 10px;
   height: calc(100% - 160px);
   overflow-y: scroll;
+  margin-bottom: 10px;
 }
 
 .messages .message {
@@ -606,6 +608,7 @@ body {
   padding: 5px 10px;
   border-radius: 0px 5px 5px 5px;
   max-width: max-content;
+  font-size: 15px;
 }
 
 .messages .message .messageContent img {
@@ -626,12 +629,12 @@ body {
   background-color: var(--primary-color);
   color: white;
   border-radius: 10px 0px 10px 10px;
-  font-size: 10px;
+  font-size: 15px;
 }
 
 /* Style the input area */
 .input {
-  height: 50px;
+  height: 75px;
   width: 100%;
   background-color: white;
   padding: 10px;
@@ -639,6 +642,7 @@ body {
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid var(--border-color);
+  border-radius: 10px;
   font-size: 25px;
 }
 
@@ -659,16 +663,16 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0px;
-  margin-bottom: 20px;
 }
 
 .input .send button {
-  padding: 25px;
+  padding: 10px;
   color: white;
-  background-color: var(--primary-color);
+  background-color: black;
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  border-radius: 10px;
 }
 .sidebar .navbar {
   display: block;
