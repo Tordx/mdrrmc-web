@@ -589,19 +589,30 @@ input:focus {
 }
 
 .postStats {
-  margin-top: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 14px;
   color: #888;
+  margin-top: 20px;
 }
 
-.postStats a{
-  text-decoration: none; 
+.postStats span{
   color: inherit; 
   outline: none;
-  cursor: pointer;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: row;
 }
+
+.postStats svg {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+
 .postHeader {
   display: flex;
   align-items: center;
@@ -624,6 +635,7 @@ input:focus {
 .displayName {
   font-size: 16px;
   font-weight: bold;
+  margin-bottom: 0rem;
 }
 
 .time {

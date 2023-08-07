@@ -114,7 +114,7 @@ const Community = () => {
   {post.map((p) => {
       
     const firstDataItem = p.time
-    const timeInSeconds = firstDataItem.seconds
+    const timeInSeconds = firstDataItem?.seconds 
     const date = new Date(timeInSeconds * 1000);
     const formattedTime = date
     return (
@@ -129,15 +129,18 @@ const Community = () => {
         {p.image && <img className="postImage" src={p.image} alt="Post" />}
         <p className="postDescription">{p.description}</p>
         <div className="postStats">
-          <a className="likes">
-            <FontAwesomeIcon icon={faThumbsUp} /> Liked Post {p.likes}
-          </a>
-          <a className="likes">
-            <FontAwesomeIcon icon={faMessage} /> Comments {p.comment}
-          </a>
-          <a className="shares">
-            <FontAwesomeIcon icon={faShare} /> Shares {p.shares}
-          </a>
+          <span>
+            <FontAwesomeIcon icon={faThumbsUp} /> 
+            <p>Liked Post {p.likes}</p>
+          </span>
+          <span>
+            <FontAwesomeIcon icon={faMessage} /> 
+            <p>Comments {p.comment}</p>
+          </span>
+          <span>
+            <FontAwesomeIcon icon={faShare} /> 
+            <p>Shares {p.shares}</p>
+          </span>
         </div>
       </div>
     );
