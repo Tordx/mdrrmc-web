@@ -157,13 +157,22 @@ const Chat = () => {
   useEffect(() => {
     Initaldata()
   },[])
+
+    const handleMapClick = (coordinates) => {
+    console.log('Map clicked:', coordinates);
+    // Do something with the coordinates when the map is clicked
+  };
   
   return (
     <>
     {modalIsOpen ?
+        <>
         <Maplocation
+        onMapClick={handleMapClick}
         initialMarker={initialMarker}
-        /> : <div className="dashboard">
+        />
+        <button onClick={() => setModalIsOpen(false)} className="gobackbutton">Back</button>
+        </> : <div className="dashboard">
         <div className="head">
       <h1 >Admin Dashboard</h1>
       

@@ -1140,3 +1140,12 @@ table.table .avatar {
 .uploadImage {
   margin-top: 2.5rem;
 }
+
+.gobackbutton {
+  position: absolute;
+  top: 1.5rem;
+  left: 17rem;
+  background-color: transparent;
+  border-radius: 5px;
+  color: black;
+}
