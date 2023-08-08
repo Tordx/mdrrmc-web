@@ -169,6 +169,8 @@ const Community = () => {
                 <ReactTimeago className="time" date={formattedTime} />
               </div>
             </div>
+             {p.image && <img className="postImage" src={p.image} alt="Post" />}
+            <p className="postDescription">{p.description}</p>
             <div className="postStats">
               <span
                 onClick={() => handleButtonClick(p.postid, p.likes, p.docid)}

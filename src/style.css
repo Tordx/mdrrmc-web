@@ -571,7 +571,7 @@ body {
   background-color: #f6f6f6;
   padding: 10px;
   border-radius: 10px;
-  height: calc(100% - 160px);
+  height: 90%;
   overflow-y: scroll;
   margin-bottom: 10px;
 }
