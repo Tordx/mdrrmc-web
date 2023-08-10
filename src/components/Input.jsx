@@ -26,11 +26,15 @@ const Input = () => {
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  const userUID = "0WExfTKqtpb2Neu86MtX6YaIRM92"
+  const userUID = data.user.uid
   const adminUID = "mdrNgqcK8NPADFBCQqIa";
   const ChatID = adminUID.concat(userUID);
   const UsernameAdmin = currentUser.displayName
-  // const userUID = data.user.uid
+  // const userUIDs = data.user.uid
+  console.log('userUIDs');
+  console.log(userUID);
+  console.log('userUIDs');
+
 
   const handleSend = async () => {
 
@@ -59,7 +63,7 @@ const Input = () => {
         }
       );
     } else {
-      await updateDoc(doc(db, "chats", 'mdrNgqcK8NPADFBCQqIa0WExfTKqtpb2Neu86MtX6YaIRM92'), {
+      await updateDoc(doc(db, "chats", ChatID), {
         messages: arrayUnion({
           id: uuid(),
           message: text,
