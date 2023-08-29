@@ -24,21 +24,17 @@ const Tornado = () => {
       backgroundColor: 'rgba(0, 0, 0, 0.75)',
     },
     content: {
-      border: '1px solid #ccc',
-      borderRadius: '4px',
-      padding: '20px',
       top: '50%',
       left: '50%',
       right: 'auto',
       bottom: 'auto',
       transform: 'translate(-50%, -50%)',
-      minWidth: '700px',
-      maxWidth: '700px',
-      maxHeight: '700px',
-      maxHeight: '700px',
+      minWidth: '90%',
+      maxWidth: '100%',
+      minHeight: '90%',
+      maxHeight: '90%',
     },
   };
-
   const handleMapClick = (coordinates) => {
     console.log('coordinates');
     console.log(coordinates);
@@ -159,6 +155,7 @@ const Tornado = () => {
          <Maplocation
          onMapClick={handleMapClick}
          />
+          <button onClick={() => setModalIsOpen(false)} className="gobackbuttonalert">Back</button>
         </ReactModal>
     </div>
   );
