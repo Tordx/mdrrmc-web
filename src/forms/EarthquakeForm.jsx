@@ -6,7 +6,7 @@ import ReactModal from "react-modal";
 import Maplocation from '../components/maplocation';
 
 
-const EarthQuickForm = () => {
+const EarthquakeForm = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -170,4 +170,4 @@ const EarthQuickForm = () => {
   );
 };
 
-export default EarthQuickForm;
+export default EarthquakeForm;

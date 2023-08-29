@@ -29,7 +29,7 @@ import vehicleacc from '../img/img/6hkpBfL.png'
 import housefire from '../img/img/eQ8MoBj.png'
 import elecacc from '../img/img/wg409Ru.png'
 import LongPress from "./LongPress";
-import EarthQuickForm from "../forms/EarthQuickForm";
+import EarthquakeForm from "../forms/EarthquakeForm";
 import WeatherMonitoringForm from "../forms/WeatherMonitoringForm";
 import VolcanicEruptionForm from "../forms/VolcanicEruptionForm";
 import ExtremeDrougth from "../forms/ExtremeDrougth";
@@ -241,7 +241,7 @@ const Chat = () => {
       </div>
       <div className="monitoringbutton" onClick={() => handleBoxClick('earthquake')} {...longPressEvent}>
         <img src={earthquake} width={'70%'} height={'70%'} />
-        <h5>Earthquick</h5>
+        <h5>Earthquake</h5>
       </div>
       <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('vehicular-accident')}}>
       <img src= {vehicleacc} width={'70%'} height={'70%'} />

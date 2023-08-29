@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { doc , Timestamp  , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
-import EarthQuickForm from "../forms/EarthQuickForm";
+import EarthquakeForm from "../forms/EarthquakeForm";
 import WeatherMonitoringForm from "../forms/WeatherMonitoringForm";
 import VolcanicEruptionForm from "../forms/VolcanicEruptionForm";
 import ExtremeDrougth from "../forms/ExtremeDrougth";
@@ -468,7 +468,7 @@ const Alert = () => {
   contentLabel="Example Modal"
   style={customStyles}
 >
-  {database === 'earthquake' && <EarthQuickForm isOpen={true} />}
+  {database === 'earthquake' && <EarthquakeForm isOpen={true} />}
   {database === 'weather-monitoring' && <WeatherMonitoringForm isOpen={true} />}
   {database === 'volcanic-eruption' && <VolcanicEruptionForm isOpen={true} />}
   {database === 'extreme-drougth' && <ExtremeDrougth isOpen={true} />}
