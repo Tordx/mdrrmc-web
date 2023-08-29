@@ -1197,6 +1197,14 @@ table.table .avatar {
   border-radius: 5px;
   color: black;
 }
+.gobackbuttonalert {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  background-color: transparent;
+  border-radius: 5px;
+  color: black;
+}
 .chatbox {
   margin: 1.5rem;
   width: 30%;
