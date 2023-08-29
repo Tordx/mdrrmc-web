@@ -11,8 +11,11 @@ import ReactModal from "react-modal";
 import sidebar_menu from "../components/navbar/sidebarmenu";
 import Sidebar from "../components/navbar/sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical, faMessage, faShare, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faMessage, faPaperPlane, faShare, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import ReactTimeago from "react-timeago";
+import { FastForwardTwoTone } from "@mui/icons-material";
+import {Timestamp} from "firebase/firestore";
+import generateRandomString from "../components/autogeneratenumber";
 
 const Community = () => {
 
@@ -23,8 +26,11 @@ const Community = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [notif, setnotif] = useState([]);
     const [postid, setpostid] = useState([]);
-    const [likes, setlikes] = useState([])
-
+    const [likes, setlikes] = useState([]);
+    const [likedata, setlikedata] = useState([])
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
+    const [opencomment, setopencomment] = useState(false)
     useEffect(() => {
         const getChats = () => {
           const unsub = onSnapshot(doc(db, "userChats",'mdrNgqcK8NPADFBCQqIa'), (doc) => {
@@ -62,13 +68,21 @@ const Community = () => {
             const likesdata = snapshot.docs.map((doc) => doc.data());
             const extractedLikes = likesdata.map((like) => like.postid);
             setlikes(extractedLikes);
+            setlikedata(likesdata)
           });
           return unsub;
         };
-
+         const getComments = () => {
+          const unsub = onSnapshot(collection(db, "community-comments"), (snapshot) => {
+            const commentdata = snapshot.docs.map((doc) => doc.data());
+            setComments(commentdata);
+          });
+          return unsub;
+        };
         getNoif();
         getPosts();
         getLikes();
+        getComments();
       }, []);
 
       const customStyles = {
@@ -122,32 +136,65 @@ const Community = () => {
         newStatus ? [...prevLikes, postid] : prevLikes.filter((id) => id !== postid)
       );
 
-      await handleReaction(postid, currentUser.displayName, newStatus, likesCount, docid);
+      await handleReaction(postid, currentUser.displayName, newStatus, likesCount);
     }
   };
   
- const handleReaction = async (postid, displayName, status, likesCount, docid) => {
-    const likeRef = doc(db, "community-likes", docid);
-    const postRef = doc(db, "community-posts", postid);
-
-    if (status) {
-      // User likes the post
+ const handleReaction = async (postid, displayName, status, likesCount) => {
+  const id = generateRandomString();
+  const likeData = likedata.find(like => like.postid === postid);
+  const newLikeRef = doc(db, "community-likes", id);
+  const postRef = doc(db, "community-posts", postid);
+    if (likeData) {
+    const likeRef = doc(db, "community-likes", likeData.docid);
+    await deleteDoc(likeRef);
+    await updateDoc(postRef, { likes: likesCount - 1 });
+    } else if (status) {
       const newLike = {
         userid: currentUser.uid,
         displayName: displayName,
         postid: postid,
         likeid: "",
         status: true,
-        time: "",
+        docid: id,
+        time: Timestamp.now(),
       };
-      await setDoc(likeRef, newLike);
+      await setDoc(newLikeRef, newLike);
       await updateDoc(postRef, { likes: likesCount + 1 });
-    } else {
-      await deleteDoc(likeRef);
-      await updateDoc(postRef, { likes: likesCount - 1 });
-    }
-  };
-  
+  } 
+ }
+
+   const handleSubmit = async (postid, comment) => {
+    const id = generateRandomString()
+    const commentRef = doc(db, "community-comments", id);
+    const postRef = doc(db, "community-posts", postid);
+    const newCommentData = {
+      commentdata: newComment,
+      time: Timestamp.now(),
+      commenterimage: currentUser.photoURL,
+      commentername: currentUser.displayName,
+      postid: postid,
+      docid: id,
+    };
+
+    await setDoc(commentRef, newCommentData)
+    await updateDoc(postRef, { comment: comment + 1 })
+      .then(() => {
+        setNewComment('');
+      })
+      .catch((error) => {
+        console.error("Error adding comment:", error);
+      });
+    };
+
+
+  const handleOpenComment = (postid) => {
+  setopencomment(prevState => ({
+    ...prevState,
+    [postid]: !prevState[postid]
+  }));
+};
+
   return (
     <div className="homecontainer">
       <div className="darkcontainer">
@@ -179,14 +226,56 @@ const Community = () => {
                 <FontAwesomeIcon icon={faThumbsUp} />
                 <p>Liked Post {p.likes}</p>
               </span>
-              <span className="reactions-inactive">
-                <FontAwesomeIcon icon={faMessage} />
-                <p>Comments {p.comment}</p>
+              <span onClick={() => handleOpenComment(p.postid)} className="reactions-inactive">
+              <FontAwesomeIcon icon={faMessage} />
+              <p>Comments {p.comment}</p>
               </span>
               <span className="reactions-inactive">
                 <FontAwesomeIcon icon={faShare} />
                 <p>Shares {p.shares}</p>
               </span>
+            </div>
+             <div>
+            {opencomment[p.postid] && (
+              <div className="comments-header">
+                <h1>Comments</h1>
+                <span>
+                  <input 
+                    placeholder="Write your comment..." 
+                    value = {newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault(); 
+                      handleSubmit(p.postid, p.comment);
+                    }
+                    }}
+                  />
+                  <a  onClick={() => handleSubmit(p.postid, p.comment)}>
+                  <FontAwesomeIcon icon = {faPaperPlane} />
+                  </a>
+                </span>
+                <div>
+                  {comments
+                    .filter(comment => comment.postid === p.postid)
+                    .map((comment, index) => { 
+                      const firstDataItem = comment.time;
+                      const timeInSeconds = firstDataItem?.seconds;
+                      const date = new Date(timeInSeconds * 1000);
+                      const formattedTime = date;
+                      return(
+                      <div className="comments-list">
+                      <img key={index} src= {comment.commenterimage} />
+                      <div>
+                       <h2 key={index}>{comment.commentername}</h2>
+                      <p key={index}>{comment.commentdata}</p>
+                       <ReactTimeago className="comment-time" date={formattedTime} />
+                      </div>
+                      </div>
+                  )})}
+                </div>
+              </div>
+            )}
             </div>
           </div>
         );
