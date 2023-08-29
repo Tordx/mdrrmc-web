@@ -595,6 +595,8 @@ input:focus {
   align-items: center;
   font-size: 14px;
   margin-top: 20px;
+  padding-bottom: 15px;
+  border-bottom: 0.5px solid #e2e2e2e2;
 }
 
 .reactions-active {
@@ -613,7 +615,8 @@ input:focus {
 }
 
 .reactions-inactive {
-  color: inherit; 
+  
+  color: #404040;
   outline: none;
   width: 30%;
   display: flex;
@@ -624,7 +627,7 @@ input:focus {
   text-align: center;
   padding: 10px;
   border-radius: 10px;
-  color: #888;
+  font-weight: 700;
 }
 
 .postStats span:hover{
@@ -701,7 +704,8 @@ input:focus {
   overflow: hidden;
 }
 .table-wrapper {
-  margin-left: 10px;
+  align-self: center;
+  margin-left: 20rem;
 	background-color: #fff;
 	padding: 20px 25px;
 	border-radius: 10px;
@@ -1209,4 +1213,86 @@ table.table .avatar {
 .chatbox {
   margin: 1.5rem;
   width: 30%;
+}
+.comments-header {
+  display: flex;
+  justify-items: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.comments-header h1 {
+  font-size: 20px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.comments-header span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  height: 75px;
+  flex-direction: row;
+}
+
+.comments-header input {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.comments-header svg {
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+  color: #4285f4;
+  cursor: pointer;
+
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: .5rem;
+}
+
+.comments-list img {
+  object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+}
+
+.comments-list h2 {
+  font-size: .8rem;
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.comments-list p {
+  font-size: .9375rem;
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 0px;
+}
+
+.comments-list div {
+  margin-left: 15px;
+  background-color: #e2e2e2;
+  border-radius: 10px;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.comment-time {
+  font-size: .8375rem;
+  margin-top: -10px;
 }
