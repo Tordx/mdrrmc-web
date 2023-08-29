@@ -10,7 +10,7 @@ const Maplocation = ({ onMapClick, initialMarker }) => {
 
     const map = new mapboxgl.Map({
       container: 'map', 
-      style: 'mapbox://styles/kalokalo/cldzyog2k000a01t401qifylc',
+      style: 'mapbox://styles/mapbox/streets-v12',
       center: [120.2307078878246, 16.032108026014853], 
       zoom: 10, 
     });
