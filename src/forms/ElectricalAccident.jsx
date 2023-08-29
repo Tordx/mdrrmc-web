@@ -112,58 +112,48 @@ const ElectricalAccident = () => {
   };
 
   return (
-    <div className="form-container1">
-      <h2>Electrical Accident Details Form</h2>
+    <div className="alert-modal-container">
+      <div style= {{width: '100%'}} >
+      <h2>Recent Electrical Incident</h2>
       <button onClick={handleButtonClick}>Get Coordinates</button>
-      <form className="form1" onSubmit={handleSubmit}>
-        <div className="form-field1">
-          <label htmlFor="area">Area:</label>
-          <input type="text" id="area" name="area" value={formData.area} onChange={handleChange} />
-        </div>
-        <div className="form-field">
-          <label htmlFor="coordinates">Coordinates:</label>
-          <input
-            type="text"
-            id="coordinates"
-            name="coordinates"
-            value={formData.coordinates}
-            onChange={handleChange}
+          <label htmlFor="area">Damage</label>
+          <input 
+            placeholder='What are the damages?'
+            type="text" 
+            id="area" 
+            name="area" 
+            value={formData.damage} 
+            onChange={handleChange} 
           />
-        </div>
-        <div className="form-field">
-          <label htmlFor="damage">Damage:</label>
-          <input type="text" id="damage" name="damage" value={formData.damage} onChange={handleChange} />
-        </div>
-        <div className="form-field">
-          <label htmlFor="location">Location:</label>
+          <label htmlFor="depth">Location</label>
           <input
+            placeholder='where it happened?'
+            type="text" 
+            id="depth" 
+            name="depth" 
+            value={formData.location} 
+            onChange={handleChange} 
+          />
+          <label htmlFor="location">Cause</label>
+          <input
+            placeholder='What is the cause?'
             type="text"
             id="location"
             name="location"
-            value={formData.location}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="cause">Cause:</label>
-          <input
-            type="text"
-            id="cause"
-            name="cause"
             value={formData.cause}
             onChange={handleChange}
           />
-        </div>
-        {/* <div className="form-field">
-          <label htmlFor="time">Time:</label>
-          <input type="text" id="time" name="time" value={formData.time} onChange={handleChange} />
-        </div> */}
-        <div className="form-field">
-          <label htmlFor="title">Title:</label>
-          <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+          <label htmlFor="title">Title</label>
+          <input
+            placeholder='What should people know?'
+            type="text" 
+            id="title" 
+            name="title" 
+            value={formData.title} 
+            onChange={handleChange} 
+          />
+        <button onClick={handleSubmit} type="submit">Submit</button>
+          </div>
       <ReactModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -173,6 +163,7 @@ const ElectricalAccident = () => {
          <Maplocation
          onMapClick={handleMapClick}
          />
+         <button onClick={() => setModalIsOpen(false)} className="gobackbuttonalert">Back</button>
         </ReactModal>
     </div>
   );
