@@ -486,14 +486,3 @@ const Alert = () => {
 };
 
 export default Alert;
-
-
-            // <label htmlFor="warningtime">Warning Time:</label>
-            // <textarea
-            //   id="warningtime"
-            //   value={warningtime}
-            //   onChange={handleWarningTimeChange}
-            // />
-          //    <button onClick={openCoordinatesModat}>Get Location</button>
-          // </div>
-          //
