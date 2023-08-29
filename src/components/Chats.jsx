@@ -50,7 +50,7 @@ const Chats = () => {
           key={chat[0]}
           onClick={() => handleSelect(chat)}
         >
-          <img src={chat[1].userInfo?.photoURL} alt="" />
+          <img src={chat[1].userInfo?.photoURL || 'https://i.imgur.com/rUn1IlG.png'} alt="" />
           <div className="userChatInfo">
             <span>
               {chat[1].userInfo?.FullName?.charAt(0).toUpperCase() +
