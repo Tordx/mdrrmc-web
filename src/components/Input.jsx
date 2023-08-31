@@ -30,10 +30,6 @@ const Input = () => {
   const adminUID = "mdrNgqcK8NPADFBCQqIa";
   const ChatID = adminUID.concat(userUID);
   const UsernameAdmin = currentUser.displayName
-  // const userUIDs = data.user.uid
-  console.log('userUIDs');
-  console.log(userUID);
-  console.log('userUIDs');
 
 
   const handleSend = async () => {

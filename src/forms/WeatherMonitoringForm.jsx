@@ -89,11 +89,10 @@ const WeatherMonitoringForm = () => {
     }
 
     try {
-      // Add the form data to Firestore
-      const weathermonitoringef = doc(db, 'weather-monitoring' , uuid()); // Replace 'earthquakes' with your collection name
+    
+      const weathermonitoringef = doc(db, 'weather-monitoring' , uuid());
       await setDoc(weathermonitoringef, formData);
 
-      // Optionally, you can reset the form after successful submission
       setFormData({
         area: '',
         coordinates: '',

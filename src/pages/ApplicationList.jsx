@@ -34,7 +34,6 @@ const ApplicationList = () => {
     const querySnapshot = await getDocs(collection(db, "users"));
     const thisdata = []
     querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
     if(doc.data().Status !== 'Active'){
     thisdata.push({
       docId: doc.id,
