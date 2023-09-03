@@ -10,6 +10,24 @@ const setAnnoucement = (userObj) => {
         payload: userObj
     }
 }
+const setMonitoring = (userObj) => {
+    console.log('userObj');
+    console.log(userObj);
+    console.log('userObj');
+    return {    
+        type: "SET_MONITORING",
+        payload: userObj
+    }
+}
+const setMapInformation = (userObj) => {
+    console.log('Mapinformation');
+    console.log(userObj);
+    console.log('Mapinformation');
+    return {    
+        type: "SET_MAPINFORMATION",
+        payload: userObj
+    }
+}
 
 const logOut = () => {
     return {
@@ -20,5 +38,7 @@ const logOut = () => {
 export default {
     setUser,
     logOut,
-    setAnnoucement
+    setAnnoucement,
+    setMonitoring,
+    setMapInformation
 }

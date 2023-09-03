@@ -20,6 +20,7 @@ import Profile from "./components/Profile";
 import Alert from "./pages/Alert";
 import Community from "./pages/Community";
 import Navbar from "./components/navbar/sidebar";
+import MapInformation from "./pages/MapInformation";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -53,6 +54,7 @@ function App() {
             <Route path = "applicationlist" index element={ <ProtectedRoute><ApplicationList/></ProtectedRoute>} />
             <Route path = "annoucementlist" index element={ <ProtectedRoute><Annoucementlist/></ProtectedRoute>} />
             <Route path = "annoucementform" index element={ <ProtectedRoute><AnnoucementForm/></ProtectedRoute>} />
+            <Route path = "mapinformation" index element={ <ProtectedRoute><MapInformation/></ProtectedRoute>} />
             <Route path="approvingform/:uniqueURL" index element={<ProtectedRoute><ApprovingForm/></ProtectedRoute>} />
             <Route path = "approvingannoucementform" index element={ <ProtectedRoute><ApproveAnnoucementForm/></ProtectedRoute>} />
           </Route>

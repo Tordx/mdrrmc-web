@@ -12,6 +12,18 @@ const currentUser = (state = {}, action) => {
                     user: action.payload,
                     loggedIn: true
                 }
+                case "SET_MONITORING":
+                    return {
+                        ...state,
+                        user: action.payload,
+                        loggedIn: true
+                    }
+                    case "SET_MAPINFORMATION":
+                        return {
+                            ...state,
+                            user: action.payload,
+                            loggedIn: true
+                        }
         case "LOG_OUT":
             return {
                 ...state,
