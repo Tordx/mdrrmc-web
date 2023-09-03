@@ -45,6 +45,8 @@ import { db } from '../firebase';
 import { doc, getDoc, getDocs , collection , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
 import Maplocation from "./maplocation";
+import { useDispatch } from "react-redux";
+import allActions from "../redux/actions/indexAction";
 
 Chart.register(
   BarElement,
@@ -57,6 +59,8 @@ Chart.register(
 
 
 const Chat = () => {
+
+  const dispatch = useDispatch()
   const { data } = useContext(ChatContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
@@ -133,6 +137,7 @@ const Chat = () => {
   };
   
   const handleLongPress = async(monitoring) => {
+    dispatch(allActions.userAction.setMonitoring(monitoring))
     console.log('handleLongPress:', monitoring);
       try {
         const querySnapshot = await getDocs(collection(db, monitoring)); 
@@ -258,7 +263,7 @@ const Chat = () => {
       </div>
     </div>
     
-  </div>
+    </div>
     }
     </>
   );
