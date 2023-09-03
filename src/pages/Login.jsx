@@ -24,9 +24,6 @@ const Login = () => {
 
 getUserData();
     
-    // If the above line executes without errors, Firebase is running
-
-    // ...other code
   }, []);
 
 
@@ -44,7 +41,7 @@ getUserData();
       if (doc.data().email === loginemail) {
         userData.push({
           // Status: doc.data().Status,
-          userType: doc.data().userType, // assuming there is a userType field in the document
+          userType: doc.data().userType,  
         });
       }
     });
