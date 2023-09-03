@@ -142,7 +142,7 @@ const Community = () => {
   
  const handleReaction = async (postid, displayName, status, likesCount) => {
   const id = generateRandomString();
-  const likeData = likedata.find(like => like.postid === postid);
+  const likeData = likedata.find(like => like.postid === postid && like.userid === currentUser.uid);
   const newLikeRef = doc(db, "community-likes", id);
   const postRef = doc(db, "community-posts", postid);
     if (likeData) {
@@ -206,7 +206,7 @@ const Community = () => {
         const timeInSeconds = firstDataItem?.seconds;
         const date = new Date(timeInSeconds * 1000);
         const formattedTime = date;
-        const maplikes = likes.includes(p.postid);
+        const liked = likedata.some((like) => like.postid === p.postid && like.userid === currentUser.uid);
         return (
           <div className="feedItem" key={p.docid}>
           <div className="postHeader">
@@ -221,7 +221,7 @@ const Community = () => {
             <div className="postStats">
               <span
                 onClick={() => handleButtonClick(p.postid, p.likes, p.docid)}
-                className={maplikes ? "reactions-active" : "reactions-inactive"}
+                className={liked ? "reactions-active" : "reactions-inactive"}
               >
                 <FontAwesomeIcon icon={faThumbsUp} />
                 <p>Liked Post {p.likes}</p>

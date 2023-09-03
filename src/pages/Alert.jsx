@@ -118,12 +118,18 @@ const Alert = () => {
       await setDoc(earthquakeRef , notifData);
       await alertdata()
       console.log('Form data added to Firestore!');
+      setloading(false)
+      setModalIsOpen(false);
     } catch (error) {
       console.error('Error adding form data to Firestore:', error);
+      setloading(false)
+      setModalIsOpen(false);
     }
   }
 
   const alertdata = async() => {
+    setloading(true)
+    try {
     const earthquakeRef = doc(db, 'monitoring-alert' , uuid());
     const alertData = ({
           
@@ -138,6 +144,13 @@ const Alert = () => {
           alerttype: type,
         })
       await setDoc(earthquakeRef , alertData);
+      setloading(false)
+    } catch(error) {
+      console.log(error)
+      setloading(false)
+      setModalIsOpen(false);
+      alert('Something went wrong, please try again')
+    }
   }
 
   const monitoringdata = (monitorig) => {
@@ -279,6 +292,12 @@ const Alert = () => {
 
   return (
     <div className='chatContainer'>
+     {loading && <div className="loading-modal-overlay">
+      <div className="loading-modal">
+        <div className="loading-spinner"></div>
+        <p>Loading...</p>
+      </div>
+    </div>}
        <div className="table-responsive">
        <Sidebar menu={sidebar_menu} />
 		<div className="table-wrapper">
