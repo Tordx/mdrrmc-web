@@ -706,18 +706,91 @@ input:focus {
 }
 
 .mapinfo-wrapper {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
   align-self: center;
 	background-color: #fff;
-	padding: 20px 25px;
+	padding: 20px 4rem;
 	border-radius: 10px;
 	min-width: 1000px;
   height: 250px;
-	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.5);
   margin-bottom: 10px;
 }
+
+.maploc-wrapper {
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-self: center;
+	background-color: #fff;
+	padding: 20px 4rem;
+	border-radius: 10px;
+	min-width: 1000px;
+  height: 250px;
+	box-shadow: 0 1px 2px rgba(0,0,0,.5);
+  margin-bottom: 10px;
+}
+
+.maploc-wrapper h1 {
+
+  display: block;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  align-self: center;
+  font-weight: bold;
+	background-color: #fff;
+}
+
+
+.mapinfo-wrapper div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.info-margin {
+  border-left: 5px solid #404040;
+  border-right: 5px solid #404040;
+  padding: 0px 5rem;
+}
+
+.maploc-wrapper div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  height: 100%
+}
+
+.maploc-wrapper svg {
+  width: 30px;
+  height: 30px;
+}
+
+.maploc-wrapper h2 {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-bottom: 0px;
+}
+
+.mapinfo-wrapper svg {
+  width: 70px;
+  height: 70px;
+}
+
 .mapinfo-container {
   width: 100%;
-  height: 80%;
+  height: 100vh;
   overflow: hidden;
   flex-direction: column;
   display: flex;
@@ -1171,6 +1244,26 @@ table.table .avatar {
   color: #ffffff;
   font-size: 16px;
   font-weight: bold;
+}
+
+.go-back-button-global {
+  position: absolute;
+  top: 10px;
+  left: 18rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.go-back-button-global:hover {
+   background-color: pink;
+   color: white;
 }
 
 .go-back-button:hover {
