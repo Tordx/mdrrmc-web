@@ -87,11 +87,8 @@ const EarthquakeForm = () => {
     }
 
     try {
-      // Add the form data to Firestore
-      const earthquakeRef = doc(db, 'earthquake' , uuid()); // Replace 'earthquakes' with your collection name
+      const earthquakeRef = doc(db, 'earthquake' , uuid()); 
       await setDoc(earthquakeRef, formData);
-
-      // Optionally, you can reset the form after successful submission
       setFormData({
         area: '',
         coordinates: '',
@@ -114,7 +111,8 @@ const EarthquakeForm = () => {
       <h2>Recent Earthquake monitoring</h2>
       <button onClick={handleButtonClick}>Get Coordinates</button>
           <label htmlFor="area">Area</label>
-          <input 
+          <input
+            placeholder='Diameter of the affected area from the center'
             type="text" 
             id="area" 
             name="area" 
@@ -122,7 +120,8 @@ const EarthquakeForm = () => {
             onChange={handleChange} 
           />
           <label htmlFor="depth">Depth</label>
-          <input 
+          <input
+            placeholder='How many meters below or above sea level?'
             type="text" 
             id="depth" 
             name="depth" 
@@ -131,6 +130,7 @@ const EarthquakeForm = () => {
           />
           <label htmlFor="location">Location</label>
           <input
+            placeholder='Name of the place the calamity, accident, or disaster occured'
             type="text"
             id="location"
             name="location"
@@ -139,6 +139,7 @@ const EarthquakeForm = () => {
           />
           <label htmlFor="magnitude">Magnitude</label>
           <input
+            placeholder='What is the Magnitude of the distaster'
             type="text"
             id="magnitude"
             name="magnitude"
@@ -146,7 +147,8 @@ const EarthquakeForm = () => {
             onChange={handleChange}
           />
           <label htmlFor="title">Title</label>
-          <input 
+          <input
+            placeholder='Short Description or Name of what happened'
             type="text" 
             id="title" 
             name="title" 

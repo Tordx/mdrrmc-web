@@ -114,27 +114,32 @@ const Flood = () => {
     <div style = {{width: '100%'}}>
       <h2>Flood Details Form</h2>
       <button onClick={handleButtonClick}>Get Coordinates</button>
-          <label htmlFor="area">Area:</label>
-          <input type="text" id="area" name="area" value={formData.area} onChange={handleChange} />
-          <label htmlFor="coordinates">Coordinates:</label>
-          <input
-            type="text"
-            id="coordinates"
-            name="coordinates"
-            value={formData.coordinates}
-            onChange={handleChange}
-          />
+          <label htmlFor="area">Area</label>
+          <input 
+            placeholder='Diameter of the affected area of flood'
+            type="text" 
+            id="area" 
+            name="area" 
+            value={formData.area} 
+            onChange={handleChange} />
           <label htmlFor="duration">Duration:</label>
-          <input type="text" id="duration" name="duration" value={formData.duration} onChange={handleChange} />
+          <input 
+            placeholder='Estimated duration of the Flood Rain'
+            type="text" 
+            id="duration" 
+            name="duration" 
+            value={formData.duration} 
+            onChange={handleChange} />
           <label htmlFor="location">Location:</label>
           <input
+            placeholder='Name of the place the calamity, accident, or disaster occured'
             type="text"
             id="location"
             name="location"
             value={formData.location}
             onChange={handleChange}
           />
-          <label htmlFor="waterlevel">Waterlevel:</label>
+          <label htmlFor="waterlevel">Water Level</label>
           <input
             type="text"
             id="waterlevel"

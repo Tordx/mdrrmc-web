@@ -114,27 +114,34 @@ const ExtremeDrougth = () => {
       <h2>Extreme Drougth Details Form</h2>
       <button onClick={handleButtonClick}>Get Coordinates</button>
           <label htmlFor="area">Area</label>
-          <input type="text" id="area" name="area" value={formData.area} onChange={handleChange} />
-          <label htmlFor="coordinates">Coordinates:</label>
           <input
-            type="text"
-            id="coordinates"
-            name="coordinates"
-            value={formData.coordinates}
-            onChange={handleChange}
-          />
+            placeholder='Diameter of the affected area from the center'
+            type="text" 
+            id="area" 
+            name="area" 
+            value={formData.area} 
+            onChange={handleChange} />
           <label htmlFor="level">Level:</label>
-          <input type="text" id="level" name="level" value={formData.level} onChange={handleChange} />
-          <label htmlFor="location">Location:</label>
           <input
+            placeholder='Heat level of the extreme drought'
+            type="text" 
+            id="level" 
+            name="level" 
+            value={formData.level} 
+            onChange={handleChange} 
+          />
+          <label htmlFor="location">Location</label>
+          <input
+            placeholder='Name of the place the calamity, accident, or disaster occured'
             type="text"
             id="location"
             name="location"
             value={formData.location}
             onChange={handleChange}
           />
-          <label htmlFor="temperature">Temperature:</label>
+          <label htmlFor="temperature">Temperature</label>
           <input
+            placeholder='Minimum or Maximum Temparature within the duration'
             type="text"
             id="temperature"
             name="temperature"
@@ -142,7 +149,13 @@ const ExtremeDrougth = () => {
             onChange={handleChange}
           />
           <label htmlFor="title">Title:</label>
-          <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
+          <input
+            placeholder='Brief description or name of the calamity'
+            type="text" 
+            id="title" 
+            name="title" 
+            value={formData.title} 
+            onChange={handleChange} />
         <button onClick={handleSubmit} type="submit">Submit</button>
         </div>
       <ReactModal

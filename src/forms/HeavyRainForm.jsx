@@ -115,19 +115,24 @@ const HeavyRain = () => {
       <h2>Heavy Rain Details Form</h2>
       <button onClick={handleButtonClick}>Get Coordinates</button>
           <label htmlFor="area">Area:</label>
-          <input type="text" id="area" name="area" value={formData.area} onChange={handleChange} />
-          <label htmlFor="coordinates">Coordinates:</label>
           <input
-            type="text"
-            id="coordinates"
-            name="coordinates"
-            value={formData.coordinates}
-            onChange={handleChange}
-          />
+             placeholder='Diameter of the affected area from the center' 
+             type="text" 
+             id="area" 
+             name="area" 
+             value={formData.area} 
+             onChange={handleChange} />
           <label htmlFor="duration">Duration:</label>
-          <input type="text" id="duration" name="duration" value={formData.duration} onChange={handleChange} />
+          <input  
+            placeholder='Estimated duration of the Heavy Rain'
+            type="text" 
+            id="duration" 
+            name="duration" 
+            value={formData.duration} 
+            onChange={handleChange} />
           <label htmlFor="location">Location:</label>
           <input
+            
             type="text"
             id="location"
             name="location"
