@@ -136,7 +136,8 @@ const Chat = () => {
     setActiveModal('weathermonitoring');
   };
   
-  const handleLongPress = async(monitoring) => {
+  const handledoubleclick = async(monitoring) => {
+    console.log('am i pressed');
     dispatch(allActions.userAction.setMonitoring(monitoring))
     console.log('handleLongPress:', monitoring);
       try {
@@ -152,12 +153,6 @@ const Chat = () => {
      setModalIsOpen(true);
     
   };
-
-  const longPressEvent = LongPress(
-    () => handleLongPress(activeModal),
-    1000,
-    activeModal
-  );
 
   useEffect(() => {
     Initaldata()
@@ -210,53 +205,53 @@ const Chat = () => {
       </div>
       <div className = 'boxcontainers' >
       <div className="boxrecontain">
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('weather-monitoring')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('weather-monitoring')}}>
         <img src={weather} width={'70%'} height={'70%'} />
         <h5>Weather Monitoring</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('volcanic-eruption')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('volcanic-eruption')}}>
         <img src= {volcano} width={'70%'} height={'70%'} />
         <h5>Volcanic Eruption</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('extreme-drougth')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('extreme-drougth')}}>
       <img src= {drought} width={'70%'} height={'70%'} />
         <h5>Extreme Drought</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('tsunami')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('tsunami')}}>
       <img src= {tsunami} width={'70%'} height={'70%'} />
         <h5>Tsunami</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('tornado')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('tornado')}}>
       <img src= {tornado} width={'70%'} height={'70%'} />
         <h5>Tornado</h5>
       </div>  
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('flood')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('flood')}}>
       <img src= {flood} width={'70%'} height={'70%'} />
         <h5>Flood</h5>
       </div>
       </div>
       <div className="boxrecontain">
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('heavy-rain')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('heavy-rain')}}>
       <img src= {rain} width={'70%'} height={'70%'} />
         <h5>Heavy rain</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('landslide')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('landslide')}}>
       <img src= {slide} width={'70%'} height={'70%'} />
         <h5>Landslide</h5>
       </div>
-      <div className="monitoringbutton" onClick={() => handleBoxClick('earthquake')} {...longPressEvent}>
+      <div className="monitoringbutton" onClick={() => handleBoxClick('earthquake')} onDoubleClick={() => handledoubleclick(activeModal)}>
         <img src={earthquake} width={'70%'} height={'70%'} />
         <h5>Earthquake</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('vehicular-accident')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('vehicular-accident')}}>
       <img src= {vehicleacc} width={'70%'} height={'70%'} />
         <h5>Vehicular Accident</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('housefire')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('housefire')}}>
       <img src= {housefire} width={'70%'} height={'70%'} />
         <h5>House fires</h5>
       </div>
-      <div className="monitoringbutton" {...longPressEvent} onClick={() => {  handleBoxClick('electrical-accident')}}>
+      <div className="monitoringbutton" onDoubleClick={() => handledoubleclick(activeModal)} onClick={() => {  handleBoxClick('electrical-accident')}}>
       <img src= {elecacc} width={'70%'} height={'70%'} />
         <h5>Electrical Accidents</h5>
       </div>
