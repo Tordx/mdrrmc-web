@@ -1,6 +1,6 @@
 import React , {useEffect , useState} from 'react';
 import '../style.css'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, deleteDoc, getDocs } from 'firebase/firestore'
 import { db, storage } from '../firebase'
 import '../style.css'
 import '../newstyle.css'
@@ -9,7 +9,7 @@ import sidebar_menu from '../components/navbar/sidebarmenu';
 import { SendNotif } from '../functions';
 import ReactModal from "react-modal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { doc , Timestamp  , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
 import EarthquakeForm from "../forms/EarthquakeForm";
@@ -44,12 +44,11 @@ const Alert = () => {
   const [image, setimage] = useState('');
   const [imagecolor, setimagecolor] = useState('');
   const [type, settype] = useState('');
-  const [icon, seticon] = useState('')
 
   useEffect(() => {
     const getAllData = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, database)); // Replace 'user' with your collection name
+        const querySnapshot = await getDocs(collection(db, database));
         const dataArray = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         setAllData(dataArray);
       } catch (error) {
@@ -80,9 +79,9 @@ const Alert = () => {
     },
   };
 
-  const handleMapClick = (coordinates) => {
-    setAlertLocation(coordinates)
-  };
+  // const handleMapClick = (coordinates) => {
+  //   setAlertLocation(coordinates)
+  // };
 
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
@@ -97,6 +96,7 @@ const Alert = () => {
    const handleChoices = (event) => {
     setmagnitude(event.target.value)
   };
+
   const handleClick = async() => {
     SendNotif(title, message , warningtime)
     try {
@@ -127,16 +127,32 @@ const Alert = () => {
     }
   }
 
-  const alertdata = async() => {
+  const deleteItem = async (id) => {
     setloading(true)
     try {
-    const earthquakeRef = doc(db, 'monitoring-alert' , uuid());
+      await deleteDoc(doc(db, database, id));
+      window.location.reload();
+      console.log('Item deleted successfully');
+      setloading(false)
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      setloading(false)
+    }
+  };
+
+  const alertdata = async() => {
+
+    const id = uuid()
+
+    setloading(true)
+    try {
+    const earthquakeRef = doc(db, 'monitoring-alert' , id);
     const alertData = ({
           
           title: title,
           description: message,
           warningtime: warningtime,
-          id: uuid(),
+          id: id,
           imagebackground: imagecolor,
           image: image,
           magnitude: magnitude,
@@ -193,6 +209,12 @@ const Alert = () => {
         return ''; 
     }
   };
+
+  const handleLoad =(action) => {
+    console.log(action);
+    setloading(action)
+    setModalIsOpen(false)
+  }
   
 
   const getHeaderLabel = () => {
@@ -348,10 +370,10 @@ const Alert = () => {
           allData.map((item, index) => (
           <tr className='' key={index}>
             <td>
-                  <span className="custom-checkbox">
-                    <input type="checkbox" id="checkbox1" name="options[]" value="1"/>
-                    <label for="checkbox1"></label>
-                  </span>
+            <span className="custom-checkbox">
+              <input type="checkbox" id={`checkbox${index}`} name="options[]" value={item.id} />
+              <label htmlFor={`checkbox${index}`}></label>
+            </span>
             </td>
             <td>{getPropertyToDisplays(item)}</td>
             <td>{item.area}</td>
@@ -360,7 +382,7 @@ const Alert = () => {
             <td>{getPropertyToDisplay(item)}</td>
             <td>{item.title}</td>
             <td>
-                  <a href="#deleteEmployeeModal" className="delete" data-toggle="modal"><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon></a>
+                  <a onClick={() => deleteItem(item.id)} className="delete" data-toggle="modal"><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon></a>
             </td>
           </tr>
           ))
@@ -487,7 +509,7 @@ const Alert = () => {
   contentLabel="Example Modal"
   style={customStyles}
 >
-  {database === 'earthquake' && <EarthquakeForm isOpen={true} />}
+  {database === 'earthquake' && <EarthquakeForm isOpen={true} onFormSubmit = {handleLoad} />}
   {database === 'weather-monitoring' && <WeatherMonitoringForm isOpen={true} />}
   {database === 'volcanic-eruption' && <VolcanicEruptionForm isOpen={true} />}
   {database === 'extreme-drougth' && <ExtremeDrougth isOpen={true} />}
