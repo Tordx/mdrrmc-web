@@ -8,16 +8,13 @@ import Maplocation from '../components/maplocation';
 const WeatherMonitoringForm = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    area: '',
-    coordinates: '',
-    signal: '',
-    id: uuid(),
-    location: '',
-    windspeed: '',
-    time: Timestamp.now(),
-    title: '',
-  });
+  const [area, setArea] = useState('');
+  const [coordinates, setCoordinates] = useState('');
+  const [signal, setSignal] = useState('');
+  const [location, setLocation] = useState('');
+  const [windspeed, setWindspeed] = useState('');
+  const [time, setTime] = useState(Timestamp.now());
+  const [title, setTitle] = useState('');
 
   const customStyles = {
     overlay: {
@@ -37,19 +34,12 @@ const WeatherMonitoringForm = () => {
   };
 
   const handleMapClick = (coordinates) => {
-    console.log('coordinates');
-    console.log(coordinates);
-    console.log('coordinates');
-    // setModalIsOpen(false)
-    setFormData({
-        ...formData,
-        coordinates: coordinates
-      });
+    setCoordinates(coordinates)
   };
 
   const handleButtonClick = () => {
     setModalIsOpen(true)
-    console.log(formData.coordinates);
+    console.log(coordinates);
   };
 
   const closeModal = () => {
@@ -57,17 +47,9 @@ const WeatherMonitoringForm = () => {
   };
 
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const id = uuid()
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
@@ -88,21 +70,28 @@ const WeatherMonitoringForm = () => {
       console.log('Document does not exist.');
     }
 
+    const formData = {
+      area: area,
+      coordinates: coordinates,
+      signal: signal,
+      id: id,
+      location: location,
+      windspeed: windspeed,
+      time: time,
+      title: title,
+    };    
+
     try {
     
-      const weathermonitoringef = doc(db, 'weather-monitoring' , uuid());
+      const weathermonitoringef = doc(db, 'weather-monitoring' , id);
       await setDoc(weathermonitoringef, formData);
-
-      setFormData({
-        area: '',
-        coordinates: '',
-        signal: '',
-        location: '',
-        windspeed: '',
-        time: '',
-        title: '',
-      });
-
+      setArea('')
+      setCoordinates('')
+      setSignal('')
+      setLocation('')
+      setWindspeed('')
+      setTitle('')
+      setModalIsOpen(false)
       console.log('Form data added to Firestore!');
     } catch (error) {
       console.error('Error adding form data to Firestore:', error);
@@ -115,36 +104,28 @@ const WeatherMonitoringForm = () => {
       <h2>Weather Monitoring Details Form</h2>
       <button onClick={handleButtonClick}>Get Coordinates</button>
           <label htmlFor="area">Area:</label>
-          <input type="text" id="area" name="area" value={formData.area} onChange={handleChange} />
-          <label htmlFor="coordinates">Coordinates:</label>
-          <input
-            type="text"
-            id="coordinates"
-            name="coordinates"
-            value={formData.coordinates}
-            onChange={handleChange}
-          />
+          <input type="text" id="area" name="area" value={area} onChange={(e) => setArea(e.target.value)} />
           <label htmlFor="signal">Signal:</label>
-          <input type="text" id="signal" name="signal" value={formData.signal} onChange={handleChange} />
+          <input type="text" id="signal" name="signal" value={signal} onChange={(e) => setSignal(e.target.value)} />
           <label htmlFor="location">Location:</label>
           <input
             type="text"
             id="location"
             name="location"
-            value={formData.location}
-            onChange={handleChange}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
           />
           <label htmlFor="windspeed">Windspeed:</label>
           <input
             type="text"
             id="windspeed"
             name="windspeed"
-            value={formData.windspeed}
-            onChange={handleChange}
+            value={windspeed}
+            onChange={(e) => setWindspeed(e.target.value)}
           />
           <label htmlFor="title">Title:</label>
-          <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
-        <button type="submit">Submit</button>
+          <input type="text" id="title" name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <button onClick={handleSubmit} type="submit">Submit</button>
         </div>
       <ReactModal
         isOpen={modalIsOpen}

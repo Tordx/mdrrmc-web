@@ -9,16 +9,13 @@ import Maplocation from '../components/maplocation';
 const LandSlide = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    area: '',
-    coordinates: '',
-    severity: '',
-    id: uuid(),
-    location: '',
-    damage: '',
-    time: Timestamp.now(),
-    title: '',
-  });
+  const [area, setArea] = useState('');
+  const [coordinates, setCoordinates] = useState('');
+  const [severity, setSeverity] = useState('');
+  const [location, setLocation] = useState('');
+  const [damage, setDamage] = useState('');
+  const [time, setTime] = useState(Timestamp.now());
+  const [title, setTitle] = useState('');
 
   const customStyles = {
     overlay: {
@@ -38,19 +35,12 @@ const LandSlide = () => {
   };
 
   const handleMapClick = (coordinates) => {
-    console.log('coordinates');
-    console.log(coordinates);
-    console.log('coordinates');
-    // setModalIsOpen(false)
-    setFormData({
-        ...formData,
-        coordinates: coordinates
-      });
+   setCoordinates(coordinates)
   };
 
   const handleButtonClick = () => {
     setModalIsOpen(true)
-    console.log(formData.coordinates);
+    console.log(coordinates);
   };
 
   const closeModal = () => {
@@ -59,17 +49,9 @@ const LandSlide = () => {
 
 
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const id = uuid()
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
@@ -90,22 +72,21 @@ const LandSlide = () => {
       console.log('Document does not exist.');
     }
 
+    const formData = {
+      area: area,
+      coordinates: coordinates,
+      severity: severity,
+      id: id,
+      location: location,
+      damage: damage,
+      time: timestamp,
+      title: title,
+    };
+
     try {
-      // Add the form data to Firestore
-      const earthquakeRef = doc(db, 'landslide' , uuid()); // Replace 'earthquakes' with your collection name
+     
+      const earthquakeRef = doc(db, 'landslide' , id); 
       await setDoc(earthquakeRef, formData);
-
-      // Optionally, you can reset the form after successful submission
-      setFormData({
-        area: '',
-        coordinates: '',
-        severity: '',
-        location: '',
-        damage: '',
-        time: '',
-        title: '',
-      });
-
       console.log('Form data added to Firestore!');
     } catch (error) {
       console.error('Error adding form data to Firestore:', error);
@@ -118,38 +99,28 @@ const LandSlide = () => {
       <h2>Landslide Details Form</h2>
       <button onClick={handleButtonClick}>Get Coordinates</button>
           <label htmlFor="area">Area:</label>
-          <input type="text" id="area" name="area" value={formData.area} onChange={handleChange} />
-
-          <label htmlFor="coordinates">Coordinates:</label>
-          <input
-            type="text"
-            id="coordinates"
-            name="coordinates"
-            value={formData.coordinates}
-            onChange={handleChange}
-          />
+          <input type="text" id="area" name="area" value={area} onChange={(e) => setArea(e.target.value)} />
           <label htmlFor="damage">Damage:</label>
-          <input type="text" id="damage" name="damage" value={formData.damage} onChange={handleChange} />
+          <input type="text" id="damage" name="damage" value={damage} onChange={(e) => setDamage(e.target.value)} />
        
           <label htmlFor="location">Location:</label>
           <input
             type="text"
             id="location"
             name="location"
-            value={formData.location}
-            onChange={handleChange}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
           />
           <label htmlFor="severity">Severity:</label>
           <input
             type="text"
             id="severity"
             name="severity"
-            value={formData.severity}
-            onChange={handleChange}
+            value={severity}
+            onChange={(e) => setSeverity(e.target.value)}
           />
           <label htmlFor="title">Title:</label>
-          <input type="text" id="title" name="title" value={formData.title} onChange={handleChange} />
-        
+          <input type="text" id="title" name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
          <button onClick={handleSubmit} type="submit">Submit</button>
          </div>
       <ReactModal

@@ -10,16 +10,13 @@ import Maplocation from '../components/maplocation';
 const ElectricalAccident = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    area: '',
-    coordinates: '',
-    cause: '',
-    id: uuid(),
-    location: '',
-    damage: '',
-    time: Timestamp.now(),
-    title: '',
-  });
+  const [area, setArea] = useState('');
+  const [coordinates, setCoordinates] = useState('');
+  const [cause, setCause] = useState('');
+  const [location, setLocation] = useState('');
+  const [damage, setDamage] = useState('');
+  const [time, setTime] = useState(Timestamp.now());
+  const [title, setTitle] = useState('');
 
   const customStyles = {
     overlay: {
@@ -38,36 +35,21 @@ const ElectricalAccident = () => {
     },
   };
   const handleMapClick = (coordinates) => {
-    console.log('coordinates');
-    console.log(coordinates);
-    console.log('coordinates');
-    // setModalIsOpen(false)
-    setFormData({
-        ...formData,
-        coordinates: coordinates
-      });
+    setCoordinates(coordinates);
   };
 
   const handleButtonClick = () => {
     setModalIsOpen(true)
-    console.log(formData.coordinates);
+    console.log(coordinates);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const id =  uuid()
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
@@ -89,19 +71,27 @@ const ElectricalAccident = () => {
     }
 
     try {
-      const earthquakeRef = doc(db, 'electrical-accident', uuid()); 
+
+      const formData = {
+        area: area,
+        coordinates: coordinates,
+        cause: cause,
+        location: location,
+        damage: damage,
+        time: time,
+        title: title,
+        id: id,
+      }
+
+      const earthquakeRef = doc(db, 'electrical-accident', id); 
       await setDoc(earthquakeRef, formData);
-
-      setFormData({
-        area: '',
-        coordinates: '',
-        cause: '',
-        location: '',
-        damage: '',
-        time: '',
-        title: '',
-      });
-
+      setArea('');
+      setCoordinates('');
+      setCause('');
+      setLocation('');
+      setDamage('');
+      setTitle('');
+      setModalIsOpen(false)
       console.log('Form data added to Firestore!');
     } catch (error) {
       console.error('Error adding form data to Firestore:', error);
@@ -110,47 +100,62 @@ const ElectricalAccident = () => {
 
   return (
     <div className="alert-modal-container">
-      <div style= {{width: '100%'}} >
+    <div style={{ width: '100%' }}>
       <h2>Recent Electrical Incident</h2>
       <button onClick={handleButtonClick}>Get Coordinates</button>
-          <label htmlFor="area">Damage</label>
-          <input 
-            placeholder='What are the damages?'
-            type="text" 
-            id="area" 
-            name="area" 
-            value={formData.damage} 
-            onChange={handleChange} 
-          />
-          <label htmlFor="depth">Location</label>
-          <input
-            placeholder='where it happened?'
-            type="text" 
-            id="depth" 
-            name="depth" 
-            value={formData.location} 
-            onChange={handleChange} 
-          />
-          <label htmlFor="location">Cause</label>
-          <input
-            placeholder='What is the cause?'
-            type="text"
-            id="location"
-            name="location"
-            value={formData.cause}
-            onChange={handleChange}
-          />
-          <label htmlFor="title">Title</label>
-          <input
-            placeholder='What should people know?'
-            type="text" 
-            id="title" 
-            name="title" 
-            value={formData.title} 
-            onChange={handleChange} 
-          />
-        <button onClick={handleSubmit} type="submit">Submit</button>
-          </div>
+
+      <label htmlFor="area">Area</label>
+      <input
+        placeholder='What are the damages?'
+        type="text"
+        id="area"
+        name="area"
+        value={area}
+        onChange={(e) => setArea(e.target.value)}
+      />
+
+      <label htmlFor="area">Damage</label>
+      <input
+        placeholder='What are the damages?'
+        type="text"
+        id="Damage"
+        name="Damage"
+        value={damage}
+        onChange={(e) => setDamage(e.target.value)}
+      />
+
+      <label htmlFor="depth">Location</label>
+      <input
+        placeholder='where it happened?'
+        type="text"
+        id="location"
+        name="location"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+      />
+
+      <label htmlFor="location">cause</label>
+      <input
+        placeholder='What is the cause?'
+        type="text"
+        id="cause"
+        name="cause"
+        value={cause}
+        onChange={(e) => setCause(e.target.value)}
+      />
+
+      <label htmlFor="title">Title</label>
+      <input
+        placeholder='What should people know?'
+        type="text"
+        id="title"
+        name="title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+
+      <button onClick={handleSubmit} type="submit">Submit</button>
+    </div>
       <ReactModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

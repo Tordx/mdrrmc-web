@@ -8,16 +8,13 @@ import Maplocation from '../components/maplocation';
 const ExtremeDrougth = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    area: '',
-    coordinates: '',
-    level: '',
-    id: uuid(),
-    location: '',
-    temperature: '',
-    time: Timestamp.now(),
-    title: '',
-  });
+  const [area, setArea] = useState('');
+  const [coordinates, setCoordinates] = useState('');
+  const [level, setLevel] = useState('');
+  const [location, setLocation] = useState('');
+  const [temperature, setTemperature] = useState('');
+  const [time, setTime] = useState('');
+  const [title, setTitle] = useState('');
 
     const customStyles = {
     overlay: {
@@ -36,36 +33,21 @@ const ExtremeDrougth = () => {
     },
   };
   const handleMapClick = (coordinates) => {
-    console.log('coordinates');
-    console.log(coordinates);
-    console.log('coordinates');
-    // setModalIsOpen(false)
-    setFormData({
-        ...formData,
-        coordinates: coordinates
-      });
+    setCoordinates(coordinates)
   };
 
   const handleButtonClick = () => {
     setModalIsOpen(true)
-    console.log(formData.coordinates);
+    console.log(coordinates);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const id = uuid()
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
@@ -85,22 +67,20 @@ const ExtremeDrougth = () => {
     } else {
       console.log('Document does not exist.');
     }
+    const formData = {
+      area: area,
+      coordinates: coordinates,
+      level: level,
+      id: id,
+      location: location,
+      temperature: temperature,
+      time: timestamp,
+      title: title,
+    };
 
     try {
-      // Add the form data to Firestore
-      const earthquakeRef = doc(db, 'extreme-drougth' , uuid()); // Replace 'earthquakes' with your collection name
+      const earthquakeRef = doc(db, 'extreme-drougth' , id); 
       await setDoc(earthquakeRef, formData);
-
-      // Optionally, you can reset the form after successful submission
-      setFormData({
-        area: '',
-        coordinates: '',
-        level: '',
-        location: '',
-        temperature: '',
-        time: '',
-        title: '',
-      });
 
       console.log('Form data added to Firestore!');
     } catch (error) {
@@ -119,16 +99,16 @@ const ExtremeDrougth = () => {
             type="text" 
             id="area" 
             name="area" 
-            value={formData.area} 
-            onChange={handleChange} />
+            value={area} 
+            onChange={(e) => setArea(e.target.value)} />
           <label htmlFor="level">Level:</label>
           <input
             placeholder='Heat level of the extreme drought'
             type="text" 
             id="level" 
             name="level" 
-            value={formData.level} 
-            onChange={handleChange} 
+            value={level} 
+            onChange={(e) => setLevel(e.target.value)} 
           />
           <label htmlFor="location">Location</label>
           <input
@@ -136,8 +116,8 @@ const ExtremeDrougth = () => {
             type="text"
             id="location"
             name="location"
-            value={formData.location}
-            onChange={handleChange}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
           />
           <label htmlFor="temperature">Temperature</label>
           <input
@@ -145,8 +125,8 @@ const ExtremeDrougth = () => {
             type="text"
             id="temperature"
             name="temperature"
-            value={formData.temperature}
-            onChange={handleChange}
+            value={temperature}
+            onChange={(e) => setTemperature(e.target.value)}
           />
           <label htmlFor="title">Title:</label>
           <input
@@ -154,8 +134,8 @@ const ExtremeDrougth = () => {
             type="text" 
             id="title" 
             name="title" 
-            value={formData.title} 
-            onChange={handleChange} />
+            value={title} 
+            onChange={(e) => setTitle(e.target.value)} />
         <button onClick={handleSubmit} type="submit">Submit</button>
         </div>
       <ReactModal

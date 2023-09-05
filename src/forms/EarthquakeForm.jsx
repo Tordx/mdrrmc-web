@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
-import { doc, getDoc , Timestamp , updateDoc , setDoc } from 'firebase/firestore';
+import { doc, getDoc , Timestamp , setDoc } from 'firebase/firestore';
 import { v4 as uuid } from "uuid";
 import ReactModal from "react-modal";
 import Maplocation from '../components/maplocation';
 
 
-const EarthquakeForm = () => {
+const EarthquakeForm = (props) => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    area: '',
-    coordinates: '',
-    depth: '',
-    id: uuid(),
-    location: '',
-    magnitude: '',
-    time: Timestamp.now(),
-    title: '',
-  });
+  const [area, setArea] = useState('');
+  const [coordinates, setCoordinates] = useState('');
+  const [depth, setDepth] = useState('');
+  const [location, setLocation] = useState('');
+  const [magnitude, setMagnitude] = useState('');
+  const [title, setTitle] = useState('');
 
   const customStyles = {
     overlay: {
@@ -40,32 +36,21 @@ const EarthquakeForm = () => {
     console.log('coordinates');
     console.log(coordinates);
     console.log('coordinates');
-    // setModalIsOpen(false)
-    setFormData({
-        ...formData,
-        coordinates: coordinates
-      });
+    setCoordinates(coordinates)
   };
 
   const handleButtonClick = () => {
     setModalIsOpen(true)
-    console.log(formData.coordinates);
+    console.log(coordinates);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    props.onFormSubmit(true);
+     const id =  uuid()
     const timestamp = Timestamp.now().toDate();
     const monthCount = timestamp.getMonth();
   
@@ -86,77 +71,91 @@ const EarthquakeForm = () => {
       console.log('Document does not exist.');
     }
 
-    try {
-      const earthquakeRef = doc(db, 'earthquake' , uuid()); 
-      await setDoc(earthquakeRef, formData);
-      setFormData({
-        area: '',
-        coordinates: '',
-        depth: '',
-        location: '',
-        magnitude: '',
-        time: '',
-        title: '',
-      });
+    const formData = {
+      area: area,
+      coordinates: coordinates,
+      depth: depth,
+      location: location,
+      title: title,
+      id: id,
+      magnitude: magnitude,
+      time: timestamp,
+    }
 
-      console.log('Form data added to Firestore!');
+    try {
+      if(coordinates != null){
+      const earthquakeRef = doc(db, 'earthquake' , id); 
+      await setDoc(earthquakeRef, formData);
+      setArea('');
+      setCoordinates('');
+      setDepth('');
+      setLocation('');
+      setMagnitude('');
+      setTitle('');
+      setModalIsOpen(false)
+      props.onFormSubmit(false);
+      console.log('Form data added to Firestore!');} else {
+        alert('Please set the map coordinates')
+        props.onFormSubmit(false);
+      }
     } catch (error) {
       console.error('Error adding form data to Firestore:', error);
+      props.onFormSubmit(false);
     }
   };
 
   return (
     <div className="alert-modal-container">
-      <div style= {{width: '100%'}} >
-      <h2>Recent Earthquake monitoring</h2>
-      <button onClick={handleButtonClick}>Get Coordinates</button>
-          <label htmlFor="area">Area</label>
-          <input
-            placeholder='Diameter of the affected area from the center'
-            type="text" 
-            id="area" 
-            name="area" 
-            value={formData.area} 
-            onChange={handleChange} 
-          />
-          <label htmlFor="depth">Depth</label>
-          <input
-            placeholder='How many meters below or above sea level?'
-            type="text" 
-            id="depth" 
-            name="depth" 
-            value={formData.depth} 
-            onChange={handleChange} 
-          />
-          <label htmlFor="location">Location</label>
-          <input
-            placeholder='Name of the place the calamity, accident, or disaster occured'
-            type="text"
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-          />
-          <label htmlFor="magnitude">Magnitude</label>
-          <input
-            placeholder='What is the Magnitude of the distaster'
-            type="text"
-            id="magnitude"
-            name="magnitude"
-            value={formData.magnitude}
-            onChange={handleChange}
-          />
-          <label htmlFor="title">Title</label>
-          <input
-            placeholder='Short Description or Name of what happened'
-            type="text" 
-            id="title" 
-            name="title" 
-            value={formData.title} 
-            onChange={handleChange} 
-          />
+      <div style={{ width: '100%' }}>
+        <h2>Recent Earthquake monitoring</h2>
+        <button onClick={handleButtonClick}>Get Coordinates</button>
+        <label htmlFor="area">Area</label>
+        <input
+          placeholder='Diameter of the affected area from the center'
+          type="text"
+          id="area"
+          name="area"
+          value={area}
+          onChange={(e) => setArea(e.target.value)}
+        />
+        <label htmlFor="depth">Depth</label>
+        <input
+          placeholder='How many meters below or above sea level?'
+          type="text"
+          id="depth"
+          name="depth"
+          value={depth}
+          onChange={(e) => setDepth(e.target.value)}
+        />
+        <label htmlFor="location">Location</label>
+        <input
+          placeholder='Name of the place the calamity, accident, or disaster occurred'
+          type="text"
+          id="location"
+          name="location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
+        <label htmlFor="magnitude">Magnitude</label>
+        <input
+          placeholder='What is the Magnitude of the disaster'
+          type="text"
+          id="magnitude"
+          name="magnitude"
+          value={magnitude}
+          onChange={(e) => setMagnitude(e.target.value)}
+        />
+        <label htmlFor="title">Title</label>
+        <input
+          placeholder='Short Description or Name of what happened'
+          type="text"
+          id="title"
+          name="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <button onClick={handleSubmit} type="submit">Submit</button>
-          </div>
+      </div>
       <ReactModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
