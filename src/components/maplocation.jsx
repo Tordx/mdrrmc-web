@@ -16,6 +16,7 @@ const Maplocation = ({ onMapClick, initialMarker }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false); // State for modal
   const [clickedMarker, setClickedMarker] = useState(null);
   const navigate = useNavigate();
+  const [err, setErr] = useState('')
 
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1Ijoia2Fsb2thbG8iLCJhIjoiY2xkeXV5bWxwMHY3aTNvcjNsc3Bsc3hmdyJ9.n-Gnaro_yu9dj5PnUhNgfQ';
